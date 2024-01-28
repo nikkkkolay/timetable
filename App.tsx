@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import * as eva from "@eva-design/eva";
+import {
+    ApplicationProvider,
+    Layout,
+    Text,
+    Datepicker,
+} from "@ui-kitten/components";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const HomeScreen = () => {
+    const [date, setDate] = useState(new Date());
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    return (
+        <Layout
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+            <Text category="h1">HOME</Text>
+            <Datepicker
+                date={date}
+                onSelect={(nextDate) => setDate(nextDate)}
+            />
+        </Layout>
+    );
+};
+
+export default () => (
+    <ApplicationProvider {...eva} theme={eva.light}>
+        <HomeScreen />
+    </ApplicationProvider>
+);
