@@ -4,13 +4,14 @@ import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { default as theme } from "./custom-theme.json";
+import { default as customMapping } from "./custom-mapping.json";
 
 import { Timetable } from "./screens/Timetable";
 
 export default () => (
     <>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+        <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
             <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
                 <SafeAreaView style={styles.safeArea}>
                     <Timetable />
