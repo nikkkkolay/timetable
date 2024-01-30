@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     groupName: {
-        fontWeight: "900",
+        fontWeight: "800",
     },
 });

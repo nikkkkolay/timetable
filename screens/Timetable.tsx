@@ -1,3 +1,4 @@
+import { Button } from "@ui-kitten/components";
 import { Header, Calendar, Container } from "../components";
 
 export const Timetable = () => {
@@ -5,6 +6,7 @@ export const Timetable = () => {
         <Container>
             <Header />
             <Calendar />
+            <Button>ttt</Button>
         </Container>
     );
 };
