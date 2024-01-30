@@ -4,7 +4,7 @@
     "color-info-500": "#1E1E1E",
     "color-warning-500": "#F9423A",
     "color-danger-500": "#14898F",
-    "text-basic-color": "#343131",
-    "text-primary-color": "#343131",
+    "text-basic-color": "#00000",
+    "text-primary-color": "#00000",
     "text-hint-color": "#858585"
 }

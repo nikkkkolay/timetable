@@ -19,7 +19,7 @@ export const Calendar = () => {
 
     return (
         <RangeCalendar
-            style={{ width: "100%", borderColor: "background: rgba(0,0,0, 0)" }}
+            style={{ width: "100%", paddingTop: 0, borderColor: "background: rgba(0,0,0, 0)" }}
             range={range}
             onSelect={(nextRange) => setRange(nextRange)}
             dateService={localeDateService}

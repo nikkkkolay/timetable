@@ -12,6 +12,7 @@
         "@eva-design/eva": "^2.2.0",
         "@expo/metro-runtime": "~3.1.1",
         "@ui-kitten/components": "^5.3.1",
+        "@ui-kitten/eva-icons": "^5.3.1",
         "@ui-kitten/metro-config": "^5.3.1",
         "expo": "~50.0.4",
         "expo-status-bar": "~1.11.1",
