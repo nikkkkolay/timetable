@@ -1,14 +1,48 @@
 {
     "components": {
-        "Button": {
-            "meta": {},
+        "Calendar": {
             "appearances": {
-                "filled": {
-                    "mapping": {},
-                    "variantGroups": {
-                        "status": {
-                            "primary": {
-                                "backgroundColor": "pink"
+                "default": {
+                    "mapping": {
+                        "width": 344,
+                        "borderColor": "background: rgba(0,0,0, 0)",
+                        "headerPaddingHorizontal": 0,
+                        "headerPaddingVertical": 0,
+                        "paddingVertical": 5,
+                        "rowMarginHorizontal": 0
+                    }
+                }
+            }
+        },
+        "CalendarCell": {
+            "meta": {
+                "selected": {
+                    "default": true
+                }
+            },
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "state": {
+                            "selected": {
+                                "contentBorderColor": "#000",
+                                "contentBackgroundColor": "color-primary-default",
+                                "contentTextColor": "#ffffff",
+                                "borderRadius": "border-radius"
+                            },
+                            "today": {
+                                "contentBorderColor": "#008CFA",
+                                "contentBackgroundColor": "background: rgba(0,140,250, 0.20)"
+                            },
+                            "range": {
+                                "contentBorderColor": "#F9423A",
+                                "backgroundColor": "background: rgba(249, 66, 58, 0.20)",
+                                "borderRadius": "border-radius"
+                            },
+                            "today.range": {
+                                "borderRadius": "border-radius",
+                                "contentBorderColor": "#008CFA",
+                                "contentBackgroundColor": "background: rgba(0,140,250, 0.20)"
                             }
                         }
                     }

@@ -17,12 +17,5 @@ const localeDateService = new NativeDateService("ru", { i18n, startDayOfWeek: 1 
 export const Calendar = () => {
     const [range, setRange] = useState({});
 
-    return (
-        <RangeCalendar
-            style={{ width: "100%", borderColor: "background: rgba(0,0,0, 0)" }}
-            range={range}
-            onSelect={(nextRange) => setRange(nextRange)}
-            dateService={localeDateService}
-        />
-    );
+    return <RangeCalendar style={{ width: "100%" }} range={range} onSelect={(nextRange) => setRange(nextRange)} dateService={localeDateService} />;
 };
