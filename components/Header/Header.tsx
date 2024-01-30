@@ -5,8 +5,8 @@ import { Icon, Text } from "@ui-kitten/components";
 export const Header = () => {
     return (
         <View style={styles.header}>
-            <View>
-                <View style={styles.burger}>
+            <View style={styles.container}>
+                <View>
                     <Icon style={styles.icon} name="calendar-outline" />
                 </View>
                 <Text style={styles.groupName}>ВБАб22о-1</Text>
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-end",
         width: "100%",
     },
-    burger: {
-        marginBottom: "auto",
+    container: {
+        flexDirection: "column",
+        justifyContent: "space-between",
     },
     logo: {
         resizeMode: "center",
