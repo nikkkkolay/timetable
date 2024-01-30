@@ -1,9 +1,11 @@
 {
-    "RangeCalendar": {
-        "appearances": {
-            "filled": {
-                "mapping": {
-                    "backgroundColor": "black"
+    "components": {
+        "RangeCalendar": {
+            "appearances": {
+                "filled": {
+                    "mapping": {
+                        "backgroundColor": "black"
+                    }
                 }
             }
         }

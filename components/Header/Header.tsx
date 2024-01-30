@@ -5,7 +5,7 @@ export const Header = () => {
     return (
         <View style={styles.header}>
             <Text>Burger</Text>
-            <Image source={require("./Logo.svg")} />
+            <Image source={require("./logo.png")} />
         </View>
     );
 };
