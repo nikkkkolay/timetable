@@ -8,7 +8,7 @@
                 "default": {
                     "mapping": {
                         "width": "100%",
-                        "borderColor": "background: rgba(0,0,0, 0)",
+                        "borderColor": "background: rgba(0, 0, 0, 0)",
                         "headerPaddingHorizontal": 0,
                         "headerPaddingVertical": 5,
                         "paddingVertical": 0,
@@ -23,23 +23,23 @@
                     "mapping": {
                         "state": {
                             "selected": {
-                                "contentBorderColor": "#008CFA",
-                                "contentBackgroundColor": "background: rgba(0,140,250, 0.20)",
-                                "contentTextColor": "#000"
+                                "contentBorderColor": "color-success-500",
+                                "contentBackgroundColor": "color-success-200",
+                                "contentTextColor": "text-primary-color"
                             },
                             "today": {
-                                "contentBorderColor": "#008CFA",
-                                "contentBackgroundColor": "background: rgba(0,140,250, 0.20)",
-                                "contentTextColor": "#000"
+                                "contentBorderColor": "color-success-500",
+                                "contentBackgroundColor": "color-success-200",
+                                "contentTextColor": "text-primary-color"
                             },
                             "range": {
-                                "backgroundColor": "rgba(249, 66, 58, 0.20)",
-                                "contentTextColor": "#000"
+                                "backgroundColor": "color-warning-500",
+                                "contentTextColor": "color-secondary-500"
                             },
                             "today.range": {
-                                "contentBorderColor": "#008CFA",
-                                "contentBackgroundColor": "background: rgba(0,140,250, 0.20)",
-                                "contentTextColor": "#000"
+                                "contentBorderColor": "color-success-500",
+                                "contentBackgroundColor": "color-success-200",
+                                "contentTextColor": "color-secondary-500"
                             }
                         }
                     }

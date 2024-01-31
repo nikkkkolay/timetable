@@ -1,9 +1,12 @@
 {
     "color-primary-500": "#0064BE",
+    "color-secondary-500": "#ffffff",
     "color-success-500": "#008CFA",
+    "color-success-200": "#background: rgba(0, 140, 250, 0.20)",
     "color-info-500": "#1E1E1E",
     "color-warning-500": "#F9423A",
     "color-danger-500": "#14898F",
+
     "text-basic-color": "#000",
     "text-primary-color": "#000",
     "text-hint-color": "#858585"
