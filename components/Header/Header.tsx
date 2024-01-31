@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { Icon, Text } from "@ui-kitten/components";
+import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
+
+const CalendarIcon = (props: any): IconElement => <Icon {...props} name="calendar-outline" />;
 
 export const Header = () => {
     return (
         <View style={styles.header}>
             <View style={styles.container}>
-                <View>
-                    <Icon style={styles.icon} name="calendar-outline" />
-                </View>
+                <Button style={styles.calendar} appearance="ghost" accessoryLeft={CalendarIcon} />
                 <Text style={styles.groupName}>ВБАб22о-1</Text>
                 <Text>28.08.2023-03.09.2023</Text>
             </View>
@@ -32,10 +32,9 @@ const styles = StyleSheet.create({
         height: 80,
         width: 90,
     },
-    icon: {
-        width: 32,
-        height: 32,
-        marginBottom: 8,
+    calendar: {
+        width: 40,
+        height: 40,
     },
     groupName: {
         fontWeight: "800",
