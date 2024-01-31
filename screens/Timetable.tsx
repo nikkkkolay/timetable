@@ -8,7 +8,7 @@ export const Timetable = () => {
     const bottomSheetRef = useRef<BottomSheet>(null);
 
     // variables
-    const snapPoints = useMemo(() => ["80%", "20%"], []);
+    const snapPoints = useMemo(() => ["20%", "80%"], []);
 
     // callbacks
     const handleSheetChanges = useCallback((index: number) => {
@@ -19,11 +19,20 @@ export const Timetable = () => {
         <Container>
             <Header />
             <Calendar />
+
             <BottomSheet
                 ref={bottomSheetRef}
                 index={1}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
+                enableOverDrag
+                enablePanDownToClose
+                handleStyle={{
+                    backgroundColor: "#0064BE",
+                    borderTopStartRadius: 10,
+                    borderTopEndRadius: 10,
+                }}
+                handleIndicatorStyle={{ backgroundColor: "#ffffff" }}
             >
                 <View style={styles.contentContainer}>
                     <Text>Awesome 🎉</Text>
@@ -34,13 +43,16 @@ export const Timetable = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        backgroundColor: "grey",
-    },
     contentContainer: {
         flex: 1,
         alignItems: "center",
+        backgroundColor: "#0064BE",
+        shadowRadius: 2,
+        shadowOffset: {
+            width: 0,
+            height: -10,
+        },
+        shadowColor: "#000000",
+        elevation: 4,
     },
 });
