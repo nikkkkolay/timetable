@@ -1,36 +1,50 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Header, Calendar, Container } from "../components";
 
 export const Timetable = () => {
     // ref
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
+    const bottomSheetRef = useRef(null);
+    const refView = useRef();
     // variables
-    const snapPoints = useMemo(() => ["20%", "80%"], []);
+    const snapPoints = useMemo(() => ["83%", "38%"], []);
 
     // callbacks
     const handleSheetChanges = useCallback((index: number) => {
         console.log("handleSheetChanges", index);
     }, []);
 
+    useEffect(() => {
+        const height = refView.current.getBoundingClientRect().height;
+        console.log(height, "height");
+    }, [refView]);
+
     return (
         <Container>
-            <Header />
-            <Calendar />
+            <View ref={refView}>
+                <Header />
+                <Calendar />
+            </View>
 
             <BottomSheet
                 ref={bottomSheetRef}
                 index={1}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
-                enableOverDrag
-                enablePanDownToClose
+                detached
+                enableContentPanningGesture
                 handleStyle={{
                     backgroundColor: "#0064BE",
-                    borderTopStartRadius: 10,
-                    borderTopEndRadius: 10,
+                    borderTopStartRadius: 4,
+                    borderTopEndRadius: 4,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: -4,
+                    },
+                    shadowOpacity: 0.4,
+                    shadowRadius: 3,
                 }}
                 handleIndicatorStyle={{ backgroundColor: "#ffffff" }}
             >
@@ -47,12 +61,5 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         backgroundColor: "#0064BE",
-        shadowRadius: 2,
-        shadowOffset: {
-            width: 0,
-            height: -10,
-        },
-        shadowColor: "#000000",
-        elevation: 4,
     },
 });
