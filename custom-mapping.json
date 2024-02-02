@@ -1,60 +1,85 @@
 {
     "strict": {
         "text-font-family": "Montserrat",
-
-        "text-heading-1-font-size": 36,
-        "text-heading-1-font-weight": "800",
         "text-heading-1-font-family": "Montserrat-ExtraBold",
-        "text-heading-2-font-size": 32,
-        "text-heading-2-font-weight": "800",
         "text-heading-2-font-family": "Montserrat-ExtraBold",
-        "text-heading-3-font-size": 30,
-        "text-heading-3-font-weight": "800",
         "text-heading-3-font-family": "Montserrat-ExtraBold",
-        "text-heading-4-font-size": 26,
-        "text-heading-4-font-weight": "800",
         "text-heading-4-font-family": "Montserrat-ExtraBold",
-        "text-heading-5-font-size": 22,
-        "text-heading-5-font-weight": "800",
         "text-heading-5-font-family": "Montserrat-ExtraBold",
-        "text-heading-6-font-size": 18,
-        "text-heading-6-font-weight": "800",
         "text-heading-6-font-family": "Montserrat-ExtraBold",
-
-        "text-subtitle-1-font-size": 15,
-        "text-subtitle-1-font-weight": "600",
         "text-subtitle-1-font-family": "Montserrat-SemiBold",
-        "text-subtitle-2-font-size": 13,
-        "text-subtitle-2-font-weight": "600",
         "text-subtitle-2-font-family": "Montserrat-SemiBold",
-
-        "text-paragraph-1-font-size": 15,
-        "text-paragraph-1-font-weight": "400",
         "text-paragraph-1-font-family": "Montserrat-Regular",
-        "text-paragraph-2-font-size": 13,
-        "text-paragraph-2-font-weight": "400",
         "text-paragraph-2-font-family": "Montserrat-Regular",
-
-        "text-caption-1-font-size": 12,
-        "text-caption-1-font-weight": "400",
         "text-caption-1-font-family": "Montserrat-Regular",
-        "text-caption-2-font-size": 12,
-        "text-caption-2-font-weight": "600",
         "text-caption-2-font-family": "Montserrat-SemiBold",
-
-        "text-label-font-size": 12,
-        "text-label-font-weight": "800",
         "text-label-font-family": "Montserrat-ExtraBold"
     },
     "components": {
+        "Button": {
+            "appearances": {
+                "filled": {
+                    "variantGroups": {
+                        "size": {
+                            "medium": {
+                                "paddingHorizontal": 5,
+                                "paddingVertical": 5
+                            }
+                        }
+                    }
+                },
+                "ghost": {
+                    "mapping": {},
+                    "variantGroups": {
+                        "status": {
+                            "primary": {
+                                "borderColor": "transparent",
+                                "backgroundColor": "color-basic-transparent-200",
+                                "textColor": "text-primary-color",
+                                "iconTintColor": "text-primary-color",
+                                "state": {
+                                    "focused": {
+                                        "borderColor": "color-basic-transparent-500",
+                                        "backgroundColor": "color-basic-transparent-300",
+                                        "textColor": "text-primary-color",
+                                        "iconTintColor": "text-primary-color"
+                                    },
+                                    "hover": {
+                                        "borderColor": "transparent",
+                                        "backgroundColor": "color-basic-transparent-200",
+                                        "textColor": "text-primary-color",
+                                        "iconTintColor": "text-primary-color"
+                                    },
+                                    "active": {
+                                        "borderColor": "transparent",
+                                        "backgroundColor": "color-basic-transparent-300",
+                                        "textColor": "text-primary-color",
+                                        "iconTintColor": "text-primary-color"
+                                    },
+                                    "disabled": {
+                                        "borderColor": "transparent",
+                                        "backgroundColor": "color-basic-transparent-300",
+                                        "textColor": "text-disabled-color",
+                                        "iconTintColor": "text-disabled-color"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "Calendar": {
             "appearances": {
                 "default": {
                     "mapping": {
                         "width": "100%",
+                        "borderWidth": 0,
                         "borderColor": "background: rgba(0, 0, 0, 0)",
+                        "titleFontWeight": "400",
+                        "weekdayTextFontWeight": "400",
                         "headerPaddingHorizontal": 0,
-                        "headerPaddingVertical": 5,
+                        "headerPaddingVertical": 15,
                         "paddingVertical": 0,
                         "rowMarginHorizontal": 0
                     }
@@ -65,6 +90,7 @@
             "appearances": {
                 "default": {
                     "mapping": {
+                        "contentTextFontWeight": "400",
                         "state": {
                             "selected": {
                                 "contentBorderColor": "color-success-500",

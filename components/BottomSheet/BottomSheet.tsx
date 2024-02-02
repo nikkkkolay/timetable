@@ -12,22 +12,20 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     }, []);
 
     return (
-        <div>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={1}
-                        snapPoints={snapPoints}
-                        onChange={handleSheetChanges}
-                        handleStyle={styles.handleStyle}
-                        handleIndicatorStyle={styles.handleIndicatorStyle}
-                    >
-                        {children}
-                    </BottomSheet>
-                </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-        </div>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={1}
+                    snapPoints={snapPoints}
+                    onChange={handleSheetChanges}
+                    handleStyle={styles.handleStyle}
+                    handleIndicatorStyle={styles.handleIndicatorStyle}
+                >
+                    {children}
+                </BottomSheet>
+            </BottomSheetModalProvider>
+        </GestureHandlerRootView>
     );
 };
 

@@ -2,27 +2,18 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 
-const CalendarIcon = (props: any): IconElement => (
-    <Icon style={styles.calendar} name="calendar-outline" />
-);
+const CalendarIcon = (props: any): IconElement => <Icon style={styles.menu} name="menu-outline" />;
 
 export const Header = () => {
     return (
         <View style={styles.header}>
             <View style={styles.container}>
-                <Button
-                    style={styles.button}
-                    appearance="ghost"
-                    accessoryLeft={CalendarIcon}
-                />
+                <Button style={styles.button} appearance="ghost" accessoryLeft={CalendarIcon} />
 
                 <Text style={styles.groupName}>ВБАб22о-1</Text>
                 <Text>28.08.2023-03.09.2023</Text>
             </View>
-            <Image
-                style={styles.logo}
-                source={require("./logo_rus_full_V.png")}
-            />
+            <Image style={styles.logo} source={require("./logo_rus_full_V.png")} />
         </View>
     );
 };
@@ -39,18 +30,19 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "center",
-        height: 80,
-        width: 90,
+        height: 90,
+        width: 100,
     },
     button: {
         width: 38,
         height: 38,
     },
-    calendar: {
+    menu: {
         width: 32,
         height: 32,
     },
     groupName: {
         fontWeight: "800",
+        fontSize: 18,
     },
 });
