@@ -1,46 +1,54 @@
-import React, { ReactNode, useCallback, useMemo, useRef, PropsWithChildren } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, {
+    useCallback,
+    useMemo,
+    useRef,
+    useState,
+    PropsWithChildren,
+} from "react";
+import { useWindowDimensions } from "react-native";
 import BottomSheet, { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
-    const bottomSheetRef = useRef(null);
-    const snapPoints = useMemo(() => ["83%", "38%"], []);
+    const [openSheet, setOpenSheet] = useState(0);
 
-    const handleSheetChanges = useCallback((index: number) => {
-        console.log("handleSheetChanges", index);
+    const { height } = useWindowDimensions();
+    const headerHeight = 130;
+    const heightVisibleArea = 453;
+
+    const snapPoints = useMemo(() => {
+        const open = height - heightVisibleArea;
+        const close = height - headerHeight;
+        return [open, close];
     }, []);
 
+    const handleSheetChanges = (index: number) => {
+        setOpenSheet(index);
+    };
+
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <BottomSheetModalProvider>
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={1}
-                    snapPoints={snapPoints}
-                    onChange={handleSheetChanges}
-                    handleStyle={styles.handleStyle}
-                    handleIndicatorStyle={styles.handleIndicatorStyle}
-                >
-                    {children}
-                </BottomSheet>
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+        <BottomSheetModalProvider>
+            <BottomSheet
+                index={openSheet}
+                snapPoints={snapPoints}
+                onChange={handleSheetChanges}
+                
+                // enableHandlePanningGesture={false}
+                // enableContentPanningGesture={false}
+
+                // Enable pan down gesture to close the sheet.
+                // enablePanDownToClose
+                handleStyle={{
+                    backgroundColor: "#008cfa",
+                    borderColor: "#008cfa",
+                    borderTopStartRadius: openSheet <= 0 ? 4 : 0,
+                    borderTopEndRadius: openSheet <= 0 ? 4 : 0,
+                }}
+                handleIndicatorStyle={{ backgroundColor: "#ffffff" }}
+            >
+                {children}
+            </BottomSheet>
+        </BottomSheetModalProvider>
     );
 };
 
-const styles = StyleSheet.create({
-    handleStyle: {
-        backgroundColor: "#008cfa",
-        borderTopStartRadius: 4,
-        borderTopEndRadius: 4,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: -4,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 3,
-    },
-    handleIndicatorStyle: { backgroundColor: "#ffffff" },
-});
+//если height - heightVisibleArea = отрицательно число то ошибка

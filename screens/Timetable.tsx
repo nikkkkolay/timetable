@@ -1,21 +1,25 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Header, Calendar, Container, BottomSheetComponent } from "../components";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+    Header,
+    Calendar,
+    Container,
+    BottomSheetComponent,
+} from "../components";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const Timetable = () => {
     return (
-        <>
-            <Container>
-                <View>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <Container>
                     <Header />
                     <Calendar />
-                </View>
-            </Container>
-            <BottomSheetComponent>
-                <View style={styles.contentContainer}>
-                    <Text>Awesome 🎉</Text>
-                </View>
-            </BottomSheetComponent>
-        </>
+                </Container>
+                <BottomSheetComponent>
+                    <Container style={styles.contentContainer}>
+                        <Text>Awesome 🎉</Text>
+                    </Container>
+                </BottomSheetComponent>
+            </GestureHandlerRootView>
     );
 };
 
