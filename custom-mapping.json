@@ -16,6 +16,42 @@
         "text-label-font-family": "Montserrat-ExtraBold"
     },
     "components": {
+        "Tab": {
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "textColor": "text-secondary-color",
+                        "iconWidth": 24,
+                        "iconHeight": 24,
+                        "iconMarginVertical": 2,
+                        "iconTintColor": "text-secondary-color",
+                        "state": {
+                            "hover": {
+                                "textColor": "text-secondary-color",
+                                "iconTintColor": "text-secondary-color"
+                            },
+                            "selected": {
+                                "textColor": "text-secondary-color",
+                                "iconTintColor": "text-secondary-color"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "TabBar": {
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "paddingVertical": 0,
+                        "backgroundColor": "color-success-500",
+                        "indicatorHeight": 1,
+                        "indicatorBorderRadius": 0,
+                        "indicatorBackgroundColor": "text-secondary-color"
+                    }
+                }
+            }
+        },
         "Button": {
             "appearances": {
                 "filled": {

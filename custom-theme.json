@@ -9,5 +9,6 @@
 
     "text-basic-color": "#000",
     "text-primary-color": "#000",
+    "text-secondary-color": "#ffffff",
     "text-hint-color": "#858585"
 }
