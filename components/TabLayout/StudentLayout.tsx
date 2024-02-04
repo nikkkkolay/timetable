@@ -38,14 +38,29 @@ const instData = [
     },
 ];
 
+const groupData = [
+    {
+        id: 1,
+        inst: "ВБАб22о-1",
+    },
+    {
+        id: 2,
+        inst: "АБАб22о-2",
+    },
+    {
+        id: 3,
+        inst: "ВБб211-99",
+    },
+];
+
 export const StudentLayout = () => {
     const styles = useStyleSheet(themedStyles);
     const [selectedIndexCourse, setSelectedIndexCourse] = useState();
     const [selectedIndexInst, setSelectedIndexInst] = useState();
+    const [selectedIndexGroup, setSelectedIndexGroup] = useState();
 
     return (
         <Layout style={styles.tabContainer}>
-            
             <Select
                 selectedIndex={selectedIndexCourse}
                 onSelect={(index) => setSelectedIndexCourse(index)}
@@ -68,6 +83,17 @@ export const StudentLayout = () => {
                 <SelectItem title="Морская академия" />
                 <SelectItem title="Институт прикладных арктических..." />
             </Select>
+            <Select
+                selectedIndex={selectedIndexGroup}
+                onSelect={(index) => setSelectedIndexGroup(index)}
+                placeholder="Выберите группу"
+                style={styles.select}
+                value={groupData[selectedIndexGroup?.row]?.inst}
+            >
+                <SelectItem title="ВБАб22о-1" />
+                <SelectItem title="АБАб22о-2" />
+                <SelectItem title="ВБб211-99" />
+            </Select>
         </Layout>
     );
 };
@@ -85,8 +111,8 @@ const themedStyles = StyleService.create({
     select: {
         width: "100%",
         marginBottom: 10,
-        borderColor: 'red'
-    }
+        borderColor: "red",
+    },
 });
 
 // БАГ С ЦВЕТОМ статусбар ПРИ ОТКРЫТИИ СЕЛЕКТА
