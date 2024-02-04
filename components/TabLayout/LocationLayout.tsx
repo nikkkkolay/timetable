@@ -12,7 +12,7 @@ export const LocationLayout = () => {
 
     return (
         <Layout style={styles.tabContainer}>
-            <Spinner size="giant" status="primary" />
+            <Spinner size="giant" status="control" />
         </Layout>
     );
 };

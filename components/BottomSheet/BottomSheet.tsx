@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     const theme = useTheme();
-    const [openSheet, setOpenSheet] = useState(0);
+    const [openSheet, setOpenSheet] = useState(1);
 
     const { height } = useWindowDimensions();
     const headerHeight = 130;
@@ -25,21 +25,35 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     return (
         <BottomSheetModalProvider>
             <BottomSheet
+                style={{
+                    borderWidth: 0,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 12,
+                    },
+                    shadowOpacity: 0.58,
+                    shadowRadius: 16.0,
+
+                    elevation: 24,
+                }}
                 index={openSheet}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
+                handleIndicatorStyle={{
+                    backgroundColor: theme["text-secondary-color"],
+                    height: 2,
+                }}
                 handleStyle={{
                     backgroundColor:
                         openSheet === 1
                             ? theme["color-success-500"]
                             : "#008cfa",
-                    borderTopStartRadius: openSheet === 1 ? 0 : 4,
-                    borderTopEndRadius: openSheet === 1 ? 0 : 4,
+                    borderTopLeftRadius: 4,
+                    borderTopRightRadius: 4,
                     paddingVertical: 15,
-                }}
-                handleIndicatorStyle={{
-                    backgroundColor: theme["text-secondary-color"],
-                    height: 2,
                 }}
             >
                 {/* <BottomSheetScrollView> */}

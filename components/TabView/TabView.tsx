@@ -5,10 +5,10 @@ import {
     useStyleSheet,
     StyleService,
 } from "@ui-kitten/components";
-import { Container } from "../index";
 
 import { IconSpeaker, IconStudent, IconLocation } from "../../icons";
 import { LocationLayout, SpeakerLayout, StudentLayout } from "../TabLayout";
+import { Container } from '../Container/Container';
 
 const tabs = [
     {
