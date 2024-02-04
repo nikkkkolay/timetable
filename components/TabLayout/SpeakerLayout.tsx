@@ -1,8 +1,15 @@
 import { StyleSheet } from "react-native";
 
-import { Layout, Spinner } from "@ui-kitten/components";
+import {
+    Layout,
+    Spinner,
+    StyleService,
+    useStyleSheet,
+} from "@ui-kitten/components";
 
 export const SpeakerLayout = () => {
+    const styles = useStyleSheet(themedStyles);
+
     return (
         <Layout style={styles.tabContainer}>
             <Spinner size="giant" status="primary" />
@@ -10,13 +17,13 @@ export const SpeakerLayout = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
     tabContainer: {
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#008cfa",
+        backgroundColor: "color-success-500",
         paddingBottom: 15,
         paddingTop: 15,
         marginTop: 15,

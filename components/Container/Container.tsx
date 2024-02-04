@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 type Props = {
     size?: "low" | "middle";
-    style?: CSSProperties;
+    style?: CSSProperties | any;
 };
 
 export const Container = ({ children, style }: PropsWithChildren<Props>) => {

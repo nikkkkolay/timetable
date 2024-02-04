@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { StyleSheet } from "react-native";
-import { TabView, Spinner, Tab } from "@ui-kitten/components";
+import {
+    TabView,
+    Tab,
+    useStyleSheet,
+    useTheme,
+    StyleService,
+} from "@ui-kitten/components";
 import { Container } from "../index";
 
 import { IconSpeaker, IconStudent, IconLocation } from "../../icons";
@@ -25,6 +30,7 @@ const tabs = [
 ];
 
 export const TabViewComponent = () => {
+    const styles = useStyleSheet(themedStyles);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const shouldLoadComponent = (index: any): boolean => {
@@ -59,11 +65,11 @@ export const TabViewComponent = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
     contentContainer: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "#008cfa",
+        backgroundColor: "color-success-500",
         paddingTop: 0,
     },
     tab: {
@@ -71,6 +77,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     tabActive: {
-        backgroundColor: "#0084ee",
+        backgroundColor: "color-success-200",
     },
 });
