@@ -3,7 +3,6 @@ import {
     TabView,
     Tab,
     useStyleSheet,
-    useTheme,
     StyleService,
 } from "@ui-kitten/components";
 import { Container } from "../index";
@@ -77,6 +76,6 @@ const themedStyles = StyleService.create({
         paddingBottom: 10,
     },
     tabActive: {
-        backgroundColor: "color-success-200",
+        backgroundColor: "color-success-100",
     },
 });

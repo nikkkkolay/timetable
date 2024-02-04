@@ -1,10 +1,12 @@
 import React, { useMemo, useState, PropsWithChildren } from "react";
-import { View, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions, StyleSheet } from "react-native";
+import { useTheme } from "@ui-kitten/components";
 import BottomSheet, { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import CustomBackground from "./CustomBackground";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
-    const [openSheet, setOpenSheet] = useState(1);
+    const theme = useTheme();
+    const [openSheet, setOpenSheet] = useState(0);
 
     const { height } = useWindowDimensions();
     const headerHeight = 130;
@@ -26,26 +28,42 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
                 index={openSheet}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
-                // enableHandlePanningGesture={false}
-                // enableContentPanningGesture={false}
-
-                // Enable pan down gesture to close the sheet.
-                // enablePanDownToClose
                 handleStyle={{
-                    backgroundColor: "#008cfa",
-                    borderColor: "#008cfa",
-                    borderTopStartRadius: openSheet <= 0 ? 6 : 0,
-                    borderTopEndRadius: openSheet <= 0 ? 6 : 0,
+                    backgroundColor:
+                        openSheet === 1
+                            ? theme["color-success-500"]
+                            : "#008cfa",
+                    borderTopStartRadius: openSheet === 1 ? 0 : 4,
+                    borderTopEndRadius: openSheet === 1 ? 0 : 4,
+                    paddingVertical: 15,
                 }}
-                handleIndicatorStyle={{ backgroundColor: "#ffffff", height: 2 }}
+                handleIndicatorStyle={{
+                    backgroundColor: theme["text-secondary-color"],
+                    height: 2,
+                }}
             >
                 {/* <BottomSheetScrollView> */}
+
                 {children}
+                {openSheet != 1 && (
+                    <LinearGradient
+                        colors={["rgba(0,140,250, 1)", "rgba(0,140,250, 0.1)"]}
+                        style={styles.overlay}
+                    ></LinearGradient>
+                )}
+
                 {/* </BottomSheetScrollView> */}
             </BottomSheet>
         </BottomSheetModalProvider>
     );
 };
 
+const styles = StyleSheet.create({
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        opacity: 0.8,
+    },
+});
+
 //если height - heightVisibleArea = отрицательно число то ошибка
-//добавить затемнение при скрытии
+//добавить анимацию на затемнение при скрытии

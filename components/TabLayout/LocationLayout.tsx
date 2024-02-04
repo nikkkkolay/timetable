@@ -20,13 +20,11 @@ export const LocationLayout = () => {
 const themedStyles = StyleService.create({
     tabContainer: {
         flex: 1,
-        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         backgroundColor: "color-success-500",
         paddingBottom: 15,
         paddingTop: 15,
-        marginTop: 15,
+        marginTop: 200,
         borderRadius: 4,
     },
 });

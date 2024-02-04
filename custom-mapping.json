@@ -16,6 +16,32 @@
         "text-label-font-family": "Montserrat-ExtraBold"
     },
     "components": {
+        "Select": {
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "textFontFamily": "Montserrat-Regular"
+                    },
+                    "variantGroups": {
+                        "size": {
+                            "medium": {
+                                "textFontWeight": 400
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "SelectOption": {
+            "appearances": {
+                "default": {
+                    "mapping": {
+                        "textFontWeight": 400,
+                        "textFontFamily": "Montserrat-Regular"
+                    }
+                }
+            }
+        },
         "Tab": {
             "appearances": {
                 "default": {
