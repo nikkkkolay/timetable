@@ -61,7 +61,7 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
 const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        opacity: 0.8,
+        opacity: 0.5,
     },
 });
 
