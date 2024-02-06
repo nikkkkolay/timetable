@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import AppLoading from "expo-app-loading";
+import React, { useCallback, useEffect, useState } from "react";
+
+import * as SplashScreen from "expo-splash-screen";
 
 import { StyleSheet, ImageBackground, SafeAreaView, StatusBar, Platform } from "react-native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
@@ -11,19 +12,37 @@ import * as Font from "expo-font";
 
 import { Timetable } from "./screens/Timetable";
 
-const loadFonts = () => {
-    return Font.loadAsync({
-        "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
-        "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
-        "Montserrat-ExtraBold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
-    });
-};
-
 export default () => {
-    const [fontsLoaded, setFontsLoded] = useState(false);
+    const [appIsReady, setAppIsReady] = useState(false);
 
-    if (!fontsLoaded) {
-        return <AppLoading startAsync={loadFonts} onFinish={() => setFontsLoded(true)} onError={console.warn} />;
+    useEffect(() => {
+        async function prepare() {
+            try {
+                await Font.loadAsync({
+                    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+                    "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
+                    "Montserrat-ExtraBold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
+                });
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+            } catch (e) {
+                console.warn(e);
+            } finally {
+                // Tell the application to render
+                setAppIsReady(true);
+            }
+        }
+
+        prepare();
+    }, []);
+
+    const onLayoutRootView = useCallback(async () => {
+        if (appIsReady) {
+            await SplashScreen.hideAsync();
+        }
+    }, [appIsReady]);
+
+    if (!appIsReady) {
+        return null;
     }
 
     return (
@@ -31,7 +50,7 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
-                    <SafeAreaView style={styles.safeArea}>
+                    <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
                         <Timetable />
                     </SafeAreaView>
                 </ImageBackground>
