@@ -25,20 +25,6 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     return (
         <BottomSheetModalProvider>
             <BottomSheet
-                style={{
-                    borderWidth: 0,
-                    borderTopLeftRadius: 15,
-                    borderTopRightRadius: 15,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 12,
-                    },
-                    shadowOpacity: 0.58,
-                    shadowRadius: 16.0,
-
-                    elevation: 24,
-                }}
                 index={openSheet}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
