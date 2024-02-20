@@ -8,9 +8,6 @@ import {
     TabViewComponent,
 } from "../components";
 
-import { Text } from 'react-native';
-
-
 export const Timetable = () => {
     return (
         <GestureHandlerRootView style={{ flex: 1}}>
