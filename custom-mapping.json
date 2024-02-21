@@ -156,8 +156,8 @@
                         "state": {
                             "selected": {
                                 "contentBorderColor": "color-success-500",
-                                "contentBackgroundColor": "color-success-200",
-                                "contentTextColor": "text-primary-color"
+                                "contentTextColor": "text-primary-color",
+                                "contentBackgroundColor": "color-success-200"
                             },
                             "today": {
                                 "contentBorderColor": "color-success-500",

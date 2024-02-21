@@ -1,12 +1,12 @@
 import React, { useMemo, useState, PropsWithChildren } from "react";
 import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { useTheme } from "@ui-kitten/components";
-import BottomSheet, { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     const theme = useTheme();
-    const [openSheet, setOpenSheet] = useState(1);
+    const [openSheet, setOpenSheet] = useState(0);
 
     const { height } = useWindowDimensions();
     const headerHeight = 130;
@@ -23,38 +23,31 @@ export const BottomSheetComponent = ({ children }: PropsWithChildren) => {
     };
 
     return (
-        <BottomSheetModalProvider>
-            <BottomSheet
-                index={openSheet}
-                snapPoints={snapPoints}
-                onChange={handleSheetChanges}
-                handleIndicatorStyle={{
-                    backgroundColor: theme["text-secondary-color"],
-                    height: 2,
-                }}
-                handleStyle={{
-                    backgroundColor:
-                        openSheet === 1
-                            ? theme["color-success-500"]
-                            : "#008cfa",
-                    borderTopLeftRadius: 4,
-                    borderTopRightRadius: 4,
-                    paddingVertical: 15,
-                }}
-            >
-                {/* <BottomSheetScrollView> */}
-
-                {children}
-                {openSheet != 1 && (
-                    <LinearGradient
-                        colors={["rgba(0,140,250, 1)", "rgba(0,140,250, 0.1)"]}
-                        style={styles.overlay}
-                    ></LinearGradient>
-                )}
-
-                {/* </BottomSheetScrollView> */}
-            </BottomSheet>
-        </BottomSheetModalProvider>
+        <BottomSheet
+            index={openSheet}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}
+            backgroundStyle={{ backgroundColor: theme["color-success-500"] }}
+            handleIndicatorStyle={{
+                backgroundColor: theme["text-secondary-color"],
+                height: 2,
+            }}
+            handleStyle={{
+                backgroundColor:
+                    openSheet === 1 ? theme["color-success-500"] : "#008cfa",
+                borderTopLeftRadius: 2,
+                borderTopRightRadius: 2,
+                paddingVertical: 15,
+            }}
+        >
+            {children}
+            {openSheet != 1 && (
+                <LinearGradient
+                    colors={["rgba(0,140,250, 1)", "rgba(0,140,250, 0.1)"]}
+                    style={styles.overlay}
+                ></LinearGradient>
+            )}
+        </BottomSheet>
     );
 };
 

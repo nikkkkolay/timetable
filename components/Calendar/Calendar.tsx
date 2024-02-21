@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NativeDateService, RangeCalendar } from "@ui-kitten/components";
-import { i18n } from './i18n';
+import { i18n } from "./i18n";
 
 const localeDateService = new NativeDateService("ru", {
     i18n,

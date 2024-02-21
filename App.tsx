@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import * as SplashScreen from "expo-splash-screen";
 
-import { StyleSheet, ImageBackground, SafeAreaView, StatusBar, Platform } from "react-native";
+import { StyleSheet, ImageBackground, SafeAreaView, StatusBar } from "react-native";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
