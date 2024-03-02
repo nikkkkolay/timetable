@@ -4,7 +4,7 @@
 
 ## Превью
 
-[![Screenshot](https://raw.githubusercontent.com/nikkkkolay/timetable/master/screenshot.png)]
+![Screenshot](https://raw.githubusercontent.com/nikkkkolay/timetable/master/screenshot.png)
 
 ## Используемые технологии и библиотеки
 
