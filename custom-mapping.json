@@ -80,6 +80,11 @@
         },
         "Button": {
             "appearances": {
+                "primary": {
+                    "mapping": {
+                        "textFontFamily": "Montserrat-Regular"
+                    }
+                },
                 "filled": {
                     "variantGroups": {
                         "size": {

@@ -1,20 +1,29 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { ModalSettings } from "../index";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 
-const CalendarIcon = (props: any): IconElement => <Icon style={styles.menu} name="menu-outline" />;
+const SettingsIcon = (props: any): IconElement => <Icon style={styles.icon} name="settings-outline" />;
+const CalendarIcon = (props: any): IconElement => <Icon style={styles.icon} name="calendar-outline" />;
 
 export const Header = () => {
-    return (
-        <View style={styles.header}>
-            <View style={styles.container}>
-                <Button style={styles.button} appearance="ghost" accessoryLeft={CalendarIcon} />
+    const [modalVisible, setModalVisible] = React.useState(false);
 
-                <Text style={styles.groupName}>ВБАб22о-1</Text>
-                <Text>28.08.2023-03.09.2023</Text>
+    return (
+        <>
+            <View style={styles.header}>
+                <View style={styles.container}>
+                    <Image style={styles.logo} source={require("./logo.png")} />
+                    <Text style={styles.groupName}>ВБАб22о-1</Text>
+                    <Text>28.08.2023-03.09.2023</Text>
+                </View>
+                <View>
+                    <Button onPress={() => setModalVisible(!modalVisible)} style={styles.button} appearance="ghost" accessoryLeft={SettingsIcon} />
+                    <Button style={styles.button} appearance="ghost" accessoryLeft={CalendarIcon} />
+                </View>
             </View>
-            <Image style={styles.logo} source={require("./logo_rus_full_V.png")} />
-        </View>
+            <ModalSettings visible={modalVisible} setVisible={setModalVisible} />
+        </>
     );
 };
 
@@ -30,16 +39,18 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "center",
-        height: 100,
-        width: 110,
+        height: 40,
+        width: 180,
+        marginBottom: 10,
     },
     button: {
         width: 38,
         height: 38,
+        marginBottom: 10,
     },
-    menu: {
-        width: 32,
-        height: 32,
+    icon: {
+        width: 24,
+        height: 24,
     },
     groupName: {
         fontWeight: "800",
