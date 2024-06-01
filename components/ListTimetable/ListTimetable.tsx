@@ -4,12 +4,14 @@ import { Card, List, Text } from "@ui-kitten/components";
 
 interface ListProps {
     name: string;
+    time: string;
     address: string;
     teacher: string;
 }
 
 const data = new Array(8).fill({
-    name: "12:40 - 14:15 Психология саморазвития и социального взаимодействия  (Тест.)",
+    time: "12:40 - 14:15",
+    name: "Психология саморазвития и социального взаимодействия  (Тест.)",
     address: "217А (Спортивная, 13)",
     teacher: "Буев С.А.",
 });
@@ -17,7 +19,7 @@ const data = new Array(8).fill({
 export const ListTimetable = (): React.ReactElement => {
     const renderItemHeader = (headerProps: any, info: ListRenderItemInfo<ListProps>): React.ReactElement => (
         <View {...headerProps} style={styles.padding}>
-            <Text>{`${info.item.name}`}</Text>
+            <Text style={styles.time}>{`${info.item.time}`}</Text>
         </View>
     );
 
@@ -34,6 +36,7 @@ export const ListTimetable = (): React.ReactElement => {
             header={(headerProps) => renderItemHeader(headerProps, info)}
             footer={(footerProps) => renderItemFooter(footerProps, info)}
         >
+            <Text>{`${info.item.name}`}</Text>
             <Text>{`${info.item.teacher}`}</Text>
         </Card>
     );
@@ -46,12 +49,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: "rgba(0, 0, 0, 0)",
     },
+    time: {
+        fontWeight: "bold",
+    },
     padding: {
         paddingVertical: 10,
         paddingHorizontal: 24,
     },
     contentContainer: {
-        flex: 1,
         paddingHorizontal: 0,
     },
     item: {

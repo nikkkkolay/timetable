@@ -20,7 +20,7 @@ export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElemen
             <Card disabled={true}>
                 <View style={styles.container}>
                     <Text style={styles.title} category="h6">
-                        Настройки
+                        Выбор группы
                     </Text>
                     <View style={styles.wrapper}>
                         <SelectSettings />
@@ -42,7 +42,7 @@ export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElemen
 
 const styles = StyleSheet.create({
     backdrop: {
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
     title: {
         marginBottom: 12,

@@ -51,7 +51,7 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
-                    <StatusBar translucent backgroundColor="transparent" />
+                    <StatusBar barStyle={"dark-content"} translucent backgroundColor="transparent" />
                     <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
                         <Timetable />
                     </SafeAreaView>
