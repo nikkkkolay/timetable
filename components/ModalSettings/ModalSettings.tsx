@@ -19,19 +19,21 @@ export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElemen
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
             <Card disabled={true}>
                 <View style={styles.container}>
-                    <Text style={styles.title} category="s1">
+                    <Text style={styles.title} category="h6">
                         Настройки
                     </Text>
-                    <SelectSettings />
-                    <SelectSettings />
-                    <SelectSettings />
-                    <Button
-                        style={styles.button}
-                        onPress={() => setVisible(!visible)}
-                        // accessoryLeft={LoadingIndicator}
-                    >
-                        Сохранить
-                    </Button>
+                    <View style={styles.wrapper}>
+                        <SelectSettings />
+                        <SelectSettings />
+                        <SelectSettings />
+                        <Button
+                            style={styles.button}
+                            onPress={() => setVisible(!visible)}
+                            // accessoryLeft={LoadingIndicator}
+                        >
+                            Сохранить
+                        </Button>
+                    </View>
                 </View>
             </Card>
         </Modal>
@@ -51,8 +53,15 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         gap: 10,
-        width: 240,
+        width: 250,
+    },
+    wrapper: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+        width: "100%",
     },
     indicator: {
         justifyContent: "center",

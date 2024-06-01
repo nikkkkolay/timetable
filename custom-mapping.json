@@ -114,7 +114,7 @@
                         "paddingVertical": 0,
                         "rowMarginHorizontal": 0,
                         "titleFontSize": 15,
-                        "titleFontWeight": "text-subtitle-1-font-weight",
+                        "titleFontWeight": "text-heading-1-font-weight",
                         "titleFontFamily": "text-subtitle-1-font-family"
                     }
                 }

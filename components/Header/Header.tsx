@@ -3,7 +3,7 @@ import { View, Image, StyleSheet } from "react-native";
 import { Calendar, ModalSettings } from "../index";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 
-const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="edit-2-outline" />;
+const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings-2-outline" />;
 const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar-outline" />;
 
 export const Header = () => {
@@ -13,22 +13,21 @@ export const Header = () => {
     return (
         <>
             <View style={styles.header}>
-                <View style={styles.logoContainer}>
+                <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                </View>
-
-                <View style={styles.buttonsContainer}>
-                    <Button onPress={() => setModalVisible(!modalVisible)} style={styles.button} appearance="ghost" accessoryLeft={SettingsIcon}>
+                    <Text style={styles.group} category="h6" onPress={() => setModalVisible(!modalVisible)}>
                         ВБАб22о-1
-                    </Button>
+                    </Text>
+                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text>
+                </View>
+                <View style={styles.buttonsContainer}>
+                    <Button onPress={() => setModalVisible(!modalVisible)} style={styles.button} appearance="ghost" accessoryLeft={SettingsIcon} />
                     <Button
                         onPress={() => setCalendarVisible(!calendarVisible)}
                         style={styles.button}
                         appearance="ghost"
                         accessoryLeft={CalendarIcon}
-                    >
-                        28.08.2023-03.09.2023
-                    </Button>
+                    />
                 </View>
             </View>
             <ModalSettings visible={modalVisible} setVisible={setModalVisible} />
@@ -39,29 +38,26 @@ export const Header = () => {
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: "column",
+        flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
         width: "100%",
     },
-    logoContainer: {
-        width: "100%",
-        alignItems: "center",
-        backgroundColor: "#fff",
-        marginBottom: 15,
+    container: {
+        flexDirection: "column",
     },
+    group: { marginBottom: 2 },
     buttonsContainer: {
         flexDirection: "column",
         gap: 10,
-        width: "100%",
     },
     logo: {
         resizeMode: "center",
         height: 40,
-        width: 200,
+        width: 180,
+        marginBottom: 10,
     },
     button: {
-        width: "100%",
+        width: 40,
         height: 40,
     },
     icon: {

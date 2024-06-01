@@ -17,12 +17,12 @@ const data = new Array(8).fill({
 export const ListTimetable = (): React.ReactElement => {
     const renderItemHeader = (headerProps: any, info: ListRenderItemInfo<ListProps>): React.ReactElement => (
         <View {...headerProps} style={styles.padding}>
-            <Text category="s2">{`${info.item.name}`}</Text>
+            <Text>{`${info.item.name}`}</Text>
         </View>
     );
 
     const renderItemFooter = (footerProps: any, info: ListRenderItemInfo<ListProps>): React.ReactElement => (
-        <Text category="p2" style={styles.padding} {...footerProps}>
+        <Text style={styles.padding} {...footerProps}>
             {`${info.item.address}`}
         </Text>
     );
@@ -34,7 +34,7 @@ export const ListTimetable = (): React.ReactElement => {
             header={(headerProps) => renderItemHeader(headerProps, info)}
             footer={(footerProps) => renderItemFooter(footerProps, info)}
         >
-            <Text category="p2">{`${info.item.teacher}`}</Text>
+            <Text>{`${info.item.teacher}`}</Text>
         </Card>
     );
 
@@ -43,7 +43,6 @@ export const ListTimetable = (): React.ReactElement => {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         marginTop: 10,
         backgroundColor: "rgba(0, 0, 0, 0)",
     },

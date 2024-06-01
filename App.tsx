@@ -51,7 +51,7 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
-                    {/* <StatusBar /> */}
+                    <StatusBar translucent backgroundColor="transparent" />
                     <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
                         <Timetable />
                     </SafeAreaView>
@@ -64,7 +64,7 @@ export default () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        paddingTop: StatusBar.currentHeight,
     },
     backgroundImage: {
         flex: 1,
