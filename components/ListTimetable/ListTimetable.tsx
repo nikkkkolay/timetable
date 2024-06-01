@@ -43,7 +43,7 @@ export const ListTimetable = (): React.ReactElement => {
 
 const styles = StyleSheet.create({
     container: {
-        maxHeight: 520,
+        // flex: 1,
         marginTop: 10,
         backgroundColor: "rgba(0, 0, 0, 0)",
     },
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
     },
     contentContainer: {
+        flex: 1,
         paddingHorizontal: 0,
     },
     item: {
