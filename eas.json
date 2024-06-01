@@ -1,20 +1,18 @@
 {
     "build": {
-        "production": {
-            "env": {
-                "EXPO_PUBLIC_API_URL": "http://localhost:8081/"
-            },
+        "preview": {
             "android": {
-                "image": "latest"
-            },
-            "ios": {
+                "buildType": "apk",
                 "image": "latest"
             }
         },
-        "test": {
-            "env": {
-                "EXPO_PUBLIC_API_URL": "http://localhost:8081/"
+        "preview2": {
+            "android": {
+                "gradleCommand": ":app:assembleRelease"
             }
+        },
+        "preview3": {
+            "developmentClient": true
         }
     }
 }
