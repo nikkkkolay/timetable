@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { ModalSettings } from "../index";
+import { Calendar, ModalSettings } from "../index";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 
 const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings-outline" />;
@@ -8,21 +8,30 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [calendarVisible, setCalendarVisible] = React.useState(false);
 
     return (
         <>
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Text category="s1">ВБАб22о-1</Text>
+                    <Text style={styles.group} category="s1">
+                        ВБАб22о-1
+                    </Text>
                     <Text>28.08.2023-03.09.2023</Text>
                 </View>
-                <View>
+                <View style={styles.buttonsContainer}>
                     <Button onPress={() => setModalVisible(!modalVisible)} style={styles.button} appearance="ghost" accessoryLeft={SettingsIcon} />
-                    <Button style={styles.button} appearance="ghost" accessoryLeft={CalendarIcon} disabled />
+                    <Button
+                        onPress={() => setCalendarVisible(!calendarVisible)}
+                        style={styles.button}
+                        appearance="ghost"
+                        accessoryLeft={CalendarIcon}
+                    />
                 </View>
             </View>
             <ModalSettings visible={modalVisible} setVisible={setModalVisible} />
+            {calendarVisible && <Calendar />}
         </>
     );
 };
@@ -35,7 +44,11 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: "column",
-        justifyContent: "space-between",
+    },
+    group: { marginBottom: 5 },
+    buttonsContainer: {
+        flexDirection: "column",
+        gap: 10,
     },
     logo: {
         resizeMode: "center",
@@ -46,7 +59,6 @@ const styles = StyleSheet.create({
     button: {
         width: 38,
         height: 38,
-        marginBottom: 10,
     },
     icon: {
         width: 24,

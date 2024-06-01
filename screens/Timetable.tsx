@@ -1,11 +1,10 @@
-import { Header, Calendar, Container, ListDividers } from "../components";
+import { Header, Calendar, Container, ListTimetable } from "../components";
 
 export const Timetable = () => {
     return (
         <Container>
             <Header />
-            <Calendar />
-            <ListDividers />
+            <ListTimetable />
         </Container>
     );
 };
