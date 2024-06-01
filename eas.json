@@ -1,11 +1,19 @@
 {
     "build": {
         "production": {
+            "env": {
+                "EXPO_PUBLIC_API_URL": "https://api.production.com"
+            },
             "android": {
                 "image": "latest"
             },
             "ios": {
                 "image": "latest"
+            }
+        },
+        "test": {
+            "env": {
+                "EXPO_PUBLIC_API_URL": "https://api.test.com"
             }
         }
     }
