@@ -1,33 +1,39 @@
 {
     "strict": {
-        "text-font-family": "Montserrat",
-        "text-heading-1-font-family": "Montserrat-ExtraBold",
-        "text-heading-2-font-family": "Montserrat-ExtraBold",
-        "text-heading-3-font-family": "Montserrat-ExtraBold",
-        "text-heading-4-font-family": "Montserrat-ExtraBold",
-        "text-heading-5-font-family": "Montserrat-ExtraBold",
-        "text-heading-6-font-family": "Montserrat-ExtraBold",
-        "text-subtitle-1-font-family": "Montserrat-SemiBold",
-        "text-subtitle-2-font-family": "Montserrat-SemiBold",
-        "text-paragraph-1-font-family": "Montserrat-Regular",
-        "text-paragraph-2-font-family": "Montserrat-Regular",
-        "text-caption-1-font-family": "Montserrat-Regular",
+        "text-heading-1-font-family": "Montserrat-SemiBold",
+        "text-heading-2-font-family": "Montserrat-SemiBold",
+        "text-heading-3-font-family": "Montserrat-SemiBold",
+        "text-heading-4-font-family": "Montserrat-SemiBold",
+        "text-heading-5-font-family": "Montserrat-SemiBold",
+        "text-heading-6-font-family": "Montserrat-SemiBold",
+        "text-subtitle-1-font-family": "Montserrat-Medium",
+        "text-subtitle-2-font-family": "Montserrat-Medium",
+        "text-paragraph-1-font-family": "Montserrat-Light",
+        "text-paragraph-2-font-family": "Montserrat-Light",
+        "text-caption-1-font-family": "Montserrat-SemiBold",
         "text-caption-2-font-family": "Montserrat-SemiBold",
-        "text-label-font-family": "Montserrat-ExtraBold"
+        "text-label-font-family": "Montserrat-Medium",
+
+        "text-heading-1-font-weight": 600,
+        "text-heading-2-font-weight": 600,
+        "text-heading-3-font-weight": 600,
+        "text-heading-4-font-weight": 600,
+        "text-heading-5-font-weight": 600,
+        "text-heading-6-font-weight": 600,
+        "text-subtitle-1-font-weight": 500,
+        "text-subtitle-2-font-weight": 500,
+        "text-paragraph-1-font-weight": 300,
+        "text-paragraph-2-font-weight": 300,
+        "text-caption-1-font-weight": 600,
+        "text-caption-2-font-weight": 600,
+        "text-label-font-weight": 500
     },
     "components": {
         "Select": {
             "appearances": {
                 "default": {
                     "mapping": {
-                        "textFontFamily": "Montserrat-Regular"
-                    },
-                    "variantGroups": {
-                        "size": {
-                            "medium": {
-                                "textFontWeight": 400
-                            }
-                        }
+                        "textFontFamily": "Montserrat-Light"
                     }
                 }
             }
@@ -36,56 +42,17 @@
             "appearances": {
                 "default": {
                     "mapping": {
-                        "textFontWeight": 400,
-                        "textFontFamily": "Montserrat-Regular"
-                    }
-                }
-            }
-        },
-        "Tab": {
-            "appearances": {
-                "default": {
-                    "mapping": {
-                        "textColor": "text-secondary-color",
-                        "iconWidth": 24,
-                        "iconHeight": 24,
-                        "iconMarginVertical": 2,
-                        "iconTintColor": "text-secondary-color",
-                        "state": {
-                            "hover": {
-                                "textColor": "text-secondary-color",
-                                "iconTintColor": "text-secondary-color"
-                            },
-                            "selected": {
-                                "textColor": "text-secondary-color",
-                                "iconTintColor": "text-secondary-color"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "TabBar": {
-            "appearances": {
-                "default": {
-                    "mapping": {
-                        "paddingVertical": 0,
-                        "backgroundColor": "color-success-500",
-                        "indicatorHeight": 1,
-                        "indicatorBorderRadius": 0,
-                        "indicatorBackgroundColor": "text-secondary-color"
+                        "textFontFamily": "Montserrat-Light"
                     }
                 }
             }
         },
         "Button": {
             "appearances": {
-                "primary": {
-                    "mapping": {
-                        "textFontFamily": "Montserrat-Regular"
-                    }
-                },
                 "filled": {
+                    "mapping": {
+                        "textFontFamily": "Montserrat-Light"
+                    },
                     "variantGroups": {
                         "size": {
                             "medium": {
@@ -96,7 +63,6 @@
                     }
                 },
                 "ghost": {
-                    "mapping": {},
                     "variantGroups": {
                         "status": {
                             "primary": {
@@ -143,12 +109,13 @@
                         "width": "100%",
                         "borderWidth": 0,
                         "borderColor": "background: rgba(0, 0, 0, 0)",
-                        "titleFontWeight": "400",
-                        "weekdayTextFontWeight": "400",
                         "headerPaddingHorizontal": 0,
                         "headerPaddingVertical": 15,
                         "paddingVertical": 0,
-                        "rowMarginHorizontal": 0
+                        "rowMarginHorizontal": 0,
+                        "titleFontSize": 15,
+                        "titleFontWeight": "text-subtitle-1-font-weight",
+                        "titleFontFamily": "text-subtitle-1-font-family"
                     }
                 }
             }
@@ -157,7 +124,6 @@
             "appearances": {
                 "default": {
                     "mapping": {
-                        "contentTextFontWeight": "400",
                         "state": {
                             "selected": {
                                 "contentBorderColor": "color-success-500",

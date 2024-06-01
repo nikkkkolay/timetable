@@ -10,11 +10,5 @@ const localeDateService = new NativeDateService("ru", {
 export const Calendar = () => {
     const [range, setRange] = useState({});
 
-    return (
-        <RangeCalendar
-            range={range}
-            onSelect={(nextRange) => setRange(nextRange)}
-            dateService={localeDateService}
-        />
-    );
+    return <RangeCalendar range={range} onSelect={(nextRange) => setRange(nextRange)} dateService={localeDateService} />;
 };

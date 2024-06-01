@@ -19,9 +19,10 @@ export default () => {
         async function prepare() {
             try {
                 await Font.loadAsync({
+                    "Montserrat-Light": require("./assets/fonts/Montserrat-Light.ttf"),
                     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+                    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
                     "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
-                    "Montserrat-ExtraBold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
                 });
                 await new Promise((resolve) => setTimeout(resolve, 2000));
             } catch (e) {
