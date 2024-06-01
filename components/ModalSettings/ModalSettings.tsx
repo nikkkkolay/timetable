@@ -19,9 +19,7 @@ export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElemen
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
             <Card disabled={true}>
                 <View style={styles.container}>
-                    <Text style={styles.title} category="h6">
-                        Выбор группы
-                    </Text>
+                    <Text style={styles.title}>Выбор группы</Text>
                     <View style={styles.wrapper}>
                         <SelectSettings />
                         <SelectSettings />
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.3)",
     },
     title: {
+        fontSize: 18,
         marginBottom: 12,
     },
     button: {

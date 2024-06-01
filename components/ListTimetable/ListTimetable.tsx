@@ -19,7 +19,7 @@ const data = new Array(8).fill({
 export const ListTimetable = (): React.ReactElement => {
     const renderItemHeader = (headerProps: any, info: ListRenderItemInfo<ListProps>): React.ReactElement => (
         <View {...headerProps} style={styles.padding}>
-            <Text style={styles.time}>{`${info.item.time}`}</Text>
+            <Text>{`${info.item.time}`}</Text>
         </View>
     );
 
@@ -48,9 +48,6 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 10,
         backgroundColor: "rgba(0, 0, 0, 0)",
-    },
-    time: {
-        fontWeight: "bold",
     },
     padding: {
         paddingVertical: 10,

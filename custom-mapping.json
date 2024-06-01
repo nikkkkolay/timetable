@@ -57,7 +57,9 @@
                         "size": {
                             "medium": {
                                 "paddingHorizontal": 5,
-                                "paddingVertical": 5
+                                "paddingVertical": 5,
+                                "textFontSize": 15,
+                                "textFontWeight": "text-paragraph-1-font-weight"
                             }
                         }
                     }

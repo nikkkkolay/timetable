@@ -8,7 +8,7 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [modalVisible, setModalVisible] = React.useState(false);
-    const [calendarVisible, setCalendarVisible] = React.useState(false);
+    const [calendarVisible, setCalendarVisible] = React.useState(true);
 
     return (
         <>
