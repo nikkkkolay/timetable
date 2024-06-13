@@ -1,13 +1,13 @@
 import { View, StyleSheet, Linking } from "react-native";
 import { Text, Button } from "@ui-kitten/components";
-import { useStore } from "../../store/useStore";
 
-export const Greeting = () => {
-    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
+export const Error = () => {
+    const url = "https://www.mauniver.ru/student/timetable/new/";
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Для начала работы перейдите в настройки и заполните форму</Text>
-            <Button onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>Настройки</Button>
+            <Text style={styles.text}>Сервис временно недоступен. Воспользуйтесь расписанием на сайте университета.</Text>
+            <Button onPress={() => Linking.openURL(url)}>Смотреть на сайте</Button>
         </View>
     );
 };

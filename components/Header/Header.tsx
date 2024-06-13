@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
@@ -8,7 +8,7 @@ const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings
 const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar-outline" />;
 
 export const Header = () => {
-    const [calendarVisible, setCalendarVisible] = React.useState(false);
+    const [calendarVisible, setCalendarVisible] = useState(false);
     const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
 
     return (
@@ -16,10 +16,10 @@ export const Header = () => {
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
+                    {/* <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
                         ВБАб22о-1
                     </Text>
-                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text>
+                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text> */}
                 </View>
                 <View style={styles.buttonsContainer}>
                     <Button

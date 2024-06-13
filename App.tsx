@@ -11,9 +11,11 @@ import { default as customMapping } from "./custom-mapping.json";
 import * as Font from "expo-font";
 
 import { Timetable } from "./screens/Timetable";
+import { useStore } from "./store/useStore";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
+    const { checkUpdateDate } = useStore((state) => state);
 
     useEffect(() => {
         async function prepare() {
@@ -34,6 +36,7 @@ export default () => {
         }
 
         prepare();
+        checkUpdateDate();
     }, []);
 
     const onLayoutRootView = useCallback(async () => {

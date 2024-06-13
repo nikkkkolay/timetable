@@ -1,14 +1,21 @@
-import React from "react";
+import React, { ReactElement, useState } from "react";
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
+import { ChoiceTypes } from "../../store/useStore.types";
 
-export const SelectSettings = (): React.ReactElement => {
-    const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+interface IProps {
+    placeholder: string;
+    disabled?: boolean;
+    options: [] | [ChoiceTypes];
+}
+
+export const SelectSettings = ({ placeholder, disabled, options }: IProps): ReactElement => {
+    const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>();
+
+    console.log(options);
 
     return (
-        <Select selectedIndex={selectedIndex} onSelect={(index) => setSelectedIndex(index)}>
-            <SelectItem title="Option 1" />
-            <SelectItem title="Option 2" />
-            <SelectItem title="Option 3" />
+        <Select placeholder={placeholder} disabled={disabled} selectedIndex={selectedIndex} onSelect={(index) => setSelectedIndex(index)}>
+            {options && options.map((option) => <SelectItem key={option.id} title={option.name} />)}
         </Select>
     );
 };

@@ -1,27 +1,31 @@
-import React from "react";
+import React, { ReactElement, useEffect } from "react";
 import { StyleSheet, View, ImageProps } from "react-native";
 import { Button, Card, Modal, Text, Spinner } from "@ui-kitten/components";
 import { SelectSettings } from "../SelectSettings/SelectSettings";
 import { useStore } from "../../store/useStore";
 
-const LoadingIndicator = (props: ImageProps): React.ReactElement => (
+const LoadingIndicator = (props: ImageProps): ReactElement => (
     <View style={[props.style, styles.indicator]}>
         <Spinner size="small" />
     </View>
 );
 
-export const ModalSettings = (): React.ReactElement => {
-    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
+export const ModalSettings = (): ReactElement => {
+    const { modalSettingsIsActive, setModalSettingsIsActive, setFaculties, faculties } = useStore((state) => state);
+
+    useEffect(() => {
+        setFaculties();
+    }, []);
 
     return (
         <Modal visible={modalSettingsIsActive} backdropStyle={styles.backdrop} onBackdropPress={() => setModalSettingsIsActive(false)}>
             <Card disabled={true}>
                 <View style={styles.container}>
-                    <Text style={styles.title}>Выбор группы</Text>
+                    <Text style={styles.title}>Настройки</Text>
                     <View style={styles.wrapper}>
-                        <SelectSettings />
-                        <SelectSettings />
-                        <SelectSettings />
+                        <SelectSettings placeholder={"Выберите институт"} options={faculties} />
+                        {/* <SelectSettings placeholder={"Выберите курс"} disabled />
+                        <SelectSettings placeholder={"Выберите группу"} disabled /> */}
                         <Button
                             style={styles.button}
                             onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}

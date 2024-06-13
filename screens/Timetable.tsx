@@ -1,11 +1,14 @@
-import { Header, Container, ListTimetable, Greeting } from "../components";
+import { Header, Container, ListTimetable, Greeting, Error } from "../components";
+import { useStore } from "../store/useStore";
 
 export const Timetable = () => {
+    const { hasErrors } = useStore((state) => state);
+
     return (
         <Container>
             <Header />
             {/* <ListTimetable /> */}
-            <Greeting />
+            {hasErrors ? <Error /> : <Greeting />}
         </Container>
     );
 };
