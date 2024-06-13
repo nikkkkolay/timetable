@@ -1,27 +1,33 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { Calendar, ModalSettings } from "../index";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
+import { Calendar, ModalSettings } from "../index";
+import { useStore } from "../../store/useStore";
 
 const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings-2-outline" />;
 const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar-outline" />;
 
 export const Header = () => {
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [calendarVisible, setCalendarVisible] = React.useState(true);
+    const [calendarVisible, setCalendarVisible] = React.useState(false);
+    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
 
     return (
         <>
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Text style={styles.group} category="h6" onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
                         ВБАб22о-1
                     </Text>
                     <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <Button onPress={() => setModalVisible(!modalVisible)} style={styles.button} appearance="ghost" accessoryLeft={SettingsIcon} />
+                    <Button
+                        onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
+                        style={styles.button}
+                        appearance="ghost"
+                        accessoryLeft={SettingsIcon}
+                    />
                     <Button
                         onPress={() => setCalendarVisible(!calendarVisible)}
                         style={styles.button}
@@ -30,7 +36,7 @@ export const Header = () => {
                     />
                 </View>
             </View>
-            <ModalSettings visible={modalVisible} setVisible={setModalVisible} />
+            <ModalSettings />
             {calendarVisible && <Calendar />}
         </>
     );

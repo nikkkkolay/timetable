@@ -1,11 +1,14 @@
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "@ui-kitten/components";
+import { useStore } from "../../store/useStore";
 
 export const Greeting = () => {
+    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Для начала работы перейдите в настройки и заполните форму</Text>
-            <Button>Настройки</Button>
+            <Button onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>Настройки</Button>
         </View>
     );
 };

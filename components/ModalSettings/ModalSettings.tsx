@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, ImageProps } from "react-native";
 import { Button, Card, Modal, Text, Spinner } from "@ui-kitten/components";
 import { SelectSettings } from "../SelectSettings/SelectSettings";
+import { useStore } from "../../store/useStore";
 
 const LoadingIndicator = (props: ImageProps): React.ReactElement => (
     <View style={[props.style, styles.indicator]}>
@@ -9,14 +10,11 @@ const LoadingIndicator = (props: ImageProps): React.ReactElement => (
     </View>
 );
 
-interface Props {
-    visible: boolean;
-    setVisible: (state: boolean) => void;
-}
+export const ModalSettings = (): React.ReactElement => {
+    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
 
-export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElement => {
     return (
-        <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
+        <Modal visible={modalSettingsIsActive} backdropStyle={styles.backdrop} onBackdropPress={() => setModalSettingsIsActive(false)}>
             <Card disabled={true}>
                 <View style={styles.container}>
                     <Text style={styles.title}>Выбор группы</Text>
@@ -26,7 +24,7 @@ export const ModalSettings = ({ visible, setVisible }: Props): React.ReactElemen
                         <SelectSettings />
                         <Button
                             style={styles.button}
-                            onPress={() => setVisible(!visible)}
+                            onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
                             // accessoryLeft={LoadingIndicator}
                         >
                             Сохранить
