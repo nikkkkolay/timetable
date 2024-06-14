@@ -9,7 +9,7 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [calendarVisible, setCalendarVisible] = useState(false);
-    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
+    const { modalSettingsIsActive, hasErrors, setModalSettingsIsActive } = useStore((state) => state);
 
     return (
         <>
@@ -27,12 +27,14 @@ export const Header = () => {
                         style={styles.button}
                         appearance="ghost"
                         accessoryLeft={SettingsIcon}
+                        disabled={hasErrors}
                     />
                     <Button
                         onPress={() => setCalendarVisible(!calendarVisible)}
                         style={styles.button}
                         appearance="ghost"
                         accessoryLeft={CalendarIcon}
+                        disabled={hasErrors}
                     />
                 </View>
             </View>

@@ -25,7 +25,7 @@ export const useStore = create<IStore>((set) => ({
         }
     },
 
-    setFaculties: async () => {
+    getFaculties: async () => {
         const response = await api.get(`/faculties`);
         set({
             faculties: response.data.map((fac: { fac_id: number; facultee: string }) => ({
@@ -35,12 +35,17 @@ export const useStore = create<IStore>((set) => ({
         });
     },
 
-    setCourses: async () => {
+    getCourses: async () => {
         const response = await api.get(`/courses`);
-        set(() => ({ courses: response.data }));
+        set({
+            courses: response.data.map((course: { course_id: number; course: string }) => ({
+                id: course.course_id,
+                name: course.course,
+            })),
+        });
     },
 
-    setGroups: async (fac_id: number, course_id: number) => {
+    getGroups: async (fac_id: number, course_id: number) => {
         const response = await api.get(`/groups/${fac_id}/${course_id}`);
         set(() => ({ groups: response.data }));
     },

@@ -12,8 +12,8 @@ export interface IStore {
     courses: [ChoiceTypes] | [];
     groups: [ChoiceTypes] | [];
     checkUpdateDate: () => void;
-    setFaculties: () => void;
-    setCourses: () => void;
-    setGroups: (fac_id: number, course_id: number) => void;
+    getFaculties: () => void;
+    getCourses: () => void;
+    getGroups: (fac_id: number, course_id: number) => void;
     setModalSettingsIsActive: (state: boolean) => void;
 }
