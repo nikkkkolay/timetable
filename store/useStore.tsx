@@ -47,6 +47,11 @@ export const useStore = create<IStore>((set) => ({
 
     getGroups: async (fac_id: number, course_id: number) => {
         const response = await api.get(`/groups/${fac_id}/${course_id}`);
-        set(() => ({ groups: response.data }));
+        set({
+            groups: response.data.map((group: { group_id: number; group: string }) => ({
+                id: group.group_id,
+                name: group.group,
+            })),
+        });
     },
 }));

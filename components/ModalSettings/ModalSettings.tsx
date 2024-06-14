@@ -4,6 +4,11 @@ import { Button, Card, Modal, Text, Spinner, Select, IndexPath, SelectItem } fro
 import { ChoiceTypes } from "../../store/useStore.types";
 import { useStore } from "../../store/useStore";
 
+interface ISettings {
+    fac_id: number;
+    course_id: number;
+}
+
 const LoadingIndicator = (props: ImageProps): ReactElement => (
     <View style={[props.style, styles.indicator]}>
         <Spinner size="small" />
@@ -11,37 +16,44 @@ const LoadingIndicator = (props: ImageProps): ReactElement => (
 );
 
 export const ModalSettings = (): ReactElement => {
-    const { modalSettingsIsActive, setModalSettingsIsActive, getFaculties, getCourses, faculties, courses } = useStore((state) => state);
+    const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, faculties, courses, groups, modalSettingsIsActive, hasErrors } = useStore(
+        (state) => state
+    );
 
     const [selectedIndexFaculty, setSelectedIndexFaculty] = useState<IndexPath>();
     const [selectedIndexCourse, setSelectedIndexCourse] = useState<IndexPath>();
-    const [selectedIndexGroup, setSselectedIndexGroup] = useState<IndexPath>();
+    const [selectedIndexGroup, setSelectedIndexGroup] = useState<IndexPath>();
 
-    const [selectedFaculty, setSelecteFaculty] = useState<ChoiceTypes>();
-    const [selectedCourse, setSelecteCourse] = useState<ChoiceTypes>();
+    const [selectedSettings, setSelectedSettings] = useState<ISettings | any>({});
+
+    const settingsState = Object.keys(selectedSettings).length;
+
+    const saveGroup = async () => {
+        setModalSettingsIsActive(!modalSettingsIsActive);
+    };
 
     useEffect(() => {
-        getFaculties();
-        getCourses();
-    }, []);
+        if (modalSettingsIsActive && !settingsState) {
+            getFaculties();
+            getCourses();
+        }
+    }, [modalSettingsIsActive]);
 
     useEffect(() => {
         if (selectedIndexFaculty) {
-            setSelecteFaculty({
-                name: faculties[selectedIndexFaculty.row].name,
-                id: faculties[selectedIndexFaculty.row].id,
-            });
+            setSelectedSettings((prev: ISettings) => ({ ...prev, fac_id: faculties[selectedIndexFaculty.row].id }));
         }
 
         if (selectedIndexCourse) {
-            setSelecteCourse({
-                name: courses[selectedIndexCourse.row].name,
-                id: courses[selectedIndexCourse.row].id,
-            });
+            setSelectedSettings((prev: ISettings) => ({ ...prev, course_id: courses[selectedIndexCourse.row].id }));
         }
     }, [selectedIndexFaculty, selectedIndexCourse]);
 
-    console.log(selectedCourse, selectedFaculty);
+    useEffect(() => {
+        if (selectedSettings.fac_id && selectedSettings.course_id) {
+            getGroups(selectedSettings.fac_id, selectedSettings.course_id);
+        }
+    }, [selectedSettings]);
 
     return (
         <Modal visible={modalSettingsIsActive} backdropStyle={styles.backdrop} onBackdropPress={() => setModalSettingsIsActive(false)}>
@@ -55,24 +67,30 @@ export const ModalSettings = (): ReactElement => {
                             selectedIndex={selectedIndexFaculty}
                             onSelect={(index: any) => setSelectedIndexFaculty(index)}
                         >
-                            {faculties.map((faculty: ChoiceTypes) => (
-                                <SelectItem title={faculty.name} key={faculty.id} />
-                            ))}
+                            {faculties && faculties.map((faculty: ChoiceTypes) => <SelectItem title={faculty.name} key={faculty.id} />)}
                         </Select>
                         <Select
                             placeholder={"Выберите курс"}
                             value={selectedIndexCourse && courses[selectedIndexCourse.row].name}
                             selectedIndex={selectedIndexCourse}
                             onSelect={(index: any) => setSelectedIndexCourse(index)}
-                            disabled={!selectedFaculty}
+                            disabled={!settingsState}
                         >
-                            {courses.map((course: ChoiceTypes) => (
-                                <SelectItem title={course.name} key={course.id} />
-                            ))}
+                            {courses && courses.map((course: ChoiceTypes) => <SelectItem title={course.name} key={course.id} />)}
                         </Select>
+                        <Select
+                            placeholder={"Выберите группу"}
+                            value={selectedIndexGroup && groups[selectedIndexGroup.row].name}
+                            selectedIndex={selectedIndexGroup}
+                            onSelect={(index: any) => setSelectedIndexGroup(index)}
+                            disabled={!selectedSettings.course_id}
+                        >
+                            {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.id} />)}
+                        </Select>
+
                         <Button
                             style={styles.button}
-                            onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
+                            onPress={() => saveGroup}
                             // accessoryLeft={LoadingIndicator}
                         >
                             Сохранить
