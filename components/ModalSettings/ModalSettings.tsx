@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { StyleSheet, View, ImageProps } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, Card, Modal, Text, Spinner, Select, IndexPath, SelectItem } from "@ui-kitten/components";
 import { ChoiceTypes } from "../../store/useStore.types";
 import { useStore } from "../../store/useStore";
@@ -29,7 +30,19 @@ export const ModalSettings = (): ReactElement => {
     const settingsState = Object.keys(selectedSettings).length;
 
     const saveGroup = async () => {
-        setModalSettingsIsActive(!modalSettingsIsActive);
+        if (selectedIndexGroup) {
+            const group = {
+                group_id: groups[selectedIndexGroup.row].id,
+                group: groups[selectedIndexGroup.row].name,
+            };
+
+            await AsyncStorage.setItem("group", JSON.stringify(group));
+
+            const value = await AsyncStorage.getItem("group");
+            console.log(value);
+
+            setModalSettingsIsActive(!modalSettingsIsActive);
+        }
     };
 
     useEffect(() => {
@@ -90,7 +103,7 @@ export const ModalSettings = (): ReactElement => {
 
                         <Button
                             style={styles.button}
-                            onPress={() => saveGroup}
+                            onPress={() => saveGroup()}
                             // accessoryLeft={LoadingIndicator}
                         >
                             Сохранить
