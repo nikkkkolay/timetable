@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
 import { useStore } from "../../store/useStore";
@@ -9,17 +10,18 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [calendarVisible, setCalendarVisible] = useState(false);
-    const { modalSettingsIsActive, hasErrors, setModalSettingsIsActive } = useStore((state) => state);
+    const { modalSettingsIsActive, hasErrors, group, setModalSettingsIsActive } = useStore((state) => state);
+    const hasGroup = Object.keys(group).length !== 0;
 
     return (
         <>
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    {/* <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
-                        ВБАб22о-1
+                    <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
+                        {hasGroup && group.name}
                     </Text>
-                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text> */}
+                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
                     <Button
@@ -29,13 +31,15 @@ export const Header = () => {
                         accessoryLeft={SettingsIcon}
                         disabled={hasErrors}
                     />
-                    <Button
-                        onPress={() => setCalendarVisible(!calendarVisible)}
-                        style={styles.button}
-                        appearance="ghost"
-                        accessoryLeft={CalendarIcon}
-                        disabled={hasErrors}
-                    />
+                    {hasGroup && (
+                        <Button
+                            onPress={() => setCalendarVisible(!calendarVisible)}
+                            style={styles.button}
+                            appearance="ghost"
+                            accessoryLeft={CalendarIcon}
+                            disabled={hasErrors}
+                        />
+                    )}
                 </View>
             </View>
             <ModalSettings />

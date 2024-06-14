@@ -17,7 +17,7 @@ const LoadingIndicator = (props: ImageProps): ReactElement => (
 );
 
 export const ModalSettings = (): ReactElement => {
-    const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, faculties, courses, groups, modalSettingsIsActive, hasErrors } = useStore(
+    const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, setGroup, faculties, courses, groups, modalSettingsIsActive } = useStore(
         (state) => state
     );
 
@@ -33,14 +33,11 @@ export const ModalSettings = (): ReactElement => {
         if (selectedIndexGroup) {
             const group = {
                 group_id: groups[selectedIndexGroup.row].id,
-                group: groups[selectedIndexGroup.row].name,
+                name: groups[selectedIndexGroup.row].name,
             };
-
             await AsyncStorage.setItem("group", JSON.stringify(group));
-
             const value = await AsyncStorage.getItem("group");
-            console.log(value);
-
+            if (value !== null) setGroup(JSON.parse(value));
             setModalSettingsIsActive(!modalSettingsIsActive);
         }
     };
@@ -87,7 +84,7 @@ export const ModalSettings = (): ReactElement => {
                             value={selectedIndexCourse && courses[selectedIndexCourse.row].name}
                             selectedIndex={selectedIndexCourse}
                             onSelect={(index: any) => setSelectedIndexCourse(index)}
-                            disabled={!settingsState}
+                            disabled={!selectedIndexFaculty}
                         >
                             {courses && courses.map((course: ChoiceTypes) => <SelectItem title={course.name} key={course.id} />)}
                         </Select>
@@ -96,7 +93,7 @@ export const ModalSettings = (): ReactElement => {
                             value={selectedIndexGroup && groups[selectedIndexGroup.row].name}
                             selectedIndex={selectedIndexGroup}
                             onSelect={(index: any) => setSelectedIndexGroup(index)}
-                            disabled={!selectedSettings.course_id}
+                            disabled={!selectedIndexCourse}
                         >
                             {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.id} />)}
                         </Select>
@@ -104,6 +101,7 @@ export const ModalSettings = (): ReactElement => {
                         <Button
                             style={styles.button}
                             onPress={() => saveGroup()}
+                            disabled={!selectedIndexGroup}
                             // accessoryLeft={LoadingIndicator}
                         >
                             Сохранить

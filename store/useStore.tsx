@@ -1,6 +1,6 @@
 import { api } from "../http";
 import { create } from "zustand";
-import { IStore } from "./useStore.types";
+import { IStore, GroupTypes } from "./useStore.types";
 
 export const useStore = create<IStore>((set) => ({
     modalSettingsIsActive: false,
@@ -10,6 +10,7 @@ export const useStore = create<IStore>((set) => ({
     faculties: [],
     courses: [],
     groups: [],
+    group: {},
 
     setModalSettingsIsActive: (state: boolean) => {
         set({ modalSettingsIsActive: state });
@@ -53,5 +54,9 @@ export const useStore = create<IStore>((set) => ({
                 name: group.group,
             })),
         });
+    },
+
+    setGroup: (group: GroupTypes) => {
+        set({ group: group });
     },
 }));
