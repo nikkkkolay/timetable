@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { StyleSheet, View, ImageProps } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button, Card, Modal, Text, Spinner, Select, IndexPath, SelectItem } from "@ui-kitten/components";
+import { Button, Card, Modal, Text, Select, IndexPath, SelectItem } from "@ui-kitten/components";
 import { ChoiceTypes } from "../../store/useStore.types";
 import { useStore } from "../../store/useStore";
 
@@ -9,12 +9,6 @@ interface ISettings {
     fac_id: number;
     course_id: number;
 }
-
-const LoadingIndicator = (props: ImageProps): ReactElement => (
-    <View style={[props.style, styles.indicator]}>
-        <Spinner size="small" />
-    </View>
-);
 
 export const ModalSettings = (): ReactElement => {
     const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, setGroup, faculties, courses, groups, modalSettingsIsActive } = useStore(
@@ -34,6 +28,7 @@ export const ModalSettings = (): ReactElement => {
             const group = {
                 group_id: groups[selectedIndexGroup.row].id,
                 name: groups[selectedIndexGroup.row].name,
+                specialty: groups[selectedIndexGroup.row].specialty,
             };
             await AsyncStorage.setItem("group", JSON.stringify(group));
             const value = await AsyncStorage.getItem("group");
@@ -98,12 +93,7 @@ export const ModalSettings = (): ReactElement => {
                             {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.id} />)}
                         </Select>
 
-                        <Button
-                            style={styles.button}
-                            onPress={() => saveGroup()}
-                            disabled={!selectedIndexGroup}
-                            // accessoryLeft={LoadingIndicator}
-                        >
+                        <Button style={styles.button} onPress={() => saveGroup()} disabled={!selectedIndexGroup}>
                             Сохранить
                         </Button>
                     </View>

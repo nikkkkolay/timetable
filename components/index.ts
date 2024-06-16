@@ -4,4 +4,6 @@ export { Header } from "./Header/Header";
 export { ModalSettings } from "./ModalSettings/ModalSettings";
 export { ListTimetable } from "./ListTimetable/ListTimetable";
 export { Greeting } from "./Greeting/Greeting";
+export { Timetable } from "./Timetable/Timetable";
+export { EmptyTimetable } from "./EmptyTimetable/EmptyTimetable";
 export { Error } from "./Error/Error";

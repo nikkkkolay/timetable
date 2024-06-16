@@ -1,8 +1,19 @@
 import { View, StyleSheet, Linking } from "react-native";
-import { Text, Button } from "@ui-kitten/components";
+import { Text, Button, Spinner } from "@ui-kitten/components";
+import { useStore } from "../../store/useStore";
 
 export const Error = () => {
+    const { loading } = useStore((state) => state);
+
     const url = "https://www.mauniver.ru/student/timetable/new/";
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <Spinner size="giant" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>

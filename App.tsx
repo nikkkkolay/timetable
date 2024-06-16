@@ -10,7 +10,7 @@ import { default as theme } from "./custom-theme.json";
 import { default as customMapping } from "./custom-mapping.json";
 import * as Font from "expo-font";
 
-import { Timetable } from "./screens/Timetable";
+import { TimetableScreen } from "./screens/TimetableScreen";
 import { useStore } from "./store/useStore";
 
 export default () => {
@@ -56,7 +56,7 @@ export default () => {
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
                     <StatusBar barStyle={"dark-content"} translucent backgroundColor="transparent" />
                     <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
-                        <Timetable />
+                        <TimetableScreen />
                     </SafeAreaView>
                 </ImageBackground>
             </ApplicationProvider>

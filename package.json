@@ -12,6 +12,7 @@
     "@babel/runtime": "^7.24.7",
     "@eva-design/eva": "^2.2.0",
     "@expo/metro-runtime": "~3.2.1",
+    "@formkit/tempo": "^0.1.1",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",

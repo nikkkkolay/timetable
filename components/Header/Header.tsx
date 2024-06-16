@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Icon, Text, Button, IconElement } from "@ui-kitten/components";
+import { Icon, Text, Button, IconElement, Tooltip } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
 import { useStore } from "../../store/useStore";
 
@@ -9,31 +8,44 @@ const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings
 const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar-outline" />;
 
 export const Header = () => {
-    const [calendarVisible, setCalendarVisible] = useState(false);
-    const { modalSettingsIsActive, hasErrors, group, setModalSettingsIsActive } = useStore((state) => state);
-    const hasGroup = Object.keys(group).length !== 0;
+    const [visibleTooltip, setVisibleTooltip] = useState(false);
+    const { modalSettingsIsActive, calendarIsActive, hasErrors, group, setModalSettingsIsActive, setCalendarIsActive } = useStore((state) => state);
+    const hasGroup = group.group_id !== 0;
+
+    const specialtyToggle = (): React.ReactElement => (
+        <Text style={styles.specialty} numberOfLines={2} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
+            {group.specialty}
+        </Text>
+    );
 
     return (
         <>
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Text style={styles.group} category="h6" onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}>
-                        {hasGroup && group.name}
-                    </Text>
-                    <Text onPress={() => setCalendarVisible(!calendarVisible)}>28.08.2023-03.09.2023</Text>
+                    <Text category="h6">{group.name}</Text>
+                    <Tooltip
+                        style={styles.tooltip}
+                        anchor={specialtyToggle}
+                        visible={visibleTooltip}
+                        onBackdropPress={() => setVisibleTooltip(false)}
+                    >
+                        {group.specialty}
+                    </Tooltip>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <Button
-                        onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
-                        style={styles.button}
-                        appearance="ghost"
-                        accessoryLeft={SettingsIcon}
-                        disabled={hasErrors}
-                    />
                     {hasGroup && (
                         <Button
-                            onPress={() => setCalendarVisible(!calendarVisible)}
+                            onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
+                            style={styles.button}
+                            appearance="ghost"
+                            accessoryLeft={SettingsIcon}
+                            disabled={hasErrors}
+                        />
+                    )}
+                    {hasGroup && (
+                        <Button
+                            onPress={() => setCalendarIsActive(!calendarIsActive)}
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={CalendarIcon}
@@ -43,7 +55,7 @@ export const Header = () => {
                 </View>
             </View>
             <ModalSettings />
-            {calendarVisible && <Calendar />}
+            {calendarIsActive && <Calendar />}
         </>
     );
 };
@@ -52,12 +64,13 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
+        gap: 10,
         width: "100%",
     },
     container: {
         flexDirection: "column",
+        flex: 1,
     },
-    group: { marginBottom: 2 },
     buttonsContainer: {
         flexDirection: "column",
         gap: 10,
@@ -65,8 +78,16 @@ const styles = StyleSheet.create({
     logo: {
         resizeMode: "center",
         height: 40,
-        width: 180,
-        marginBottom: 10,
+        width: 40,
+        marginBottom: 5,
+    },
+    specialty: {
+        marginTop: 2,
+        flex: 1,
+        flexWrap: "wrap",
+    },
+    tooltip: {
+        maxWidth: 300,
     },
     button: {
         width: 40,

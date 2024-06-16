@@ -1,9 +1,18 @@
-import { View, StyleSheet, Linking } from "react-native";
-import { Text, Button } from "@ui-kitten/components";
+import { View, StyleSheet } from "react-native";
+import { Text, Button, Spinner } from "@ui-kitten/components";
 import { useStore } from "../../store/useStore";
 
 export const Greeting = () => {
-    const { modalSettingsIsActive, setModalSettingsIsActive } = useStore((state) => state);
+    const { modalSettingsIsActive, loading, setModalSettingsIsActive } = useStore((state) => state);
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <Spinner size="giant" />
+            </View>
+        );
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Для начала работы перейдите в настройки и заполните форму</Text>

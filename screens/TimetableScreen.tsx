@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Header, Container, ListTimetable, Greeting, Error } from "../components";
+import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 
-export const Timetable = () => {
-    const { hasErrors, setGroup, group } = useStore((state) => state);
-    const hasGroup = Object.keys(group).length !== 0;
+export const TimetableScreen = () => {
+    const { hasErrors, group, setGroup } = useStore((state) => state);
+    const hasGroup = group.group_id !== 0;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         async function getGroup() {
             const value = await AsyncStorage.getItem("group");
             if (value !== null) setGroup(JSON.parse(value));
@@ -18,7 +18,7 @@ export const Timetable = () => {
     return (
         <Container>
             <Header />
-            {!hasErrors && hasGroup && <ListTimetable />}
+            {!hasErrors && hasGroup && <Timetable />}
             {!hasErrors && !hasGroup && <Greeting />}
             {hasErrors && <Error />}
         </Container>
