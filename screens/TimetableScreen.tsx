@@ -18,9 +18,10 @@ export const TimetableScreen = () => {
     return (
         <Container>
             <Header />
-            {!hasErrors && hasGroup && <Timetable />}
-            {!hasErrors && !hasGroup && <Greeting />}
-            {hasErrors && <Error />}
+            {/* {!hasErrors && hasGroup && <Timetable />} */}
+            {/* {!hasErrors && !hasGroup && <Greeting />} */}
+            {/* {hasErrors && <Error />} */}
+            <Greeting />
         </Container>
     );
 };

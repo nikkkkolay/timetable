@@ -15,7 +15,7 @@ import { useStore } from "./store/useStore";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { checkUpdateDate } = useStore((state) => state);
+    const { checkUpdateDate, modalSettingsIsActive } = useStore((state) => state);
 
     useEffect(() => {
         async function prepare() {
@@ -54,7 +54,7 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
-                    <StatusBar barStyle={"dark-content"} translucent backgroundColor="transparent" />
+                    <StatusBar barStyle={"dark-content"} translucent backgroundColor={modalSettingsIsActive ? "rgba(0,0,0,0.3)" : "transparent"} />
                     <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
                         <TimetableScreen />
                     </SafeAreaView>
