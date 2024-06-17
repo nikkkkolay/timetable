@@ -318,7 +318,7 @@
                         "borderWidth": 0,
                         "borderColor": "background: rgba(0, 0, 0, 0)",
                         "headerPaddingHorizontal": 0,
-                        "headerPaddingVertical": 15,
+                        "headerPaddingVertical": 10,
                         "paddingVertical": 0,
                         "rowMarginHorizontal": 0,
                         "titleFontSize": 15,

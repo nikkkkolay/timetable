@@ -52,6 +52,9 @@ export const ModalSettings = (): ReactElement => {
         if (selectedIndexCourse) {
             setSelectedSettings((prev: ISettings) => ({ ...prev, course_id: courses[selectedIndexCourse.row].id }));
         }
+        // if (selectedIndexGroup) {
+        //     setSelectedIndexGroup(new IndexPath(0));
+        // }
     }, [selectedIndexFaculty, selectedIndexCourse]);
 
     useEffect(() => {

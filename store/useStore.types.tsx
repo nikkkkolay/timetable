@@ -14,8 +14,10 @@ export type ScheduleTypes = {
     id: number;
     pair_date: string;
     pair: string;
-    lesson: string;
+    pair_type: string;
     room: string;
+    teacher: string;
+    disciplines: string;
 };
 
 export interface IStore {

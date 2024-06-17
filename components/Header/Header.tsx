@@ -12,9 +12,9 @@ export const Header = () => {
     const { modalSettingsIsActive, calendarIsActive, hasErrors, group, setModalSettingsIsActive, setCalendarIsActive } = useStore((state) => state);
     const hasGroup = group.group_id !== 0;
 
-    const specialtyToggle = (): React.ReactElement => (
-        <Text style={styles.specialty} numberOfLines={2} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
-            {group.specialty}
+    const nameToggle = (): React.ReactElement => (
+        <Text category="h6" style={styles.name} numberOfLines={2} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
+            {group.name}
         </Text>
     );
 
@@ -23,13 +23,7 @@ export const Header = () => {
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Text category="h6">{group.name}</Text>
-                    <Tooltip
-                        style={styles.tooltip}
-                        anchor={specialtyToggle}
-                        visible={visibleTooltip}
-                        onBackdropPress={() => setVisibleTooltip(false)}
-                    >
+                    <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
                         {group.specialty}
                     </Tooltip>
                 </View>
@@ -68,23 +62,21 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     container: {
-        flexDirection: "column",
+        flexDirection: "row",
+        alignItems: "flex-end",
         flex: 1,
     },
     buttonsContainer: {
-        flexDirection: "column",
+        flexDirection: "row",
         gap: 10,
     },
     logo: {
         resizeMode: "center",
         height: 40,
         width: 40,
-        marginBottom: 5,
     },
-    specialty: {
-        marginTop: 2,
-        flex: 1,
-        flexWrap: "wrap",
+    name: {
+        marginBottom: 1,
     },
     tooltip: {
         maxWidth: 300,
