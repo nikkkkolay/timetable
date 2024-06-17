@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement, Tooltip } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
@@ -12,7 +12,7 @@ export const Header = () => {
     const { modalSettingsIsActive, calendarIsActive, hasErrors, group, setModalSettingsIsActive, setCalendarIsActive } = useStore((state) => state);
     const hasGroup = group.group_id !== 0;
 
-    const nameToggle = (): React.ReactElement => (
+    const nameToggle = (): ReactElement => (
         <Text category="h6" style={styles.name} numberOfLines={2} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
             {group.name}
         </Text>

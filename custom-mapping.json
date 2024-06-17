@@ -114,8 +114,8 @@
                                         "backgroundColor": "color-primary-500"
                                     },
                                     "hover": {
-                                        "borderColor": "color-primary-hover-border",
-                                        "backgroundColor": "color-primary-hover"
+                                        "borderColor": "color-primary-default-border",
+                                        "backgroundColor": "color-primary-default"
                                     },
                                     "active": {
                                         "borderColor": "color-primary-600",
@@ -318,10 +318,12 @@
                         "borderWidth": 0,
                         "borderColor": "background: rgba(0, 0, 0, 0)",
                         "headerPaddingHorizontal": 0,
-                        "headerPaddingVertical": 10,
+                        "headerPaddingVertical": 15,
                         "paddingVertical": 0,
                         "rowMarginHorizontal": 0,
                         "titleFontSize": 15,
+                        "iconWidth": 26,
+                        "iconHeight": 26,
                         "titleFontWeight": "text-heading-1-font-weight",
                         "titleFontFamily": "text-subtitle-1-font-family"
                     }
