@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, Card, Modal, Text, Select, IndexPath, SelectItem } from "@ui-kitten/components";
@@ -14,6 +14,8 @@ export const ModalSettings = (): ReactElement => {
     const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, setGroup, faculties, courses, groups, modalSettingsIsActive } = useStore(
         (state) => state
     );
+
+    const groupSelect = useRef<any>();
 
     const [selectedIndexFaculty, setSelectedIndexFaculty] = useState<IndexPath>();
     const [selectedIndexCourse, setSelectedIndexCourse] = useState<IndexPath>();
@@ -52,9 +54,9 @@ export const ModalSettings = (): ReactElement => {
         if (selectedIndexCourse) {
             setSelectedSettings((prev: ISettings) => ({ ...prev, course_id: courses[selectedIndexCourse.row].id }));
         }
-        // if (selectedIndexGroup) {
-        //     setSelectedIndexGroup(new IndexPath(0));
-        // }
+        if (selectedIndexGroup) {
+            groupSelect.current?.clear();
+        }
     }, [selectedIndexFaculty, selectedIndexCourse]);
 
     useEffect(() => {
@@ -92,6 +94,7 @@ export const ModalSettings = (): ReactElement => {
                             selectedIndex={selectedIndexGroup}
                             onSelect={(index: any) => setSelectedIndexGroup(index)}
                             disabled={!selectedIndexCourse}
+                            ref={groupSelect}
                         >
                             {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.id} />)}
                         </Select>
