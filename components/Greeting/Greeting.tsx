@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         gap: 15,
         flex: 1,
         backgroundColor: "rgba(0, 0, 0, 0)",
-        paddingBottom: 120,
+        paddingBottom: 110,
     },
     text: {
         fontSize: 18,

@@ -18,17 +18,17 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
                 <View style={styles.accent}></View>
             )}
             <View style={styles.padding}>
-                <Text>{info.item.pair}</Text>
+                <Text>{`${info.item.pair} (${info.item.pair_type})`}</Text>
             </View>
         </>
     );
 
-    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.padding}>{`${info.item.room}`}</Text>;
+    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.padding}>{info.item.room}</Text>;
 
     const renderItem = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <Card style={styles.item} status="basic" header={() => renderItemHeader(info)} footer={() => renderItemFooter(info)}>
-            <Text style={styles.disciplines}>{`${info.item.disciplines} (${info.item.pair_type})`}</Text>
-            <Text>{info.item.teacher}</Text>
+            <Text style={styles.disciplines}>{info.item.disciplines}</Text>
+            <Text>{`— ${info.item.teacher}`}</Text>
         </Card>
     );
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         color: "#ffffff",
     },
     disciplines: {
-        marginBottom: 4,
+        marginBottom: 6,
     },
     contentContainer: {
         paddingHorizontal: 0,
