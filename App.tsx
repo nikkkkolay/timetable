@@ -36,7 +36,6 @@ export default () => {
         }
 
         prepare();
-        checkUpdateDate();
     }, []);
 
     const onLayoutRootView = useCallback(async () => {

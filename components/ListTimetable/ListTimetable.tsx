@@ -18,7 +18,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
                 <View style={styles.accent}></View>
             )}
             <View style={styles.padding}>
-                <Text category="s2">{`${info.item.pair} (${info.item.pair_type})`}</Text>
+                <Text category="s2" style={styles.pair}>{`${info.item.pair} (${info.item.pair_type})`}</Text>
             </View>
         </>
     );
@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
     accent: {
         backgroundColor: "#f2f5fa",
         paddingVertical: 2,
+    },
+    pair: {
+        fontSize: 15,
     },
     pair_date: {
         color: "#ffffff",

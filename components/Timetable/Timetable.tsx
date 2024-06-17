@@ -5,13 +5,15 @@ import { ListTimetable, EmptyTimetable } from "../index";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
-    const { currentSchedule, group, fetchingTimetable, getCurrentSchedule } = useStore((state) => state);
+    const { currentSchedule, group, fetchingTimetable, getCurrentSchedule, getGroup } = useStore((state) => state);
     const hasGroup = group.group_id !== 0;
 
     useEffect(() => {
-        if (hasGroup) {
-            getCurrentSchedule(group.group_id);
-        }
+        getGroup(group.name);
+    }, []);
+
+    useEffect(() => {
+        if (hasGroup) getCurrentSchedule(group.group_id);
     }, [group]);
 
     if (fetchingTimetable) {
