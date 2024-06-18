@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     pair_date: {
-        fontSize: 16,
+        fontSize: 15,
         color: "#ffffff",
     },
     disciplines: {
