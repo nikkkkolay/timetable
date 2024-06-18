@@ -17,22 +17,24 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
             ) : (
                 <View style={styles.accent}></View>
             )}
-            <View style={styles.padding}>
-                <Text category="s2" style={styles.pair}>{`${info.item.pair} (${info.item.pair_type})`}</Text>
+            <View style={styles.row}>
+                <Text style={styles.pair} category="s2">{`${info.item.pair} (${info.item.pair_type})`}</Text>
             </View>
         </>
     );
 
-    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.padding}>{info.item.room}</Text>;
+    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.row}>{info.item.room}</Text>;
 
-    const renderItem = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
-        <Card style={styles.item} status="basic" header={() => renderItemHeader(info)} footer={() => renderItemFooter(info)}>
-            <Text style={styles.disciplines}>{`— ${info.item.disciplines}`}</Text>
-            <Text>{`${info.item.teacher}`}</Text>
+    const renderCard = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
+        <Card style={styles.card} status="basic" header={() => renderItemHeader(info)} footer={() => renderItemFooter(info)}>
+            <View style={styles.row}>
+                <Text style={styles.disciplines}>{info.item.disciplines}</Text>
+                <Text>{`— ${info.item.teacher}`}</Text>
+            </View>
         </Card>
     );
 
-    return <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderItem} />;
+    return <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />;
 };
 
 const styles = StyleSheet.create({
@@ -40,7 +42,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: "rgba(0, 0, 0, 0)",
     },
-    padding: {
+    card: {
+        marginVertical: 4,
+    },
+    row: {
         paddingVertical: 10,
         paddingHorizontal: 24,
     },
@@ -58,6 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     pair_date: {
+        fontSize: 16,
         color: "#ffffff",
     },
     disciplines: {
@@ -65,8 +71,5 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingHorizontal: 0,
-    },
-    item: {
-        marginVertical: 4,
     },
 });

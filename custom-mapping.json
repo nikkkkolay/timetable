@@ -50,6 +50,10 @@
         "Card": {
             "appearances": {
                 "outline": {
+                    "mapping": {
+                        "bodyPaddingHorizontal": 0,
+                        "bodyPaddingVertical": 0
+                    },
                     "variantGroups": {
                         "status": {
                             "basic": {

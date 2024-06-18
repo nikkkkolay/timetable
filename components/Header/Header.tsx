@@ -13,7 +13,7 @@ export const Header = () => {
     const hasGroup = group.group_id !== 0;
 
     const nameToggle = (): ReactElement => (
-        <Text category="h6" style={styles.name} numberOfLines={2} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
+        <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
             {group.name}
         </Text>
     );
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     },
     name: {
         marginBottom: 1,
+        maxWidth: 200,
     },
     tooltip: {
         maxWidth: 300,

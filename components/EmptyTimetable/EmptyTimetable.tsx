@@ -23,8 +23,10 @@ export const EmptyTimetable = (): ReactElement => {
     );
 
     const renderItem = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
-        <Card style={styles.item} status="basic" header={() => renderItemHeader(info)}>
-            <Text style={styles.text}>{info.item.description}</Text>
+        <Card style={styles.card} status="basic" header={() => renderItemHeader(info)}>
+            <View style={styles.item}>
+                <Text style={styles.text}>{info.item.description}</Text>
+            </View>
         </Card>
     );
 
@@ -55,8 +57,12 @@ const styles = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 0,
     },
-    item: {
+    card: {
         marginVertical: 4,
+    },
+    item: {
+        paddingVertical: 12,
+        paddingHorizontal: 24,
     },
     text: {
         textAlign: "center",

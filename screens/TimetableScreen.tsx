@@ -1,25 +1,31 @@
-import { useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 
 export const TimetableScreen = () => {
-    const { hasErrors, group, setGroup } = useStore((state) => state);
-    const hasGroup = group.group_id !== 0;
+    const { hasErrors, group, getGroup } = useStore((state) => state);
+    const [emptyGroup, checkEmptyGroup] = useState(false);
 
     useLayoutEffect(() => {
-        async function getGroup() {
+        async function updateGroup() {
             const value = await AsyncStorage.getItem("group");
-            if (value !== null) setGroup(JSON.parse(value));
+            if (value !== null) {
+                await getGroup(JSON.parse(value).name);
+            }
         }
-        getGroup();
+        updateGroup();
     }, []);
+
+    useEffect(() => {
+        checkEmptyGroup(group.group_id !== 0);
+    }, [group]);
 
     return (
         <Container>
             <Header />
-            {!hasErrors && hasGroup && <Timetable />}
-            {!hasErrors && !hasGroup && <Greeting />}
+            {!hasErrors && emptyGroup && <Timetable />}
+            {!hasErrors && !emptyGroup && <Greeting />}
             {hasErrors && <Error />}
         </Container>
     );

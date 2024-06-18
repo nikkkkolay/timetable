@@ -11,9 +11,18 @@ interface ISettings {
 }
 
 export const ModalSettings = (): ReactElement => {
-    const { setModalSettingsIsActive, getFaculties, getCourses, getGroups, setGroup, faculties, courses, groups, modalSettingsIsActive } = useStore(
-        (state) => state
-    );
+    const {
+        setModalSettingsIsActive,
+        getFaculties,
+        getCourses,
+        getGroups,
+        setGroup,
+        getCurrentSchedule,
+        faculties,
+        courses,
+        groups,
+        modalSettingsIsActive,
+    } = useStore((state) => state);
 
     const groupSelect = useRef<any>();
 
@@ -32,10 +41,13 @@ export const ModalSettings = (): ReactElement => {
                 name: groups[selectedIndexGroup.row].name,
                 specialty: groups[selectedIndexGroup.row].specialty,
             };
+            await setModalSettingsIsActive(!modalSettingsIsActive);
             await AsyncStorage.setItem("group", JSON.stringify(group));
             const value = await AsyncStorage.getItem("group");
-            if (value !== null) setGroup(JSON.parse(value));
-            setModalSettingsIsActive(!modalSettingsIsActive);
+            if (value !== null) {
+                await setGroup(JSON.parse(value));
+                await getCurrentSchedule(JSON.parse(value).group_id);
+            }
         }
     };
 
@@ -115,10 +127,10 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        marginBottom: 12,
+        marginBottom: 8,
     },
     button: {
-        marginTop: 10,
+        marginTop: 5,
     },
     container: {
         display: "flex",
@@ -126,6 +138,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10,
         width: 250,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
     },
     wrapper: {
         display: "flex",

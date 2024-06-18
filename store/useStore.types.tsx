@@ -31,7 +31,7 @@ export interface IStore {
     courses: [ChoiceTypes] | [];
     groups: [ChoiceTypes] | [];
     group: GroupTypes;
-    currentSchedule: [ScheduleTypes] | [];
+    schedule: [ScheduleTypes] | [];
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;

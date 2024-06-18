@@ -13,7 +13,7 @@ export const useStore = create<IStore>((set) => ({
     courses: [],
     groups: [],
     group: { group_id: 0, name: "", specialty: "" },
-    currentSchedule: [],
+    schedule: [],
 
     setModalSettingsIsActive: (state: boolean) => {
         set({ modalSettingsIsActive: state });
@@ -34,7 +34,6 @@ export const useStore = create<IStore>((set) => ({
     },
 
     getFaculties: async () => {
-        set({ loading: true });
         try {
             const response = await api.get(`/faculties`);
             set({
@@ -42,10 +41,9 @@ export const useStore = create<IStore>((set) => ({
                     id: fac.fac_id,
                     name: fac.facultee,
                 })),
-                loading: false,
             });
         } catch (err) {
-            set({ hasErrors: true, loading: false });
+            set({ hasErrors: true });
         }
     },
 
@@ -60,7 +58,6 @@ export const useStore = create<IStore>((set) => ({
     },
 
     getGroups: async (fac_id: number, course_id: number) => {
-        set({ loading: true });
         try {
             const response = await api.get(`/groups/${fac_id}/${course_id}`);
             set({
@@ -69,10 +66,9 @@ export const useStore = create<IStore>((set) => ({
                     name: group.group,
                     specialty: group.speciality,
                 })),
-                loading: false,
             });
         } catch (err) {
-            set({ hasErrors: true, loading: false });
+            set({ hasErrors: true });
         }
     },
 
@@ -80,19 +76,18 @@ export const useStore = create<IStore>((set) => ({
         set({ fetchingTimetable: true });
         try {
             const response = await api.get(`/current-schedule/${group_id}`);
-            set({ currentSchedule: response.data, fetchingTimetable: false });
+            set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
             set({ hasErrors: true, fetchingTimetable: false });
         }
     },
 
     getGroup: async (name: string) => {
-        set({ loading: true });
         try {
             const response = await api.get(`/groups/${name}`);
-            set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group }, loading: false });
+            set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group } });
         } catch (err) {
-            set({ hasErrors: true, loading: false });
+            set({ hasErrors: true });
         }
     },
 
