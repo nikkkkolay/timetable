@@ -4,10 +4,10 @@ import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 
 export const TimetableScreen = () => {
-    const { hasErrors, group, getGroup } = useStore((state) => state);
+    const { hasErrors, schedule, group, getGroup } = useStore((state) => state);
     const [emptyGroup, checkEmptyGroup] = useState(false);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         async function updateGroup() {
             const value = await AsyncStorage.getItem("group");
             if (value !== null) {

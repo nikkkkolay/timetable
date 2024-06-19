@@ -12,6 +12,7 @@ export const useStore = create<IStore>((set) => ({
     faculties: [],
     courses: [],
     groups: [],
+    availableDates: [],
     group: { group_id: 0, name: "", specialty: "" },
     schedule: [],
 
@@ -86,6 +87,15 @@ export const useStore = create<IStore>((set) => ({
         try {
             const response = await api.get(`/groups/${name}`);
             set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group } });
+        } catch (err) {
+            set({ hasErrors: true });
+        }
+    },
+
+    getAvailableDates: async (group_id: number) => {
+        try {
+            const response = await api.get(`/available-dates/${group_id}/`);
+            set({ availableDates: response.data, hasErrors: false });
         } catch (err) {
             set({ hasErrors: true });
         }

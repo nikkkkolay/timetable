@@ -32,6 +32,7 @@ export interface IStore {
     courses: [ChoiceTypes] | [];
     groups: [ChoiceTypes] | [];
     group: GroupTypes;
+    availableDates: string[];
     schedule: [ScheduleTypes] | [];
     checkUpdateDate: () => void;
     getFaculties: () => void;
@@ -39,6 +40,7 @@ export interface IStore {
     getGroups: (fac_id: number, course_id: number) => void;
     getGroup: (name: string) => void;
     getCurrentSchedule: (group_id: number) => void;
+    getAvailableDates: (group_id: number) => void;
     setGroup: (group: GroupTypes) => void;
     setModalSettingsIsActive: (state: boolean) => void;
     setCalendarIsActive: (state: boolean) => void;

@@ -14,7 +14,7 @@ const data = new Array(1).fill({
 });
 
 export const EmptyTimetable = (): ReactElement => {
-    const { calendarIsActive, setCalendarIsActive } = useStore((state) => state);
+    const { calendarIsActive, availableDates, setCalendarIsActive } = useStore((state) => state);
 
     const renderItemHeader = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
         <View style={styles.week}>
@@ -33,7 +33,7 @@ export const EmptyTimetable = (): ReactElement => {
     return (
         <View>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderItem} />
-            <Button style={styles.button} onPress={() => setCalendarIsActive(!calendarIsActive)}>
+            <Button style={styles.button} onPress={() => setCalendarIsActive(!calendarIsActive)} disabled={!availableDates.length}>
                 {`${!calendarIsActive ? "Открыть" : "Закрыть"} календарь`}
             </Button>
         </View>

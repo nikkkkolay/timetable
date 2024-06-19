@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, StyleSheet } from "react-native";
 import { Spinner } from "@ui-kitten/components";
@@ -6,12 +6,13 @@ import { ListTimetable, EmptyTimetable } from "../index";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
-    const { schedule, group, fetchingTimetable, getCurrentSchedule } = useStore((state) => state);
+    const { schedule, group, fetchingTimetable, getCurrentSchedule, getAvailableDates } = useStore((state) => state);
     const [emptySchedule, checkEmptySchedule] = useState(false);
 
     useEffect(() => {
         async function updateSchedule() {
             await getCurrentSchedule(group.group_id);
+            await getAvailableDates(group.group_id);
             await AsyncStorage.setItem("group", JSON.stringify(group));
         }
         updateSchedule();

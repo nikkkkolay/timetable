@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
+import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button } from "@ui-kitten/components";
 import { i18n } from "./i18n";
 
@@ -16,6 +17,18 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 
 export const Calendar = () => {
     const [range, setRange] = useState({});
+    const { availableDates } = useStore((state) => state);
+
+    const yesterday = new Date(availableDates[0]);
+    const tomorrow = new Date(availableDates[1]);
+
+    useEffect(() => {
+        console.log(availableDates);
+    }, []);
+
+    // useEffect(() => {
+    //     console.log(range.startDate, range.endDate);
+    // }, [range]);
 
     return (
         <RangeCalendar
@@ -23,6 +36,8 @@ export const Calendar = () => {
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
             onSelect={(nextRange) => setRange(nextRange)}
             dateService={localeDateService}
+            min={yesterday}
+            max={tomorrow}
         />
     );
 };
