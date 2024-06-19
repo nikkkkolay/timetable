@@ -13,11 +13,13 @@ interface ISettings {
 export const ModalSettings = (): ReactElement => {
     const {
         setModalSettingsIsActive,
+        setCalendarIsActive,
         getFaculties,
         getCourses,
         getGroups,
         setGroup,
         getCurrentSchedule,
+        getAvailableDates,
         faculties,
         courses,
         groups,
@@ -45,8 +47,10 @@ export const ModalSettings = (): ReactElement => {
             await AsyncStorage.setItem("group", JSON.stringify(group));
             const value = await AsyncStorage.getItem("group");
             if (value !== null) {
+                await setCalendarIsActive(false);
                 await setGroup(JSON.parse(value));
                 await getCurrentSchedule(JSON.parse(value).group_id);
+                await getAvailableDates(JSON.parse(value).group_id);
             }
         }
     };
