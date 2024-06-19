@@ -15,9 +15,12 @@ export const Header = () => {
     const hasGroup = group.group_id !== 0;
 
     const nameToggle = (): ReactElement => (
-        <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
-            {group.name}
-        </Text>
+        <View style={styles.nameContainer}>
+            <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
+                {group.name}
+            </Text>
+            <Icon style={styles.info} name="info-outline" />
+        </View>
     );
 
     return (
@@ -65,8 +68,15 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: "row",
-        alignItems: "flex-end",
+        alignItems: "center",
         flex: 1,
+        gap: 5,
+    },
+    nameContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: -15,
+        gap: 5,
     },
     buttonsContainer: {
         flexDirection: "row",
@@ -74,11 +84,10 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "center",
-        height: 35,
-        width: 35,
+        height: 30,
+        width: 30,
     },
     name: {
-        marginBottom: 1,
         maxWidth: 200,
     },
     tooltip: {
@@ -91,5 +100,9 @@ const styles = StyleSheet.create({
     icon: {
         width: 26,
         height: 26,
+    },
+    info: {
+        width: 17,
+        height: 17,
     },
 });
