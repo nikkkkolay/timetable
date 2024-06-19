@@ -13,6 +13,7 @@ export type GroupTypes = {
 export type ScheduleTypes = {
     id: number;
     pair_date: string;
+    pair_first: boolean;
     pair: string;
     pair_type: string;
     room: string;

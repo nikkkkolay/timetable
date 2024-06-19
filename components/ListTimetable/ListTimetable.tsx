@@ -10,7 +10,7 @@ export interface ITimetableProps {
 export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
     const renderItemHeader = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <>
-            {info.item.id == 0 ? (
+            {info.item.pair_first ? (
                 <View style={styles.week}>
                     <Text style={styles.pair_date}>{info.item.pair_date}</Text>
                 </View>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     pair_date: {
-        fontSize: 15,
+        fontSize: 16,
         color: "#ffffff",
     },
     disciplines: {
