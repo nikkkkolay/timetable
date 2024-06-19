@@ -28,9 +28,11 @@ export const Header = () => {
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
-                        {group.specialty}
-                    </Tooltip>
+                    {group.name && (
+                        <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
+                            {group.specialty}
+                        </Tooltip>
+                    )}
                 </View>
                 <View style={styles.buttonsContainer}>
                     {hasGroup && (
@@ -84,11 +86,11 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "center",
-        height: 30,
-        width: 30,
+        height: 35,
+        width: 35,
     },
     name: {
-        maxWidth: 140,
+        maxWidth: 180,
     },
     tooltip: {
         maxWidth: 300,
