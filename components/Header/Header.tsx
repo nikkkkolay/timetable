@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement, Tooltip } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
 import { useStore } from "../../store/useStore";
@@ -15,12 +15,12 @@ export const Header = () => {
     const hasGroup = group.group_id !== 0;
 
     const nameToggle = (): ReactElement => (
-        <View style={styles.nameContainer}>
-            <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle" onPress={() => setVisibleTooltip(true)}>
+        <TouchableOpacity style={styles.nameContainer} onPress={() => setVisibleTooltip(true)}>
+            <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle">
                 {group.name}
             </Text>
             <Icon style={styles.info} name="info-outline" />
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     nameContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: -15,
+        marginBottom: -12,
         gap: 5,
     },
     buttonsContainer: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         width: 30,
     },
     name: {
-        maxWidth: 200,
+        maxWidth: 140,
     },
     tooltip: {
         maxWidth: 300,
