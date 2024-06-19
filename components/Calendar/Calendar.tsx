@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
+import { format } from "@formkit/tempo";
 import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button } from "@ui-kitten/components";
 import { i18n } from "./i18n";
@@ -16,19 +17,17 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const [range, setRange] = useState({});
-    const { availableDates } = useStore((state) => state);
+    const [range, setRange] = useState<any>({});
+    const { availableDates, group } = useStore((state) => state);
 
     const yesterday = new Date(availableDates[0]);
     const tomorrow = new Date(availableDates[1]);
 
     useEffect(() => {
-        console.log(availableDates);
-    }, []);
-
-    // useEffect(() => {
-    //     console.log(range.startDate, range.endDate);
-    // }, [range]);
+        const start = range.startDate && format(range.startDate, "YYYY-MM-DD");
+        const end = range.endDate && format(range.endDate, "YYYY-MM-DD");
+        console.log(start, end, group.group_id);
+    }, [range]);
 
     return (
         <RangeCalendar
