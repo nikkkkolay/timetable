@@ -10,7 +10,7 @@ interface IEmpty {
 }
 
 const data = new Array(1).fill({
-    description: "На сегодня занятий нет",
+    description: "Сегодня нет учебных занятий",
 });
 
 export const EmptyTimetable = (): ReactElement => {

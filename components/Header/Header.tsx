@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, Pressable, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement, Tooltip } from "@ui-kitten/components";
 import { Calendar, ModalSettings } from "../index";
 import { useStore } from "../../store/useStore";
@@ -15,12 +15,14 @@ export const Header = () => {
     const hasGroup = group.group_id !== 0;
 
     const nameToggle = (): ReactElement => (
-        <TouchableOpacity style={styles.nameContainer} onPress={() => setVisibleTooltip(true)}>
+        <Pressable style={styles.nameContainer} onPress={() => setVisibleTooltip(true)}>
             <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle">
                 {group.name}
             </Text>
-            <Icon style={styles.info} name="info-outline" />
-        </TouchableOpacity>
+            <>
+                <Icon style={styles.info} name="info-outline" />
+            </>
+        </Pressable>
     );
 
     return (
@@ -28,11 +30,10 @@ export const Header = () => {
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-                    {group.name && (
-                        <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
-                            {group.specialty}
-                        </Tooltip>
-                    )}
+
+                    <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
+                        {group.specialty}
+                    </Tooltip>
                 </View>
                 <View style={styles.buttonsContainer}>
                     {hasGroup && (
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     logo: {
-        resizeMode: "center",
         height: 35,
         width: 35,
     },
