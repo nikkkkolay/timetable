@@ -16,7 +16,7 @@ export const Timetable = () => {
             await AsyncStorage.setItem("group", JSON.stringify(group));
         }
         updateSchedule();
-    }, []);
+    }, [group]);
 
     useEffect(() => {
         checkEmptySchedule(schedule.length === 0);

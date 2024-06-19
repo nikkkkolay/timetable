@@ -36,7 +36,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={SettingsIcon}
-                            disabled={hasErrors}
+                            disabled={hasErrors || !availableDates.length}
                         />
                     )}
                     {hasGroup && (
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "center",
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
     },
     name: {
         marginBottom: 1,
