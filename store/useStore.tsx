@@ -49,13 +49,17 @@ export const useStore = create<IStore>((set) => ({
     },
 
     getCourses: async () => {
-        const response = await api.get(`/courses`);
-        set({
-            courses: response.data.map((course: { course_id: number; course: string }) => ({
-                id: course.course_id,
-                name: course.course,
-            })),
-        });
+        try {
+            const response = await api.get(`/courses`);
+            set({
+                courses: response.data.map((course: { course_id: number; course: string }) => ({
+                    id: course.course_id,
+                    name: course.course,
+                })),
+            });
+        } catch (err) {
+            set({ hasErrors: true });
+        }
     },
 
     getGroups: async (fac_id: number, course_id: number) => {
