@@ -83,7 +83,7 @@ export const useStore = create<IStore>((set) => ({
             const response = await api.get(`/current-schedule/${group_id}`);
             set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
-            set({ hasErrors: true, fetchingTimetable: false });
+            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false });
         }
     },
 
