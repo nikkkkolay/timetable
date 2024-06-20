@@ -49,8 +49,7 @@ export const ModalSettings = (): ReactElement => {
             if (value !== null) {
                 await setCalendarIsActive(false);
                 await setGroup(JSON.parse(value));
-                // await getCurrentSchedule(JSON.parse(value).group_id);
-                // await getAvailableDates(JSON.parse(value).group_id);
+                await getAvailableDates(JSON.parse(value).group_id);
             }
         }
     };

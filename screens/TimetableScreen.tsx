@@ -4,28 +4,23 @@ import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 
 export const TimetableScreen = () => {
-    const { hasErrors, group, getGroup } = useStore((state) => state);
+    const { hasErrors, group, schedule, getCurrentSchedule } = useStore((state) => state);
     const [emptyGroup, checkEmptyGroup] = useState(false);
 
-    useEffect(() => {
-        async function updateGroup() {
-            const value = await AsyncStorage.getItem("group");
-            if (value !== null) {
-                await getGroup(JSON.parse(value).name);
-            }
+    useLayoutEffect(() => {
+        async function updateSchedule() {
+            await getCurrentSchedule(group.group_id);
+            await AsyncStorage.setItem("group", JSON.stringify(group));
         }
-        updateGroup();
-    }, []);
-
-    useEffect(() => {
+        updateSchedule();
         checkEmptyGroup(group.group_id !== 0);
     }, [group]);
 
     return (
         <Container>
             <Header />
-            {!hasErrors && emptyGroup && <Timetable />}
             {!hasErrors && !emptyGroup && <Greeting />}
+            {!hasErrors && emptyGroup && <Timetable />}
             {hasErrors && <Error />}
         </Container>
     );

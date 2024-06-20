@@ -40,7 +40,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={SettingsIcon}
-                            disabled={hasErrors || !availableDates.length}
+                            disabled={hasErrors}
                         />
                     )}
                     {hasGroup && (
@@ -49,7 +49,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={CalendarIcon}
-                            disabled={hasErrors || !availableDates.length}
+                            disabled={hasErrors}
                         />
                     )}
                 </View>

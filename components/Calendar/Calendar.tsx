@@ -18,10 +18,16 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 
 export const Calendar = () => {
     const [range, setRange] = useState<any>({});
-    const { availableDates, group } = useStore((state) => state);
+    const { availableDates, group, getAvailableDates } = useStore((state) => state);
 
     const yesterday = new Date(availableDates[0]);
     const tomorrow = new Date(availableDates[1]);
+
+    useEffect(() => {
+        if (!availableDates.length) {
+            getAvailableDates(group.group_id);
+        }
+    }, []);
 
     useEffect(() => {
         const start = range.startDate && format(range.startDate, "YYYY-MM-DD");

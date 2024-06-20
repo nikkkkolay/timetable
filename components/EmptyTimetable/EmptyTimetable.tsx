@@ -33,7 +33,7 @@ export const EmptyTimetable = (): ReactElement => {
     return (
         <View>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderItem} />
-            <Button style={styles.button} onPress={() => setCalendarIsActive(!calendarIsActive)} disabled={!availableDates.length}>
+            <Button style={styles.button} onPress={() => setCalendarIsActive(!calendarIsActive)}>
                 {`${!calendarIsActive ? "Открыть" : "Закрыть"} календарь`}
             </Button>
         </View>

@@ -44,7 +44,7 @@ export const useStore = create<IStore>((set) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true });
+            set({ hasErrors: true, modalSettingsIsActive: false });
         }
     },
 
@@ -58,7 +58,7 @@ export const useStore = create<IStore>((set) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true });
+            set({ hasErrors: true, modalSettingsIsActive: false });
         }
     },
 
@@ -73,7 +73,7 @@ export const useStore = create<IStore>((set) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true });
+            set({ hasErrors: true, modalSettingsIsActive: false });
         }
     },
 
@@ -101,7 +101,7 @@ export const useStore = create<IStore>((set) => ({
             const response = await api.get(`/available-dates/${group_id}/`);
             set({ availableDates: response.data, hasErrors: false });
         } catch (err) {
-            set({ hasErrors: true });
+            set({ hasErrors: true, calendarIsActive: false });
         }
     },
 

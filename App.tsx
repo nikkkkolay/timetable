@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import * as SplashScreen from "expo-splash-screen";
-
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView, StatusBar } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { default as theme } from "./custom-theme.json";
 import { default as customMapping } from "./custom-mapping.json";
+import * as eva from "@eva-design/eva";
 import * as Font from "expo-font";
 
 import { TimetableScreen } from "./screens/TimetableScreen";
@@ -15,7 +14,18 @@ import { useStore } from "./store/useStore";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { checkUpdateDate, modalSettingsIsActive } = useStore((state) => state);
+    const { checkUpdateDate, getGroup, modalSettingsIsActive } = useStore((state) => state);
+
+    useLayoutEffect(() => {
+        async function updateGroup() {
+            const value = await AsyncStorage.getItem("group");
+            if (value !== null) {
+                await getGroup(JSON.parse(value).name);
+            }
+        }
+        updateGroup();
+        checkUpdateDate();
+    }, []);
 
     useEffect(() => {
         async function prepare() {
@@ -36,7 +46,6 @@ export default () => {
         }
 
         prepare();
-        checkUpdateDate();
     }, []);
 
     const onLayoutRootView = useCallback(async () => {
