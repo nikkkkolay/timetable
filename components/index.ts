@@ -6,4 +6,5 @@ export { ListTimetable } from "./ListTimetable/ListTimetable";
 export { Greeting } from "./Greeting/Greeting";
 export { Timetable } from "./Timetable/Timetable";
 export { EmptyTimetable } from "./EmptyTimetable/EmptyTimetable";
+export { Skeleton } from "./Skeleton/Skeleton";
 export { Error } from "./Error/Error";

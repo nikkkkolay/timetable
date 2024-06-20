@@ -1,7 +1,6 @@
 import { useState, useLayoutEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { Spinner } from "@ui-kitten/components";
-import { ListTimetable, EmptyTimetable } from "../index";
+import { StyleSheet } from "react-native";
+import { ListTimetable, EmptyTimetable, Skeleton } from "../index";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
@@ -12,20 +11,15 @@ export const Timetable = () => {
         checkEmptySchedule(schedule.length === 0);
     }, [schedule]);
 
-    if (fetchingTimetable) {
-        return (
-            <View style={styles.container}>
-                <Spinner size="giant" />
-            </View>
-        );
+    if (true) {
+        return <Skeleton />;
     }
-
-    return (
-        <>
-            {emptySchedule && <EmptyTimetable />}
-            {!emptySchedule && <ListTimetable data={schedule} />}
-        </>
-    );
+    // return (
+    //     <>
+    //         {emptySchedule && <EmptyTimetable />}
+    //         {!emptySchedule && <ListTimetable data={schedule} />}
+    //     </>
+    // );
 };
 
 const styles = StyleSheet.create({
