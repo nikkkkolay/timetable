@@ -35,6 +35,7 @@ export const Calendar = () => {
         const start = range.startDate && format(range.startDate, "YYYY-MM-DD");
         const end = range.endDate && format(range.endDate, "YYYY-MM-DD");
         console.log(start, end, group.group_id);
+        console.log(group);
     }, [range]);
 
     return (

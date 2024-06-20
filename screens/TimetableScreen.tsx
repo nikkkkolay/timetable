@@ -1,16 +1,18 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 
 export const TimetableScreen = () => {
-    const { hasErrors, group, schedule, getCurrentSchedule } = useStore((state) => state);
+    const { hasErrors, group, getCurrentSchedule } = useStore((state) => state);
     const [emptyGroup, checkEmptyGroup] = useState(false);
 
     useLayoutEffect(() => {
         async function updateSchedule() {
-            await getCurrentSchedule(group.group_id);
-            await AsyncStorage.setItem("group", JSON.stringify(group));
+            if (group.group_id !== 0) {
+                await getCurrentSchedule(group.group_id);
+                await AsyncStorage.setItem("group", JSON.stringify(group));
+            }
         }
         updateSchedule();
         checkEmptyGroup(group.group_id !== 0);
