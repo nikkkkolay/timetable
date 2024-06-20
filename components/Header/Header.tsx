@@ -39,7 +39,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={SettingsIcon}
-                            disabled={hasErrors}
+                            disabled={hasErrors || fetchingTimetable}
                         />
                     )}
                     {hasGroup && (
