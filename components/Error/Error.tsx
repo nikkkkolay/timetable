@@ -1,11 +1,10 @@
-import { View, StyleSheet, Linking } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Text, Button, Spinner } from "@ui-kitten/components";
 import { useStore } from "../../store/useStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Error = () => {
-    const { loading } = useStore((state) => state);
-
-    const url = "https://www.mauniver.ru/student/timetable/new/";
+    const { loading, hasErrors, group, getGroup, checkUpdateDate } = useStore((state) => state);
 
     if (loading) {
         return (
@@ -15,10 +14,20 @@ export const Error = () => {
         );
     }
 
+    const fetchData = async () => {
+        const value = await AsyncStorage.getItem("group");
+        if (value !== null) {
+            await checkUpdateDate();
+            if (!hasErrors) {
+                await getGroup(JSON.parse(value).name);
+            }
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Сервис временно недоступен. Воспользуйтесь расписанием на сайте университета.</Text>
-            <Button onPress={() => Linking.openURL(url)}>Смотреть на сайте</Button>
+            <Text style={styles.text}>Сервис временно недоступен. Попробуйте подключиться позднее.</Text>
+            {group.group_id !== 0 && <Button onPress={fetchData}>Обновить</Button>}
         </View>
     );
 };

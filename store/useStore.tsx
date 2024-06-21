@@ -88,6 +88,7 @@ export const useStore = create<IStore>((set) => ({
     },
 
     getGroup: async (name: string) => {
+        set({ hasErrors: false });
         try {
             const response = await api.get(`/groups/${name}`);
             set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group } });
