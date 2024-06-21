@@ -24,7 +24,8 @@ const SkeletonCommonProps = {
         duration: 2000,
     },
     backgroundColor: "#f2f5fa",
-} as const;
+    colors: ["#edeff3", "#f2f5fa"],
+} as any;
 
 export const MSkeleton = (): ReactElement => {
     const renderSkeletonHeader = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
@@ -32,7 +33,7 @@ export const MSkeleton = (): ReactElement => {
             {info.index === 0 ? (
                 <View style={styles.week}>
                     <Skeleton show width={"100%"} {...SkeletonCommonProps} backgroundColor={"#008cfa"} colors={["#41a9fd", "#f6f6f6"]}>
-                        <Text style={styles.pair_date}>{info.item.header}</Text>
+                        <Text>{info.item.header}</Text>
                     </Skeleton>
                 </View>
             ) : (
@@ -86,9 +87,6 @@ const styles = StyleSheet.create({
     row: {
         paddingVertical: 10,
         paddingHorizontal: 24,
-    },
-    pair_date: {
-        color: "#ffffff",
     },
     contentContainer: {
         paddingHorizontal: 0,
