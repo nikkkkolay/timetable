@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
+import { Skeleton } from "moti/skeleton";
 
 interface IEmpty {
     header: string;
@@ -16,28 +17,54 @@ const data = new Array(3).fill({
     footer: " ",
 });
 
-export const Skeleton = (): ReactElement => {
+const SkeletonCommonProps = {
+    colorMode: "light",
+    transition: {
+        type: "timing",
+        duration: 2000,
+    },
+    backgroundColor: "#f2f5fa",
+} as const;
+
+export const MSkeleton = (): ReactElement => {
     const renderSkeletonHeader = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
         <>
             {info.index === 0 ? (
                 <View style={styles.week}>
-                    <Text style={styles.pair_date}>{info.item.header}</Text>
+                    <Skeleton show width={"100%"} {...SkeletonCommonProps} backgroundColor={"#008cfa"} colors={["#41a9fd", "#f6f6f6"]}>
+                        <Text style={styles.pair_date}>{info.item.header}</Text>
+                    </Skeleton>
                 </View>
             ) : (
                 <View style={styles.accent}></View>
             )}
             <View style={styles.row}>
-                <Text>{info.item.time}</Text>
+                <Skeleton show width={"100%"} {...SkeletonCommonProps}>
+                    <Text>{info.item.time}</Text>
+                </Skeleton>
             </View>
         </>
     );
 
-    const renderSkeletonFooter = (info: ListRenderItemInfo<IEmpty>): ReactElement => <Text style={styles.row}>{info.item.footer}</Text>;
+    const renderSkeletonFooter = (info: ListRenderItemInfo<IEmpty>): ReactElement => {
+        return (
+            <View style={styles.item}>
+                <Skeleton show width={"100%"} {...SkeletonCommonProps}>
+                    <Text>{info.item.footer}</Text>
+                </Skeleton>
+            </View>
+        );
+    };
 
     const renderSkeleton = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
         <Card style={styles.card} status="basic" header={() => renderSkeletonHeader(info)} footer={() => renderSkeletonFooter(info)}>
             <View style={styles.item}>
-                <Text>{info.item.body}</Text>
+                <Skeleton show width={"100%"} {...SkeletonCommonProps}>
+                    <Text>{info.item.body}</Text>
+                </Skeleton>
+                <Skeleton show width={"70%"} {...SkeletonCommonProps}>
+                    <Text>{info.item.body}</Text>
+                </Skeleton>
             </View>
         </Card>
     );
@@ -72,6 +99,7 @@ const styles = StyleSheet.create({
     item: {
         paddingVertical: 12,
         paddingHorizontal: 24,
+        gap: 10,
     },
     accent: {
         backgroundColor: "#f2f5fa",

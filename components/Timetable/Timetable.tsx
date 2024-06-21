@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from "react";
 import { StyleSheet } from "react-native";
-import { ListTimetable, EmptyTimetable, Skeleton } from "../index";
+import { ListTimetable, EmptyTimetable, MSkeleton } from "../index";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
@@ -11,15 +11,16 @@ export const Timetable = () => {
         checkEmptySchedule(schedule.length === 0);
     }, [schedule]);
 
-    if (true) {
-        return <Skeleton />;
+    if (fetchingTimetable) {
+        return <MSkeleton />;
     }
-    // return (
-    //     <>
-    //         {emptySchedule && <EmptyTimetable />}
-    //         {!emptySchedule && <ListTimetable data={schedule} />}
-    //     </>
-    // );
+
+    return (
+        <>
+            {emptySchedule && <EmptyTimetable />}
+            {!emptySchedule && <ListTimetable data={schedule} />}
+        </>
+    );
 };
 
 const styles = StyleSheet.create({
