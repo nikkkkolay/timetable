@@ -1,5 +1,6 @@
 import { api } from "../http";
 import { create } from "zustand";
+import { format } from "@formkit/tempo";
 import { IStore, GroupTypes } from "./useStore.types";
 
 export const useStore = create<IStore>((set) => ({
@@ -25,7 +26,7 @@ export const useStore = create<IStore>((set) => ({
     },
 
     checkUpdateDate: async () => {
-        set({ loading: true });
+        set({ loading: true, hasErrors: false });
         try {
             const response = await api.get(`/`);
             set({ updateDate: response.data[0].download, loading: false });
@@ -88,19 +89,22 @@ export const useStore = create<IStore>((set) => ({
     },
 
     getGroup: async (name: string) => {
-        set({ hasErrors: false });
+        set({ loading: true, hasErrors: false });
         try {
             const response = await api.get(`/groups/${name}`);
-            set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group } });
+            set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group }, loading: false });
         } catch (err) {
-            set({ hasErrors: true });
+            set({ hasErrors: true, loading: false });
         }
     },
 
     getAvailableDates: async (group_id: number) => {
         try {
             const response = await api.get(`/available-dates/${group_id}/`);
-            set({ availableDates: response.data, hasErrors: false });
+            const availableDates = response.data.reduce((acc: [], item: string) => {
+                return [...acc, format(item, "YYYY-MM-DD")];
+            }, []);
+            set({ availableDates: availableDates, hasErrors: false });
         } catch (err) {
             set({ hasErrors: true, calendarIsActive: false });
         }

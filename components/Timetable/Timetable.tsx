@@ -22,13 +22,3 @@ export const Timetable = () => {
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1,
-        backgroundColor: "rgba(0, 0, 0, 0)",
-        paddingBottom: 120,
-    },
-});

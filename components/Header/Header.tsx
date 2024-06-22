@@ -9,8 +9,9 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [visibleTooltip, setVisibleTooltip] = useState(false);
-    const { modalSettingsIsActive, calendarIsActive, hasErrors, group, loading, fetchingTimetable, setModalSettingsIsActive, setCalendarIsActive } =
-        useStore((state) => state);
+    const { modalSettingsIsActive, calendarIsActive, hasErrors, group, fetchingTimetable, setModalSettingsIsActive, setCalendarIsActive } = useStore(
+        (state) => state
+    );
     const hasGroup = group.group_id !== 0;
 
     const nameToggle = (): ReactElement => (
@@ -103,6 +104,5 @@ const styles = StyleSheet.create({
     info: {
         width: 17,
         height: 17,
-        marginBottom: 1,
     },
 });
