@@ -1,6 +1,6 @@
 {
     "expo": {
-        "name": "timetable",
+        "name": "Расписание МАУ",
         "slug": "timetable",
         "version": "1.0.0",
         "orientation": "portrait",
@@ -35,6 +35,17 @@
                 "owner": "fdrvch",
                 "projectId": "353e059b-7891-4ef0-a004-083b65a1bb6e"
             }
-        }
+        },
+        "plugins": [
+            "expo-build-properties",
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "usesCleartextTraffic": true
+                    }
+                }
+            ]
+        ]
     }
 }
