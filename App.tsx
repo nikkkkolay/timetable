@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppState } from "@react-native-community/hooks";
 import * as SplashScreen from "expo-splash-screen";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
@@ -11,19 +12,32 @@ import * as Font from "expo-font";
 
 import { TimetableScreen } from "./screens/TimetableScreen";
 import { useStore } from "./store/useStore";
+import { format } from "@formkit/tempo";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { checkUpdateDate, getGroup, modalSettingsIsActive } = useStore((state) => state);
+    const { checkUpdateDate, getGroup, getSchedule, modalSettingsIsActive, range } = useStore((state) => state);
+    const currentAppState = useAppState();
 
     useLayoutEffect(() => {
-        async function updateGroup() {
-            const value = await AsyncStorage.getItem("group");
-            if (value !== null) {
-                await getGroup(JSON.parse(value).name);
+        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
+        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
+        if (currentAppState === "active") {
+            async function getGroupId() {
+                const value = await AsyncStorage.getItem("group");
+                if (value !== null) {
+                    const groupId = JSON.parse(value).group_id;
+                    await getGroup(JSON.parse(value).name);
+                    if (rangeStart && rangeEnd && groupId) {
+                        getSchedule(groupId, rangeStart, rangeEnd);
+                    }
+                }
             }
+            getGroupId();
         }
-        updateGroup();
+    }, [currentAppState]);
+
+    useEffect(() => {
         checkUpdateDate();
     }, []);
 

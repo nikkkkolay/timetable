@@ -18,8 +18,7 @@ export const ModalSettings = (): ReactElement => {
         getCourses,
         getGroups,
         setGroup,
-        getCurrentSchedule,
-        getAvailableDates,
+        setRange,
         faculties,
         courses,
         groups,
@@ -48,6 +47,7 @@ export const ModalSettings = (): ReactElement => {
             const value = await AsyncStorage.getItem("group");
             if (value !== null) {
                 await setCalendarIsActive(false);
+                await setRange({ startDate: null, endDate: null });
                 await setGroup(JSON.parse(value));
             }
         }

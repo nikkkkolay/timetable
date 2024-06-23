@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { format } from "@formkit/tempo";
 import { useStore } from "../../store/useStore";
@@ -17,12 +17,22 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const [range, setRange] = useState<any>({});
-
-    const { availableDates, group, getGroup } = useStore((state) => state);
+    const { availableDates, group, range, hasErrors, getGroup, getSchedule, setRange } = useStore((state) => state);
 
     const startDate = new Date(availableDates[0]);
     const endDate = new Date(availableDates[availableDates.length - 1]);
+
+    useEffect(() => {
+        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
+        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
+        if (rangeStart && rangeEnd && group.group_id) {
+            getGroup(group.name);
+            getSchedule(group.group_id, rangeStart, rangeEnd);
+        }
+        if (hasErrors) {
+            setRange({ startDate: null, endDate: null });
+        }
+    }, [range, hasErrors]);
 
     const filter = (date: Date): boolean => {
         const check = availableDates.includes(format(date, "YYYY-MM-DD"));
@@ -31,33 +41,19 @@ export const Calendar = () => {
 
     const renderDay = (info: any, style: StyleType) => {
         const workDay = filter(info.date);
-        const emptySchedule = info.date < endDate;
+        const emptySchedule = info.date < endDate || info.date < new Date();
 
         return (
             <View style={[styles.dayContainer, style.container]}>
                 <Text style={style.text}>{info.date.getDate()}</Text>
                 {!workDay && emptySchedule && (
                     <View style={styles.dayOff}>
-                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#ced5e0"} />
+                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
                     </View>
                 )}
             </View>
         );
     };
-
-    useEffect(() => {
-        async function getDates() {
-            await getGroup(group.name);
-        }
-        getDates();
-    }, []);
-
-    useEffect(() => {
-        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-
-        console.log(rangeStart, rangeEnd, group.group_id);
-    }, [range]);
 
     return (
         <RangeCalendar
@@ -67,7 +63,7 @@ export const Calendar = () => {
             dateService={localeDateService}
             min={startDate}
             max={endDate}
-            boundingMonth={false}
+            // boundingMonth={false}
             renderDay={renderDay}
             filter={filter}
         />
@@ -87,10 +83,10 @@ const styles = StyleSheet.create({
     },
     dayOff: {
         position: "absolute",
-        right: 4,
-        top: 4,
-        width: 12,
-        height: 12,
+        right: 3,
+        top: 3,
+        width: 10,
+        height: 10,
     },
     button: {
         width: 40,

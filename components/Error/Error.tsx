@@ -4,7 +4,7 @@ import { useStore } from "../../store/useStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Error = () => {
-    const { loading, hasErrors, group, getGroup, checkUpdateDate } = useStore((state) => state);
+    const { loading, hasErrors, group, getGroup, setGroup, checkUpdateDate } = useStore((state) => state);
 
     if (loading) {
         return (
@@ -27,7 +27,7 @@ export const Error = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Сервис временно недоступен. Попробуйте подключиться позднее.</Text>
-            {group.group_id !== 0 && <Button onPress={fetchData}>Обновить</Button>}
+            <Button onPress={fetchData}>Обновить</Button>
         </View>
     );
 };

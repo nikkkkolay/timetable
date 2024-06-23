@@ -21,6 +21,11 @@ export type ScheduleTypes = {
     disciplines: string;
 };
 
+export type RangeTypes = {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+};
+
 export interface IStore {
     loading: boolean;
     fetchingTimetable: boolean;
@@ -34,14 +39,17 @@ export interface IStore {
     group: GroupTypes;
     availableDates: string[];
     schedule: [ScheduleTypes] | [];
+    range: RangeTypes;
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;
     getGroups: (fac_id: number, course_id: number) => void;
     getGroup: (name: string) => void;
     getCurrentSchedule: (group_id: number) => void;
+    getSchedule: (group_id: number, start: string, end: string) => void;
     getAvailableDates: (group_id: number) => void;
     setGroup: (group: GroupTypes) => void;
     setModalSettingsIsActive: (state: boolean) => void;
     setCalendarIsActive: (state: boolean) => void;
+    setRange: (range: any) => void;
 }

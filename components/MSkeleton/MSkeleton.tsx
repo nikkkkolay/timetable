@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
     },
     card: {
-        marginVertical: 4,
+        marginBottom: 8,
     },
     item: {
         paddingVertical: 12,

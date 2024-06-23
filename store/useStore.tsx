@@ -14,15 +14,20 @@ export const useStore = create<IStore>((set) => ({
     courses: [],
     groups: [],
     availableDates: [],
+    range: { startDate: undefined, endDate: undefined },
     group: { group_id: 0, name: "", specialty: "" },
     schedule: [],
 
-    setModalSettingsIsActive: (state: boolean) => {
+    setModalSettingsIsActive: (state) => {
         set({ modalSettingsIsActive: state });
     },
 
-    setCalendarIsActive: (state: boolean) => {
+    setCalendarIsActive: (state) => {
         set({ calendarIsActive: state });
+    },
+
+    setRange: (range) => {
+        set({ range: range });
     },
 
     checkUpdateDate: async () => {
@@ -63,7 +68,7 @@ export const useStore = create<IStore>((set) => ({
         }
     },
 
-    getGroups: async (fac_id: number, course_id: number) => {
+    getGroups: async (fac_id, course_id) => {
         try {
             const response = await api.get(`/groups/${fac_id}/${course_id}`);
             set({
@@ -78,7 +83,7 @@ export const useStore = create<IStore>((set) => ({
         }
     },
 
-    getCurrentSchedule: async (group_id: number) => {
+    getCurrentSchedule: async (group_id) => {
         set({ fetchingTimetable: true });
         try {
             const response = await api.get(`/current-schedule/${group_id}`);
@@ -88,17 +93,30 @@ export const useStore = create<IStore>((set) => ({
         }
     },
 
-    getGroup: async (name: string) => {
-        set({ loading: true, hasErrors: false });
+    getSchedule: async (group_id, start, end) => {
+        set({ fetchingTimetable: true });
         try {
-            const response = await api.get(`/groups/${name}`);
-            set({ group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group }, loading: false });
+            const response = await api.get(`/schedule/${group_id}/${start}/${end}`);
+            set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
-            set({ hasErrors: true, loading: false });
+            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false });
         }
     },
 
-    getAvailableDates: async (group_id: number) => {
+    getGroup: async (name) => {
+        set({ loading: true, hasErrors: false });
+        try {
+            const response = await api.get(`/groups/${name}`);
+            set({
+                group: { specialty: response.data.speciality, group_id: response.data.group_id, name: response.data.group },
+                loading: false,
+            });
+        } catch (err) {
+            set({ hasErrors: true, loading: false, calendarIsActive: false });
+        }
+    },
+
+    getAvailableDates: async (group_id) => {
         try {
             const response = await api.get(`/available-dates/${group_id}/`);
             const availableDates = response.data.reduce((acc: [], item: string) => {
@@ -110,7 +128,7 @@ export const useStore = create<IStore>((set) => ({
         }
     },
 
-    setGroup: (group: GroupTypes) => {
+    setGroup: (group) => {
         set({ group: group });
     },
 }));

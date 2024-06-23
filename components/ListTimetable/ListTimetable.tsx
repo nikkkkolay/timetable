@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0)",
     },
     card: {
-        marginVertical: 4,
+        marginBottom: 8,
     },
     row: {
         paddingVertical: 10,
