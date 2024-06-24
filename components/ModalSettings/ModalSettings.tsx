@@ -18,7 +18,8 @@ export const ModalSettings = (): ReactElement => {
         getCourses,
         getGroups,
         setGroup,
-        setRange,
+        getCurrentSchedule,
+        getAvailableDates,
         faculties,
         courses,
         groups,
@@ -38,17 +39,20 @@ export const ModalSettings = (): ReactElement => {
     const saveGroup = async () => {
         if (selectedIndexGroup) {
             const group = {
-                group_id: groups[selectedIndexGroup.row].id,
+                uid: groups[selectedIndexGroup.row].uid,
                 name: groups[selectedIndexGroup.row].name,
                 specialty: groups[selectedIndexGroup.row].specialty,
             };
+
             await setModalSettingsIsActive(!modalSettingsIsActive);
             await AsyncStorage.setItem("group", JSON.stringify(group));
             const value = await AsyncStorage.getItem("group");
             if (value !== null) {
+                const uid = JSON.parse(value).uid;
                 await setCalendarIsActive(false);
-                await setRange({ startDate: null, endDate: null });
                 await setGroup(JSON.parse(value));
+                await getCurrentSchedule(uid);
+                await getAvailableDates(uid);
             }
         }
     };
@@ -110,7 +114,7 @@ export const ModalSettings = (): ReactElement => {
                             disabled={!selectedIndexCourse}
                             ref={groupSelect}
                         >
-                            {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.id} />)}
+                            {groups && groups.map((group: ChoiceTypes) => <SelectItem title={group.name} key={group.uid} />)}
                         </Select>
 
                         <Button style={styles.button} onPress={() => saveGroup()} disabled={!selectedIndexGroup}>

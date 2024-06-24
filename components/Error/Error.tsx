@@ -1,33 +1,14 @@
 import { View, StyleSheet } from "react-native";
 import { Text, Button, Spinner } from "@ui-kitten/components";
 import { useStore } from "../../store/useStore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Error = () => {
-    const { loading, hasErrors, group, getGroup, setGroup, checkUpdateDate } = useStore((state) => state);
-
-    if (loading) {
-        return (
-            <View style={styles.container}>
-                <Spinner size="giant" />
-            </View>
-        );
-    }
-
-    const fetchData = async () => {
-        const value = await AsyncStorage.getItem("group");
-        if (value !== null) {
-            await checkUpdateDate();
-            if (!hasErrors) {
-                await getGroup(JSON.parse(value).name);
-            }
-        }
-    };
+    const { checkUpdateDate } = useStore((state) => state);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Сервис временно недоступен. Попробуйте подключиться позднее.</Text>
-            <Button onPress={fetchData}>Обновить</Button>
+            <Text style={styles.text}>Сервис временно недоступен. Попробуйте позднее.</Text>
+            <Button onPress={() => checkUpdateDate()}>Обновить</Button>
         </View>
     );
 };

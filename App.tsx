@@ -1,44 +1,30 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAppState } from "@react-native-community/hooks";
-import * as SplashScreen from "expo-splash-screen";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { default as theme } from "./custom-theme.json";
 import { default as customMapping } from "./custom-mapping.json";
+import * as SplashScreen from "expo-splash-screen";
 import * as eva from "@eva-design/eva";
 import * as Font from "expo-font";
 
 import { TimetableScreen } from "./screens/TimetableScreen";
 import { useStore } from "./store/useStore";
-import { format } from "@formkit/tempo";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { checkUpdateDate, getGroup, getSchedule, modalSettingsIsActive, range } = useStore((state) => state);
-    const currentAppState = useAppState();
+    const { modalSettingsIsActive, setGroup, checkUpdateDate } = useStore((state) => state);
 
     useLayoutEffect(() => {
-        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-        if (currentAppState === "active") {
-            async function getGroupId() {
-                const value = await AsyncStorage.getItem("group");
-                if (value !== null) {
-                    const groupId = JSON.parse(value).group_id;
-                    await getGroup(JSON.parse(value).name);
-                    if (rangeStart && rangeEnd && groupId) {
-                        getSchedule(groupId, rangeStart, rangeEnd);
-                    }
-                }
+        async function checkData() {
+            await checkUpdateDate();
+            const value = await AsyncStorage.getItem("group");
+            if (value !== null) {
+                await setGroup(JSON.parse(value));
             }
-            getGroupId();
         }
-    }, [currentAppState]);
-
-    useEffect(() => {
-        checkUpdateDate();
+        checkData();
     }, []);
 
     useEffect(() => {
@@ -54,7 +40,6 @@ export default () => {
             } catch (e) {
                 console.warn(e);
             } finally {
-                // Tell the application to render
                 setAppIsReady(true);
             }
         }

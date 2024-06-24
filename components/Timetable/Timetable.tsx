@@ -1,5 +1,4 @@
 import { useState, useLayoutEffect } from "react";
-import { StyleSheet } from "react-native";
 import { ListTimetable, EmptyTimetable, MSkeleton } from "../index";
 import { useStore } from "../../store/useStore";
 

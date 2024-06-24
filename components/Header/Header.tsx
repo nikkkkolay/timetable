@@ -9,10 +9,10 @@ const CalendarIcon = (): IconElement => <Icon style={styles.icon} name="calendar
 
 export const Header = () => {
     const [visibleTooltip, setVisibleTooltip] = useState(false);
-    const { modalSettingsIsActive, calendarIsActive, hasErrors, group, fetchingTimetable, setModalSettingsIsActive, setCalendarIsActive } = useStore(
-        (state) => state
-    );
-    const hasGroup = group.group_id !== 0;
+    const { modalSettingsIsActive, calendarIsActive, hasErrors, group, fetchingTimetable, loading, setModalSettingsIsActive, setCalendarIsActive } =
+        useStore((state) => state);
+
+    const hasGroup = Object.keys(group).length !== 0;
 
     const nameToggle = (): ReactElement => (
         <Pressable style={styles.nameContainer} onPress={() => setVisibleTooltip(true)}>
@@ -40,7 +40,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={SettingsIcon}
-                            disabled={hasErrors || fetchingTimetable}
+                            disabled={hasErrors || fetchingTimetable || loading}
                         />
                     )}
                     {hasGroup && (
@@ -49,7 +49,7 @@ export const Header = () => {
                             style={styles.button}
                             appearance="ghost"
                             accessoryLeft={CalendarIcon}
-                            disabled={hasErrors || fetchingTimetable}
+                            disabled={hasErrors || fetchingTimetable || loading}
                         />
                     )}
                 </View>

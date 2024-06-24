@@ -17,7 +17,7 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, range, hasErrors, getGroup, getSchedule, setRange } = useStore((state) => state);
+    const { availableDates, group, range, hasErrors, getSchedule, setRange } = useStore((state) => state);
 
     const startDate = new Date(availableDates[0]);
     const endDate = new Date(availableDates[availableDates.length - 1]);
@@ -25,9 +25,8 @@ export const Calendar = () => {
     useEffect(() => {
         const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
         const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-        if (rangeStart && rangeEnd && group.group_id) {
-            getGroup(group.name);
-            getSchedule(group.group_id, rangeStart, rangeEnd);
+        if (rangeStart && rangeEnd && group.uid) {
+            getSchedule(group.uid, rangeStart, rangeEnd);
         }
         if (hasErrors) {
             setRange({ startDate: null, endDate: null });
@@ -63,7 +62,6 @@ export const Calendar = () => {
             dateService={localeDateService}
             min={startDate}
             max={endDate}
-            // boundingMonth={false}
             renderDay={renderDay}
             filter={filter}
         />
@@ -85,8 +83,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 3,
         top: 3,
-        width: 10,
-        height: 10,
+        width: 12,
+        height: 12,
     },
     button: {
         width: 40,

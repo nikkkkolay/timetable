@@ -10,7 +10,7 @@ interface IEmpty {
     footer: string;
 }
 
-const data = new Array(3).fill({
+const data = new Array(4).fill({
     header: " ",
     time: " ",
     body: " ",

@@ -1,11 +1,12 @@
 export type ChoiceTypes = {
     id: number;
+    uid: string;
     name: string;
     specialty: string;
 };
 
 export type GroupTypes = {
-    group_id: number;
+    uid: string;
     name: string;
     specialty: string;
 };
@@ -33,21 +34,20 @@ export interface IStore {
     modalSettingsIsActive: boolean;
     calendarIsActive: boolean;
     updateDate: string;
-    faculties: [ChoiceTypes] | [];
-    courses: [ChoiceTypes] | [];
-    groups: [ChoiceTypes] | [];
-    group: GroupTypes;
+    faculties: ChoiceTypes[];
+    courses: ChoiceTypes[];
+    groups: ChoiceTypes[];
     availableDates: string[];
-    schedule: [ScheduleTypes] | [];
-    range: RangeTypes;
+    schedule: ScheduleTypes[];
+    group: GroupTypes | Record<string, never>;
+    range: RangeTypes | Record<string, never>;
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;
+    getCurrentSchedule: (uid: string) => void;
     getGroups: (fac_id: number, course_id: number) => void;
-    getGroup: (name: string) => void;
-    getCurrentSchedule: (group_id: number) => void;
-    getSchedule: (group_id: number, start: string, end: string) => void;
-    getAvailableDates: (group_id: number) => void;
+    getSchedule: (uid: string, start: string, end: string) => void;
+    getAvailableDates: (uid: string) => void;
     setGroup: (group: GroupTypes) => void;
     setModalSettingsIsActive: (state: boolean) => void;
     setCalendarIsActive: (state: boolean) => void;
