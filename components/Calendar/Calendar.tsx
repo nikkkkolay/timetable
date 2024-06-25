@@ -3,6 +3,7 @@ import { format } from "@formkit/tempo";
 import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType } from "@ui-kitten/components";
 import { i18n } from "./i18n";
+import { useEffect } from "react";
 
 const localeDateService = new NativeDateService("ru", {
     i18n,
@@ -16,12 +17,16 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, range, getSchedule, setRange } = useStore((state) => state);
+    const { availableDates, group, range, getSchedule, getAvailableDates, setRange } = useStore((state) => state);
 
     const startDate = new Date(availableDates[0]);
     const endDate = new Date(availableDates[availableDates.length - 1]);
 
-    const SelectionRange = (range: any) => {
+    useEffect(() => {
+        getAvailableDates(group.uid);
+    }, []);
+
+    const selectionRange = (range: any) => {
         setRange(range);
         const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
         const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
@@ -55,7 +60,7 @@ export const Calendar = () => {
         <RangeCalendar
             range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
-            onSelect={(nextRange) => SelectionRange(nextRange)}
+            onSelect={(nextRange) => selectionRange(nextRange)}
             dateService={localeDateService}
             min={startDate}
             max={endDate}
