@@ -1,22 +1,14 @@
 import React, { ReactElement } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
-import { Card, List, Text, Button, Icon, IconElement } from "@ui-kitten/components";
+import { Card, List, Text } from "@ui-kitten/components";
 import { ScheduleTypes } from "../../store/useStore.types";
-import { useStore } from "../../store/useStore";
+import { DownloadButton } from "../DownloadButton/DownloadButton";
 
 export interface ITimetableProps {
     data: ScheduleTypes[];
 }
 
-const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="download-outline" fill="#f2f5fa" />;
-
 export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
-    const { fetchingTimetable } = useStore((state) => state);
-
-    const downloadSchedule = () => {
-        console.log(123);
-    };
-
     const renderItemHeader = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <>
             {info.item.pair_first ? (
@@ -55,13 +47,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
     return (
         <>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />
-            <Button
-                onPress={() => downloadSchedule()}
-                style={styles.downloadButton}
-                accessoryLeft={DownloadIcon}
-                status="warning"
-                disabled={fetchingTimetable}
-            />
+            <DownloadButton />
         </>
     );
 };
@@ -103,17 +89,5 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingHorizontal: 0,
-    },
-    downloadButton: {
-        position: "absolute",
-        right: 15,
-        bottom: 14,
-        width: 40,
-        height: 40,
-        borderWidth: 0,
-    },
-    icon: {
-        width: 26,
-        height: 26,
     },
 });
