@@ -5,7 +5,17 @@
 
     "color-secondary-500": "#ffffff",
     "color-success-200": "rgba(0, 140, 250, 0.20)",
-    "color-warning-500": "#F9423A",
+    "color-warning-500": "#f9423a",
+
+    "color-warning-default-border": "rgba(241, 77, 27, 0.70)",
+    "color-warning-default": "rgba(241, 77, 27, 0.70)",
+    "text-control-color": "#ffffff",
+    "color-warning-focus-border": "#f9423a",
+    "color-warning-focus": "#f9423a",
+    "color-warning-hover-border": "#f9423a",
+    "color-warning-hover": "#f9423a",
+    "color-warning-active-border": "#f9423a",
+    "color-warning-active": "#f9423a",
 
     "text-basic-color": "#000",
     "text-primary-color": "#000",
