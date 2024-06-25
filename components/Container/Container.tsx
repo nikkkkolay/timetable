@@ -12,7 +12,9 @@ export const Container = ({ children, style }: PropsWithChildren<Props>) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        flex: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         width: "100%",
     },
 });

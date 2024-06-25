@@ -1,33 +1,45 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import * as SplashScreen from "expo-splash-screen";
-
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView, StatusBar } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { default as theme } from "./custom-theme.json";
 import { default as customMapping } from "./custom-mapping.json";
+import * as SplashScreen from "expo-splash-screen";
+import * as eva from "@eva-design/eva";
 import * as Font from "expo-font";
 
-import { Timetable } from "./screens/Timetable";
+import { TimetableScreen } from "./screens/TimetableScreen";
+import { useStore } from "./store/useStore";
 
 export default () => {
     const [appIsReady, setAppIsReady] = useState(false);
+    const { modalSettingsIsActive, setGroup, checkUpdateDate } = useStore((state) => state);
+
+    useLayoutEffect(() => {
+        async function checkData() {
+            await checkUpdateDate();
+            const value = await AsyncStorage.getItem("group");
+            if (value !== null) {
+                await setGroup(JSON.parse(value));
+            }
+        }
+        checkData();
+    }, []);
 
     useEffect(() => {
         async function prepare() {
             try {
                 await Font.loadAsync({
+                    "Montserrat-Light": require("./assets/fonts/Montserrat-Light.ttf"),
                     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+                    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
                     "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
-                    "Montserrat-ExtraBold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
                 });
                 await new Promise((resolve) => setTimeout(resolve, 2000));
             } catch (e) {
                 console.warn(e);
             } finally {
-                // Tell the application to render
                 setAppIsReady(true);
             }
         }
@@ -50,9 +62,9 @@ export default () => {
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider mapping={eva.mapping} customMapping={{ ...eva.mapping, ...customMapping }} theme={{ ...eva.light, ...theme }}>
                 <ImageBackground source={require("./assets/bg.png")} style={styles.backgroundImage}>
-                    <StatusBar/>
+                    <StatusBar barStyle={"dark-content"} translucent backgroundColor={modalSettingsIsActive ? "rgba(0,0,0,0.3)" : "transparent"} />
                     <SafeAreaView style={styles.safeArea} onLayout={onLayoutRootView}>
-                        <Timetable />
+                        <TimetableScreen />
                     </SafeAreaView>
                 </ImageBackground>
             </ApplicationProvider>
@@ -63,7 +75,7 @@ export default () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        paddingTop: StatusBar.currentHeight,
     },
     backgroundImage: {
         flex: 1,
