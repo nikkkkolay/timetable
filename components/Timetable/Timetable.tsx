@@ -3,7 +3,7 @@ import { ListTimetable, EmptyTimetable, MSkeleton } from "../index";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
-    const { schedule, fetchingTimetable } = useStore((state) => state);
+    const { hasErrors, schedule, fetchingTimetable } = useStore((state) => state);
     const [emptySchedule, checkEmptySchedule] = useState(false);
 
     useLayoutEffect(() => {
@@ -16,8 +16,8 @@ export const Timetable = () => {
 
     return (
         <>
-            {emptySchedule && <EmptyTimetable />}
-            {!emptySchedule && <ListTimetable data={schedule} />}
+            {!hasErrors && emptySchedule && <EmptyTimetable />}
+            {!hasErrors && !emptySchedule && <ListTimetable data={schedule} />}
         </>
     );
 };

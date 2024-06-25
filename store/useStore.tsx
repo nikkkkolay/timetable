@@ -35,12 +35,12 @@ export const useStore = create<IStore>((set) => ({
     },
 
     checkUpdateDate: async () => {
-        set({ loading: true, hasErrors: false });
+        set({ loading: true });
         try {
             const response = await api.get(`/`);
-            set({ updateDate: response.data[0].download, loading: false });
+            set({ updateDate: response.data[0].download, loading: false, hasErrors: false });
         } catch (err) {
-            set({ hasErrors: true, loading: false });
+            set({ hasErrors: true, loading: false, schedule: [], availableDates: [], range: {} });
         }
     },
 

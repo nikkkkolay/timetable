@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { format } from "@formkit/tempo";
 import { useStore } from "../../store/useStore";
@@ -17,21 +16,19 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, range, hasErrors, getSchedule, setRange } = useStore((state) => state);
+    const { availableDates, group, range, getSchedule, setRange } = useStore((state) => state);
 
     const startDate = new Date(availableDates[0]);
     const endDate = new Date(availableDates[availableDates.length - 1]);
 
-    useEffect(() => {
+    const SelectionRange = (range: any) => {
+        setRange(range);
         const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
         const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
         if (rangeStart && rangeEnd && group.uid) {
             getSchedule(group.uid, rangeStart, rangeEnd);
         }
-        if (hasErrors) {
-            setRange({ startDate: null, endDate: null });
-        }
-    }, [range, hasErrors]);
+    };
 
     const filter = (date: Date): boolean => {
         const check = availableDates.includes(format(date, "YYYY-MM-DD"));
@@ -58,7 +55,7 @@ export const Calendar = () => {
         <RangeCalendar
             range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
-            onSelect={(nextRange) => setRange(nextRange)}
+            onSelect={(nextRange) => SelectionRange(nextRange)}
             dateService={localeDateService}
             min={startDate}
             max={endDate}

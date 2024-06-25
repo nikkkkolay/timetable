@@ -18,6 +18,7 @@ export const ModalSettings = (): ReactElement => {
         getCourses,
         getGroups,
         setGroup,
+        setRange,
         getCurrentSchedule,
         getAvailableDates,
         faculties,
@@ -50,6 +51,7 @@ export const ModalSettings = (): ReactElement => {
             if (value !== null) {
                 const uid = JSON.parse(value).uid;
                 await setCalendarIsActive(false);
+                await setRange({});
                 await setGroup(JSON.parse(value));
                 await getCurrentSchedule(uid);
                 await getAvailableDates(uid);
