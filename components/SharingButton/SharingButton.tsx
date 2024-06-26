@@ -7,6 +7,7 @@ import { useStore } from "../../store/useStore";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import XLSX from "xlsx-js-style";
+import { ScheduleTypes } from "../../store/useStore.types";
 
 const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="share-outline" fill="#f2f5fa" />;
 
@@ -15,25 +16,35 @@ export const SharingButton = (): ReactElement => {
 
     const rangeStart = range.startDate && format(range.startDate, "DD.MM.YYYY");
     const rangeEnd = range.endDate && format(range.endDate, "DD.MM.YYYY");
-    const headerTitle = `Расписание группы ${group.name} (${rangeStart} - ${rangeEnd})`;
 
-    const header = [
-        {
-            v: headerTitle,
-            s: { font: { sz: 14, bold: true } },
-        },
-    ];
-    const date = [{ v: "10-10-2024", s: { font: { sz: 12, bold: true } } }];
-    const pair = [{ v: "1" }, { v: "10.00-12.00" }, { v: "Ольга И.В." }, { v: "Автоматизация" }];
+    const sheetConstructor = (schedule: [ScheduleTypes], start: string, end: string, name: string) => {
+        const headerTitle = `Расписание группы ${name} ${start === end ? `(${start})` : `(${start} - ${end})`}`;
+
+        const header = [
+            {
+                v: headerTitle,
+                s: { font: { sz: 14, bold: true } },
+            },
+            {},
+        ];
+        const body = schedule.reduce((acc, item, index) => {
+            const date = [{ v: item.pair_date, s: { font: { sz: 12, bold: true } } }];
+            const pair = [{ v: item.id }, { v: item.pair }, { v: item.teacher }, { v: item.disciplines }, { v: item.room }];
+            return acc;
+        }, []);
+        return [header, body];
+    };
 
     const ShareExcel = async () => {
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet([header, date, pair, pair, pair]);
+        const ws = XLSX.utils.aoa_to_sheet([[], [], [], [], []]);
 
-        XLSX.utils.book_append_sheet(wb, ws, `Расписание ${group.name}`, true);
+        const fileTitle = `Расписание ${group.name} ${rangeStart}-${rangeEnd}`;
+
+        XLSX.utils.book_append_sheet(wb, ws, fileTitle, true);
 
         const base64 = XLSX.write(wb, { type: "base64" });
-        const fileName = FileSystem.documentDirectory + `Расписание ${group.name}.xlsx`;
+        const fileName = FileSystem.documentDirectory + `${fileTitle}.xlsx`;
 
         FileSystem.writeAsStringAsync(fileName, base64, {
             encoding: FileSystem.EncodingType.Base64,

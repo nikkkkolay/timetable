@@ -3,12 +3,16 @@ import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { ScheduleTypes } from "../../store/useStore.types";
 import { SharingButton } from "../SharingButton/SharingButton";
+import { useStore } from "../../store/useStore";
 
 export interface ITimetableProps {
     data: ScheduleTypes[];
 }
 
 export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
+    const { range } = useStore((state) => state);
+    const hasRange = Object.keys(range).length !== 0;
+
     const renderItemHeader = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <>
             {info.item.pair_first ? (
@@ -42,7 +46,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
     return (
         <>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />
-            <SharingButton />
+            {hasRange && <SharingButton />}
         </>
     );
 };
