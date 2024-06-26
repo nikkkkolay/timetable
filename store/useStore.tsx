@@ -103,7 +103,7 @@ export const useStore = create<IStore>((set) => ({
             const availableDates = response.data.reduce((acc: [], item: string) => {
                 return [...acc, format(item, "YYYY-MM-DD")];
             }, []);
-            set({ availableDates: availableDates, hasErrors: false });
+            set({ availableDates: availableDates });
         } catch (err) {
             set({ hasErrors: true, calendarIsActive: false });
         }

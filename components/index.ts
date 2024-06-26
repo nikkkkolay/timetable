@@ -7,5 +7,5 @@ export { Greeting } from "./Greeting/Greeting";
 export { Timetable } from "./Timetable/Timetable";
 export { EmptyTimetable } from "./EmptyTimetable/EmptyTimetable";
 export { MSkeleton } from "./MSkeleton/MSkeleton";
-export { DownloadButton } from "./DownloadButton/DownloadButton";
+export { SharingButton } from "./SharingButton/SharingButton";
 export { Error } from "./Error/Error";

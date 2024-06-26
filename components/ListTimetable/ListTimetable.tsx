@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { ScheduleTypes } from "../../store/useStore.types";
-import { DownloadButton } from "../DownloadButton/DownloadButton";
+import { SharingButton } from "../SharingButton/SharingButton";
 
 export interface ITimetableProps {
     data: ScheduleTypes[];
@@ -26,28 +26,23 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
 
     const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.row}>{info.item.room}</Text>;
 
-    const renderCard = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => {
-        console.log(info.index);
-
-        return (
-            <Card
-                style={info.index === data.length - 1 ? styles.cardNoMargin : styles.card}
-                status="basic"
-                header={() => renderItemHeader(info)}
-                footer={() => renderItemFooter(info)}
-            >
-                <View style={styles.row}>
-                    <Text style={styles.disciplines}>{info.item.disciplines}</Text>
-                    <Text>{`— ${info.item.teacher}`}</Text>
-                </View>
-            </Card>
-        );
-    };
-
+    const renderCard = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
+        <Card
+            style={info.index === data.length - 1 ? styles.cardNoMargin : styles.card}
+            status="basic"
+            header={() => renderItemHeader(info)}
+            footer={() => renderItemFooter(info)}
+        >
+            <View style={styles.row}>
+                <Text style={styles.disciplines}>{info.item.disciplines}</Text>
+                <Text>{`— ${info.item.teacher}`}</Text>
+            </View>
+        </Card>
+    );
     return (
         <>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />
-            <DownloadButton />
+            <SharingButton />
         </>
     );
 };

@@ -1,14 +1,14 @@
 {
-    "color-primary-400": "rgba(0, 140, 250, 0.40)",
+    "color-primary-400": "rgba(0, 140, 250, 0.4)",
     "color-primary-500": "#008CFA",
     "color-primary-600": "#0064be",
 
     "color-secondary-500": "#ffffff",
-    "color-success-200": "rgba(0, 140, 250, 0.20)",
+    "color-success-200": "rgba(0, 140, 250, 0.2)",
     "color-warning-500": "#f9423a",
 
-    "color-warning-default-border": "rgba(241, 77, 27, 0.70)",
-    "color-warning-default": "rgba(241, 77, 27, 0.70)",
+    "color-warning-default-border": "rgba(241, 77, 27, 0.8)",
+    "color-warning-default": "rgba(241, 77, 27, 0.8)",
     "text-control-color": "#ffffff",
     "color-warning-focus-border": "#f9423a",
     "color-warning-focus": "#f9423a",

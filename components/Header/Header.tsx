@@ -19,7 +19,7 @@ export const Header = () => {
             <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle">
                 {group.name}
             </Text>
-            <>{group.name && <Icon style={styles.info} name="info-outline" />}</>
+            {group.name && <Icon style={styles.info} name="info-outline" />}
         </Pressable>
     );
 
