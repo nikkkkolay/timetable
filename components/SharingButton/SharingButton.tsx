@@ -17,40 +17,105 @@ export const SharingButton = (): ReactElement => {
     const rangeStart = range.startDate && format(range.startDate, "DD.MM.YYYY");
     const rangeEnd = range.endDate && format(range.endDate, "DD.MM.YYYY");
 
-    const sheetConstructor = (schedule: [ScheduleTypes], start: string, end: string, name: string) => {
+    const borderStyle = {
+        top: { style: "thin", color: "f4f4f4" },
+        bottom: { style: "thin", color: "f4f4f4" },
+        left: { style: "thin", color: "f4f4f4" },
+        right: { style: "thin", color: "f4f4f4" },
+    };
+
+    const cellStyle = {
+        alignment: { wrapText: true, vertical: "center", horizontal: "center" },
+        border: borderStyle,
+    };
+
+    const getDaysInRange = (startDate: any, endDate: any) => {
+        const days = [];
+
+        while (startDate <= endDate) {
+            days.push(new Date(startDate));
+            startDate.setDate(startDate.getDate());
+        }
+
+        return days;
+    };
+
+    const sheetCollector = (schedule: ScheduleTypes[], start: string | undefined, end: string | undefined, name: string) => {
         const headerTitle = `Расписание группы ${name} ${start === end ? `(${start})` : `(${start} - ${end})`}`;
+        const descriptionText = "Даты не представленные в таблице являются свободными от занятий";
 
         const header = [
             {
                 v: headerTitle,
                 s: { font: { sz: 14, bold: true } },
             },
-            {},
         ];
-        const body = schedule.reduce((acc, item, index) => {
-            const date = [{ v: item.pair_date, s: { font: { sz: 12, bold: true } } }];
-            const pair = [{ v: item.id }, { v: item.pair }, { v: item.teacher }, { v: item.disciplines }, { v: item.room }];
+        const description = [
+            {
+                v: descriptionText,
+            },
+        ];
+        const body = schedule.reduce((acc: any, item: any) => {
+            if (item.pair_first) {
+                const date = [
+                    {
+                        v: item.pair_date,
+                        s: {
+                            fill: { fgColor: { theme: 4 } },
+                            font: { sz: 12, bold: true, color: { rgb: "FFFFFF" } },
+                            border: { borderStyle },
+                            alignment: { horizontal: "center", vertical: "center" },
+                        },
+                    },
+                ];
+                acc = [...acc, [], date];
+            }
+            const pair = [
+                {
+                    v: item.pair,
+                    s: cellStyle,
+                },
+                {
+                    v: item.teacher,
+                    s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
+                },
+                {
+                    v: `${item.disciplines} (${item.pair_type})`,
+                    s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
+                },
+                {
+                    v: item.room,
+                    s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top" } },
+                },
+            ];
+            acc = [...acc, pair];
             return acc;
         }, []);
-        return [header, body];
+
+        return [header, description, ...body];
     };
 
     const ShareExcel = async () => {
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet([[], [], [], [], []]);
+        const sheet = sheetCollector(schedule, rangeStart, rangeEnd, group.name);
+        const rangeArray = getDaysInRange(range.startDate, range.endDate);
 
-        const fileTitle = `Расписание ${group.name} ${rangeStart}-${rangeEnd}`;
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(sheet);
+        ws["!cols"] = [{ wch: 20 }, { wch: 20 }, { wch: 50 }, { wch: 30 }];
+        const fileTitle = `Расписание ${group.name}`;
 
         XLSX.utils.book_append_sheet(wb, ws, fileTitle, true);
 
         const base64 = XLSX.write(wb, { type: "base64" });
         const fileName = FileSystem.documentDirectory + `${fileTitle}.xlsx`;
 
-        FileSystem.writeAsStringAsync(fileName, base64, {
-            encoding: FileSystem.EncodingType.Base64,
-        }).then(() => {
-            Sharing.shareAsync(fileName);
-        });
+        console.log(rangeArray);
+
+        // FileSystem.writeAsStringAsync(fileName, base64, {
+        //     encoding: FileSystem.EncodingType.Base64,
+        // }).then(() => {
+        //     Sharing.shareAsync(fileName);
+        // });
     };
 
     return (
