@@ -1,14 +1,11 @@
 import { useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppState } from "@react-native-community/hooks";
 import { Header, Container, Timetable, Greeting, Error } from "../components";
 import { useStore } from "../store/useStore";
 import { format } from "@formkit/tempo";
 
 export const TimetableScreen = () => {
-    const { hasErrors, group, range, getCurrentSchedule, getAvailableDates, setRange, getSchedule, setGroup, checkUpdateDate } = useStore(
-        (state) => state
-    );
+    const { hasErrors, group, range, getCurrentSchedule, getAvailableDates, getSchedule, checkUpdateDate } = useStore((state) => state);
     const currentAppState = useAppState();
     const hasGroup = Object.keys(group).length !== 0;
 

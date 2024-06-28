@@ -2,12 +2,16 @@ import React, { ReactElement } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { ScheduleTypes } from "../../store/useStore.types";
+import { SharingButton } from "../SharingButton/SharingButton";
+import { useStore } from "../../store/useStore";
 
 export interface ITimetableProps {
     data: ScheduleTypes[];
 }
 
 export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
+    const { range } = useStore((state) => state);
+
     const renderItemHeader = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <>
             {info.item.pair_first ? (
@@ -26,15 +30,24 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
     const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.row}>{info.item.room}</Text>;
 
     const renderCard = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
-        <Card style={styles.card} status="basic" header={() => renderItemHeader(info)} footer={() => renderItemFooter(info)}>
+        <Card
+            style={info.index === data.length - 1 ? styles.cardNoMargin : styles.card}
+            status="basic"
+            header={() => renderItemHeader(info)}
+            footer={() => renderItemFooter(info)}
+        >
             <View style={styles.row}>
                 <Text style={styles.disciplines}>{info.item.disciplines}</Text>
                 <Text>{`— ${info.item.teacher}`}</Text>
             </View>
         </Card>
     );
-
-    return <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />;
+    return (
+        <>
+            <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />
+            {range.endDate && <SharingButton />}
+        </>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -44,6 +57,9 @@ const styles = StyleSheet.create({
     },
     card: {
         marginBottom: 8,
+    },
+    cardNoMargin: {
+        marginBottom: 4,
     },
     row: {
         paddingVertical: 10,
