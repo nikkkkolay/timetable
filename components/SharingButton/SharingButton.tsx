@@ -7,6 +7,7 @@ import * as Sharing from "expo-sharing";
 import XLSX from "xlsx-js-style";
 import { useStore } from "../../store/useStore";
 import { ScheduleTypes } from "../../store/useStore.types";
+import { getDatesInRange } from "./helpers";
 
 const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="share-outline" fill="#f2f5fa" />;
 
@@ -16,6 +17,7 @@ export const SharingButton = (): ReactElement => {
     const sheetCollector = (schedule: ScheduleTypes[], start: any, end: any, name: string) => {
         const rangeStart = format(start, "DD.MM.YYYY");
         const rangeEnd = format(end, "DD.MM.YYYY");
+        const rangeArray = getDatesInRange(start, end);
 
         const headerTitle = `Расписание группы ${name} ${rangeStart === rangeEnd ? `(${rangeStart})` : `(${rangeStart} - ${rangeEnd})`}`;
         const descriptionText = "Даты не указанные в таблице свободны от учебных занятий";
@@ -75,14 +77,16 @@ export const SharingButton = (): ReactElement => {
     };
 
     const shareExcel = async () => {
+        const dateStart = range.startDate && format(range.startDate, "DD.MM.YYYY");
+        const dateEnd = range.endDate && format(range.endDate, "DD.MM.YYYY");
         const sheet = sheetCollector(schedule, range.startDate, range.endDate, group.name);
 
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
         ws["!cols"] = [{ wch: 25 }, { wch: 20 }, { wch: 50 }, { wch: 30 }];
-        const fileTitle = `Расписание ${group.name}`;
+        const fileTitle = `${group.name} ${dateStart === dateEnd ? `${dateStart}` : `${dateStart} - ${dateEnd}`}`;
 
-        XLSX.utils.book_append_sheet(wb, ws, fileTitle, true);
+        XLSX.utils.book_append_sheet(wb, ws, group.name, true);
 
         const base64 = XLSX.write(wb, { type: "base64" });
         const fileName = FileSystem.documentDirectory + `${fileTitle}.xlsx`;
