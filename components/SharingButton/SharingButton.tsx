@@ -84,7 +84,7 @@ export const SharingButton = (): ReactElement => {
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
         ws["!cols"] = [{ wch: 25 }, { wch: 20 }, { wch: 50 }, { wch: 30 }];
-        const fileTitle = `${group.name} ${dateStart} - ${dateEnd}`;
+        const fileTitle = `${group.name} ${dateStart === dateEnd ? `${dateStart}` : `${dateStart} - ${dateEnd}`}`;
 
         XLSX.utils.book_append_sheet(wb, ws, group.name, true);
 
