@@ -38,7 +38,9 @@ export const useStore = create<IStore>((set) => ({
         set({ loading: true });
         try {
             const response = await api.get(`/`);
-            set({ updateDate: response.data[0].download, loading: false, hasErrors: false });
+            if (response.status === 200) {
+                set({ updateDate: response.data[0].download, loading: false, hasErrors: false });
+            }
         } catch (err) {
             set({ hasErrors: true, loading: false, schedule: [], availableDates: [], range: {} });
         }
