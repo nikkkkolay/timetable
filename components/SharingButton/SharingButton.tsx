@@ -19,8 +19,24 @@ export const SharingButton = (): ReactElement => {
         const rangeEnd = format(end, "DD.MM.YYYY");
         const rangeArray = getDatesInRange(start, end);
 
+        const daysOff = rangeArray.filter((el) => !schedule.find((item) => el === item.pair_date));
+
+        const scheduleArr = [
+            ...schedule,
+            ...daysOff.map((item) => ({
+                pair: "---",
+                pair_date: item,
+                pair_first: true,
+                pair_type: "---",
+                teacher: "---",
+                room: "---",
+                disciplines: "Нет учебных занятий",
+            })),
+        ];
+
+        scheduleArr.sort((a: any, b: any) => Number(a.pair_date.split(" ")[0] > Number(b.pair_date.split(" ")[0])));
+
         const headerTitle = `Расписание группы ${name} ${rangeStart === rangeEnd ? `(${rangeStart})` : `(${rangeStart} - ${rangeEnd})`}`;
-        const descriptionText = "Даты не указанные в таблице свободны от учебных занятий";
 
         const header = [
             {
@@ -29,13 +45,7 @@ export const SharingButton = (): ReactElement => {
             },
         ];
 
-        const description = [
-            {
-                v: descriptionText,
-            },
-        ];
-
-        const body = schedule.reduce((acc: any, item: any) => {
+        const body = scheduleArr.reduce((acc: any, item: any) => {
             if (item.pair_first) {
                 const date = [
                     {
@@ -57,11 +67,11 @@ export const SharingButton = (): ReactElement => {
                     s: cellStyle,
                 },
                 {
-                    v: item.teacher,
+                    v: `${item.disciplines} (${item.pair_type})`,
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
                 },
                 {
-                    v: `${item.disciplines} (${item.pair_type})`,
+                    v: item.teacher,
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
                 },
                 {
@@ -73,7 +83,7 @@ export const SharingButton = (): ReactElement => {
             return acc;
         }, []);
 
-        return [header, description, ...body];
+        return [header, ...body];
     };
 
     const shareExcel = async () => {
@@ -83,8 +93,8 @@ export const SharingButton = (): ReactElement => {
 
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
-        ws["!cols"] = [{ wch: 25 }, { wch: 20 }, { wch: 50 }, { wch: 30 }];
-        const fileTitle = `${group.name} ${dateStart === dateEnd ? `${dateStart}` : `${dateStart} - ${dateEnd}`}`;
+        ws["!cols"] = [{ wch: 30 }, { wch: 50 }, { wch: 30 }, { wch: 30 }];
+        const fileTitle = `${group.name} ${dateStart === dateEnd ? `(${dateStart})` : `(${dateStart} - ${dateEnd})`}`;
 
         XLSX.utils.book_append_sheet(wb, ws, group.name, true);
 
