@@ -1,7 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import { View, Pressable, Image, StyleSheet } from "react-native";
 import { Icon, Text, Button, IconElement, Tooltip } from "@ui-kitten/components";
-import { Calendar, ModalSettings } from "../index";
+import { Calendar } from "../Calendar/Calendar";
+import { ModalSettings } from "../ModalSettings/ModalSettings";
 import { useStore } from "../../store/useStore";
 
 const SettingsIcon = (): IconElement => <Icon style={styles.icon} name="settings-2-outline" />;

@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#ffffff",
         textTransform: "capitalize",
-        fontWeight: "600",
     },
     disciplines: {
         marginBottom: 6,

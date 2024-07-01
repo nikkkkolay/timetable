@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#ffffff",
         textTransform: "capitalize",
-        fontWeight: "600",
     },
     contentContainer: {
         paddingHorizontal: 0,

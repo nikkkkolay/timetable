@@ -1,5 +1,7 @@
 import { useState, useLayoutEffect } from "react";
-import { ListTimetable, EmptyTimetable, MSkeleton } from "../index";
+import { ListTimetable } from "../ListTimetable/ListTimetable";
+import { EmptyTimetable } from "../EmptyTimetable/EmptyTimetable";
+import { MSkeleton } from "../MSkeleton/MSkeleton";
 import { useStore } from "../../store/useStore";
 
 export const Timetable = () => {
