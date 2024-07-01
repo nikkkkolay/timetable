@@ -14,7 +14,7 @@ const data = new Array(1).fill({
 });
 
 export const EmptyTimetable = (): ReactElement => {
-    const { calendarIsActive, availableDates, setCalendarIsActive } = useStore((state) => state);
+    const { calendarIsActive, setCalendarIsActive } = useStore((state) => state);
 
     const renderItemHeader = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
         <View style={styles.week}>
@@ -52,7 +52,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     pair_date: {
+        fontSize: 16,
         color: "#ffffff",
+        textTransform: "capitalize",
+        fontWeight: "600",
     },
     contentContainer: {
         paddingHorizontal: 0,
