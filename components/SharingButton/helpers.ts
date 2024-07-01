@@ -8,7 +8,7 @@ export const getDatesInRange = (startDate: string, endDate: string) => {
     const days = [];
 
     while (currentDate <= end) {
-        days.push(format(new Date(currentDate), `D MMMM (dddd)`));
+        days.push(format(new Date(currentDate), `D MMMM (dddd)`, "ru"));
         currentDate.setDate(currentDate.getDate() + 1);
     }
 
