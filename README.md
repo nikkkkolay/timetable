@@ -21,7 +21,7 @@
 EXPO_PUBLIC_API_URL="API URL"
 ```
 
-Создать eas.json файл в корне
+Создать eas.json файл в корне и добавить API URL
 
 ```sh
 {
