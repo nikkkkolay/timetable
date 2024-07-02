@@ -2,6 +2,7 @@ import { api } from "../http";
 import { create } from "zustand";
 import { format } from "@formkit/tempo";
 import { IStore } from "./useStore.types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useStore = create<IStore>((set) => ({
     modalSettingsIsActive: false,
@@ -97,7 +98,8 @@ export const useStore = create<IStore>((set) => ({
             const response = await api.get(`/schedule-current/${uid}`);
             set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
-            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false });
+            await AsyncStorage.removeItem("group");
+            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false, group: {} });
         }
     },
 
