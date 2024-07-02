@@ -14,6 +14,11 @@ const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="share-ou
 export const SharingButton = (): ReactElement => {
     const { fetchingTimetable, schedule, range, group } = useStore((state) => state);
 
+    const setHeightRows = (sheet: ScheduleTypes[]) =>
+        sheet.map(() => ({
+            hpt: 5,
+        }));
+
     const sheetCollector = (schedule: ScheduleTypes[], start: any, end: any, name: string) => {
         const rangeStart = format(start, "DD.MM.YYYY");
         const rangeEnd = format(end, "DD.MM.YYYY");
@@ -94,7 +99,7 @@ export const SharingButton = (): ReactElement => {
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
         ws["!cols"] = [{ wch: 30 }, { wch: 50 }, { wch: 30 }, { wch: 30 }];
-        ws["!margins"] = { header: 0.5, footer: 0.5, left: 0.5, right: 0.5, top: 0.5, bottom: 0.5 };
+        ws["!rows"] = setHeightRows(sheet);
 
         const fileTitle = `${group.name} ${dateStart === dateEnd ? `(${dateStart})` : `(${dateStart} - ${dateEnd})`}`;
 
