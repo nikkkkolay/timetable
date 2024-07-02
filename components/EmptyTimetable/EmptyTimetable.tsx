@@ -18,7 +18,7 @@ export const EmptyTimetable = (): ReactElement => {
 
     const renderItemHeader = (info: ListRenderItemInfo<IEmpty>): ReactElement => (
         <View style={styles.week}>
-            <Text style={styles.pair_date}>{format({ date: new Date(), format: "D", tz: "Europe/Moscow" })}</Text>
+            <Text style={styles.pair_date}>{format({ date: new Date(), format: "D MMMM (dddd)", tz: "Europe/Moscow" })}</Text>
         </View>
     );
 
