@@ -8,6 +8,7 @@ export const useStore = create<IStore>((set) => ({
     calendarIsActive: false,
     hasErrors: false,
     loading: false,
+    connection: false,
     fetchingTimetable: false,
     updateDate: "",
     faculties: [],
@@ -34,8 +35,11 @@ export const useStore = create<IStore>((set) => ({
         set({ group: group });
     },
 
+    checkConnection: (state) => {
+        set({ connection: state });
+    },
+
     checkUpdateDate: async () => {
-        set({ loading: true });
         try {
             const response = await api.get(`/`);
             if (response.status === 200) {
