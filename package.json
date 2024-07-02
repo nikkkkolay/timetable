@@ -36,8 +36,7 @@
     "react-native-web": "~0.19.10",
     "xlsx": "https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz",
     "xlsx-js-style": "^1.2.0",
-    "zustand": "^4.5.2",
-    "@react-native-community/netinfo": "11.3.1"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

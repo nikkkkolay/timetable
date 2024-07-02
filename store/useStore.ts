@@ -8,7 +8,6 @@ export const useStore = create<IStore>((set) => ({
     calendarIsActive: false,
     hasErrors: false,
     loading: false,
-    connection: false,
     fetchingTimetable: false,
     updateDate: "",
     faculties: [],
@@ -35,15 +34,14 @@ export const useStore = create<IStore>((set) => ({
         set({ group: group });
     },
 
-    checkConnection: (state) => {
-        set({ connection: state });
-    },
-
     checkUpdateDate: async () => {
+        set({ loading: true });
         try {
             const response = await api.get(`/`);
-            if (response.status === 200) {
-                set({ updateDate: response.data[0].download, loading: false, hasErrors: false });
+            if (response.status !== 200) {
+                set({ hasErrors: true, loading: false, schedule: [], availableDates: [], range: {} });
+            } else {
+                set({ hasErrors: false, updateDate: response.data[0].download, loading: false });
             }
         } catch (err) {
             set({ hasErrors: true, loading: false, schedule: [], availableDates: [], range: {} });

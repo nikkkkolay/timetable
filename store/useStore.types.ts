@@ -29,7 +29,6 @@ export type RangeTypes = {
 
 export interface IStore {
     loading: boolean;
-    connection: boolean;
     fetchingTimetable: boolean;
     hasErrors: boolean;
     modalSettingsIsActive: boolean;
@@ -45,7 +44,6 @@ export interface IStore {
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;
-    checkConnection: (state: boolean) => void;
     getCurrentSchedule: (uid: string) => void;
     getGroups: (fac_id: number, course_id: number) => void;
     getSchedule: (uid: string, start: string, end: string) => void;
