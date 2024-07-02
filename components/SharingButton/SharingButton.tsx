@@ -24,13 +24,13 @@ export const SharingButton = (): ReactElement => {
         const scheduleArr = [
             ...schedule,
             ...daysOff.map((item) => ({
-                pair: "---",
                 pair_date: item,
                 pair_first: true,
+                pair: "Нет учебных занятий",
                 pair_type: "---",
                 teacher: "---",
                 room: "---",
-                disciplines: "Нет учебных занятий",
+                disciplines: "---",
             })),
         ];
 
@@ -67,7 +67,7 @@ export const SharingButton = (): ReactElement => {
                     s: cellStyle,
                 },
                 {
-                    v: `${item.disciplines} (${item.pair_type})`,
+                    v: `${item.disciplines} ${item.pair_type !== "---" && item.pair_type}`,
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
                 },
                 {
@@ -94,6 +94,8 @@ export const SharingButton = (): ReactElement => {
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
         ws["!cols"] = [{ wch: 30 }, { wch: 50 }, { wch: 30 }, { wch: 30 }];
+        ws["!margins"] = { top: 0.5, bottom: 0.5, left: 0.5, right: 0.5 };
+
         const fileTitle = `${group.name} ${dateStart === dateEnd ? `(${dateStart})` : `(${dateStart} - ${dateEnd})`}`;
 
         XLSX.utils.book_append_sheet(wb, ws, group.name, true);
