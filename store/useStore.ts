@@ -115,6 +115,7 @@ export const useStore = create<IStore>((set) => ({
         set({ fetchingTimetable: true });
         try {
             const response = await api.get(`/schedule/${uid}/${start}/${end}`);
+
             set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
             set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false });

@@ -34,7 +34,7 @@ export const SharingButton = (): ReactElement => {
             })),
         ];
 
-        scheduleArr.sort((a: any, b: any) => Number(a.pair_date.split(" ")[0] > Number(b.pair_date.split(" ")[0])));
+        scheduleArr.sort((a: ScheduleTypes, b: ScheduleTypes) => Number(a.pair_date.split(" ")[0]) - Number(b.pair_date.split(" ")[0]));
 
         const headerTitle = `Расписание группы ${name} ${rangeStart === rangeEnd ? `(${rangeStart})` : `(${rangeStart} - ${rangeEnd})`}`;
 
@@ -45,7 +45,7 @@ export const SharingButton = (): ReactElement => {
             },
         ];
 
-        const body = scheduleArr.reduce((acc: any, item: any) => {
+        const body = scheduleArr.reduce((acc: ScheduleTypes[] | any, item: ScheduleTypes) => {
             if (item.pair_first) {
                 const date = [
                     {

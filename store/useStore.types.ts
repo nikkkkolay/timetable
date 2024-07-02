@@ -12,7 +12,7 @@ export type GroupTypes = {
 };
 
 export type ScheduleTypes = {
-    id: number;
+    id?: number;
     pair_date: string;
     pair_first: boolean;
     pair: string;
