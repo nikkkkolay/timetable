@@ -46,7 +46,7 @@ export const Calendar = () => {
 
         return (
             <View style={[styles.dayContainer, style.container]}>
-                <Text style={style.text}>{info.date.getDate()}</Text>
+                <Text style={style.text}>{format({ date: info.date, format: "D", tz: "Europe/Moscow" })}</Text>
                 {!workDay && emptySchedule && (
                     <View style={styles.dayOff}>
                         <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
