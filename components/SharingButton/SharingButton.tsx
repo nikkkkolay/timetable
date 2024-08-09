@@ -7,7 +7,7 @@ import * as Sharing from "expo-sharing";
 import XLSX from "xlsx-js-style";
 import { useStore } from "../../store/useStore";
 import { ScheduleTypes } from "../../store/useStore.types";
-import { getDatesInRange } from "./helpers";
+// import { getDatesInRange } from "../../store/helpers";
 
 const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="share-outline" fill="#f2f5fa" />;
 
@@ -22,24 +22,6 @@ export const SharingButton = (): ReactElement => {
     const sheetCollector = (schedule: ScheduleTypes[], start: any, end: any, name: string) => {
         const rangeStart = format(start, "DD.MM.YYYY");
         const rangeEnd = format(end, "DD.MM.YYYY");
-        const rangeArray = getDatesInRange(start, end);
-
-        const daysOff = rangeArray.filter((el) => !schedule.find((item) => el === item.pair_date));
-
-        const scheduleArr = [
-            ...schedule,
-            ...daysOff.map((item) => ({
-                pair_date: item,
-                pair_first: true,
-                pair: "Нет учебных занятий",
-                pair_type: "---",
-                teacher: "---",
-                room: "---",
-                disciplines: "---",
-            })),
-        ];
-
-        scheduleArr.sort((a: ScheduleTypes, b: ScheduleTypes) => Number(a.pair_date.split(" ")[0]) - Number(b.pair_date.split(" ")[0]));
 
         const headerTitle = `Расписание группы ${name} ${rangeStart === rangeEnd ? `(${rangeStart})` : `(${rangeStart} - ${rangeEnd})`}`;
 
@@ -50,7 +32,7 @@ export const SharingButton = (): ReactElement => {
             },
         ];
 
-        const body = scheduleArr.reduce((acc: ScheduleTypes[] | any, item: ScheduleTypes) => {
+        const body = schedule.reduce((acc: ScheduleTypes[] | any, item: ScheduleTypes) => {
             if (item.pair_first) {
                 const date = [
                     {

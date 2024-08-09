@@ -28,10 +28,8 @@ export const Calendar = () => {
 
     const selectionRange = (range: any) => {
         setRange(range);
-        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-        if (rangeStart && rangeEnd && group.uid) {
-            getSchedule(group.uid, rangeStart, rangeEnd);
+        if (range.startDate && range.endDate && group.uid) {
+            getSchedule(group.uid, range.startDate, range.endDate);
         }
     };
 
