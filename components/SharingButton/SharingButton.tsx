@@ -16,7 +16,7 @@ export const SharingButton = (): ReactElement => {
 
     const setHeightRows = (sheet: ScheduleTypes[]) =>
         sheet.map(() => ({
-            hpt: 5,
+            hpt: 30,
         }));
 
     const sheetCollector = (schedule: ScheduleTypes[], start: any, end: any, name: string) => {
