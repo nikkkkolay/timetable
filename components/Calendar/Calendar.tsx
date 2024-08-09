@@ -40,21 +40,21 @@ export const Calendar = () => {
         return check;
     };
 
-    const renderDay = (info: any, style: StyleType) => {
-        const workDay = filter(info.date);
-        const emptySchedule = info.date < endDate || info.date < new Date();
+    // const renderDay = (info: any, style: StyleType) => {
+    //     const workDay = filter(info.date);
+    //     const emptySchedule = info.date < endDate || info.date < new Date();
 
-        return (
-            <View style={[styles.dayContainer, style.container]}>
-                <Text style={style.text}>{format({ date: info.date, format: "D", tz: "Europe/Moscow" })}</Text>
-                {!workDay && emptySchedule && (
-                    <View style={styles.dayOff}>
-                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
-                    </View>
-                )}
-            </View>
-        );
-    };
+    //     return (
+    //         <View style={[styles.dayContainer, style.container]}>
+    //             <Text style={style.text}>{format({ date: info.date, format: "D", tz: "Europe/Moscow" })}</Text>
+    //             {!workDay && emptySchedule && (
+    //                 <View style={styles.dayOff}>
+    //                     <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
+    //                 </View>
+    //             )}
+    //         </View>
+    //     );
+    // };
 
     return (
         <RangeCalendar
@@ -64,7 +64,7 @@ export const Calendar = () => {
             dateService={localeDateService}
             min={startDate}
             max={endDate}
-            renderDay={renderDay}
+            // renderDay={renderDay}
             filter={filter}
         />
     );
