@@ -19,22 +19,22 @@ export const TimetableScreen = () => {
         setData();
     }, [hasErrors]);
 
-    useEffect(() => {
-        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-        if (currentAppState === "active") {
-            async function getGroupId() {
-                await checkUpdateDate();
-                if (!hasErrors) {
-                    if (rangeStart && rangeEnd && group.uid) {
-                        getAvailableDates(group.uid);
-                        getSchedule(group.uid, rangeStart, rangeEnd);
-                    }
-                }
-            }
-            getGroupId();
-        }
-    }, [currentAppState]);
+    // useEffect(() => {
+    //     const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
+    //     const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
+    //     if (currentAppState === "active") {
+    //         async function getGroupId() {
+    //             await checkUpdateDate();
+    //             if (!hasErrors) {
+    //                 if (rangeStart && rangeEnd && group.uid) {
+    //                     getAvailableDates(group.uid);
+    //                     getSchedule(group.uid, rangeStart, rangeEnd);
+    //                 }
+    //             }
+    //         }
+    //         getGroupId();
+    //     }
+    // }, [currentAppState]);
 
     return (
         <Container>
