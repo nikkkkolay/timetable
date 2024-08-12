@@ -21,13 +21,19 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
             ) : (
                 <View style={styles.accent}></View>
             )}
-            <View style={styles.row}>
-                <Text style={styles.pair} category="s2">{`${info.item.pair} (${info.item.pair_type})`}</Text>
-            </View>
+            {info.item.pair && (
+                <View style={styles.row}>
+                    <Text style={styles.pair} category="s2">
+                        {`${info.item.pair} (${info.item.pair_type})`}
+                    </Text>
+                </View>
+            )}
         </>
     );
 
-    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => <Text style={styles.row}>{info.item.room}</Text>;
+    const renderItemFooter = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => {
+        return <View>{info.item.room && <Text style={styles.row}>{info.item.room}</Text>}</View>;
+    };
 
     const renderCard = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <Card
@@ -36,10 +42,16 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
             header={() => renderItemHeader(info)}
             footer={() => renderItemFooter(info)}
         >
-            <View style={styles.row}>
-                <Text style={styles.disciplines}>{info.item.disciplines}</Text>
-                <Text>{`— ${info.item.teacher}`}</Text>
-            </View>
+            {info.item.disciplines ? (
+                <View style={styles.row}>
+                    <Text>{info.item.disciplines}</Text>
+                    <Text style={styles.teacher}>{`— ${info.item.teacher}`}</Text>
+                </View>
+            ) : (
+                <View style={styles.row}>
+                    <Text style={styles.empty}>{"— Нет учебных занятий"}</Text>
+                </View>
+            )}
         </Card>
     );
     return (
@@ -83,7 +95,11 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         textTransform: "capitalize",
     },
-    disciplines: {
+    teacher: {
+        marginTop: 6,
+    },
+    empty: {
+        marginTop: 6,
         marginBottom: 6,
     },
     contentContainer: {

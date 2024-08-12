@@ -131,11 +131,11 @@ export const useStore = create<IStore>((set) => ({
                 ...daysOff.map((item) => ({
                     pair_date: item,
                     pair_first: true,
-                    pair: "Нет учебных занятий",
-                    pair_type: "---",
-                    teacher: "---",
-                    room: "---",
-                    disciplines: "---",
+                    pair: null,
+                    pair_type: null,
+                    teacher: null,
+                    room: null,
+                    disciplines: null,
                 })),
             ];
 

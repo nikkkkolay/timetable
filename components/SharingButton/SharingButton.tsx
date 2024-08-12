@@ -50,19 +50,19 @@ export const SharingButton = (): ReactElement => {
 
             const pair = [
                 {
-                    v: item.pair,
+                    v: item.pair ? item.pair : "Нет учебных занятий",
                     s: cellStyle,
                 },
                 {
-                    v: `${item.disciplines} ${item.pair_type !== "---" ? item.pair_type : ""}`,
+                    v: `${item.disciplines ? item.disciplines : ""} ${item.pair_type ? item.pair_type : "---"}`,
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
                 },
                 {
-                    v: item.teacher,
+                    v: item.teacher ? item.teacher : "---",
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top", wrapText: true } },
                 },
                 {
-                    v: item.room,
+                    v: item.room ? item.room : "---",
                     s: { ...cellStyle, alignment: { horizontal: "left", vertical: "top" } },
                 },
             ];
