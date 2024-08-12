@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
+import { format } from "@formkit/tempo";
 import { ScheduleTypes } from "../../store/useStore.types";
 import { SharingButton } from "../SharingButton/SharingButton";
 import { useStore } from "../../store/useStore";
@@ -16,7 +17,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
         <>
             {info.item.pair_first ? (
                 <View style={styles.week}>
-                    <Text style={styles.pair_date}>{info.item.pair_date}</Text>
+                    <Text style={styles.pair_date}>{format(info.item.pair_date, "D MMMM (dddd)")}</Text>
                 </View>
             ) : (
                 <View style={styles.accent}></View>
