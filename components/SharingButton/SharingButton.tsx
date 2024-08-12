@@ -97,19 +97,11 @@ export const SharingButton = (): ReactElement => {
         });
     };
 
-    return (
-        <Button
-            onPress={() => shareExcel()}
-            style={styles.downloadButton}
-            accessoryLeft={DownloadIcon}
-            status="warning"
-            disabled={fetchingTimetable}
-        />
-    );
+    return <Button onPress={() => shareExcel()} style={styles.button} accessoryLeft={DownloadIcon} status="warning" disabled={fetchingTimetable} />;
 };
 
 const styles = StyleSheet.create({
-    downloadButton: {
+    button: {
         position: "absolute",
         right: 15,
         bottom: 14,
