@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import { format } from "@formkit/tempo";
 import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType } from "@ui-kitten/components";
 import { i18n } from "./i18n";
@@ -14,6 +13,18 @@ const ArrowIcon = (): IconElement => <Icon style={styles.icon} name="chevron-rig
 
 const CalendarIcon = (arrowProps: any): IconElement => {
     return <Button onPress={arrowProps} style={styles.button} appearance="ghost" accessoryLeft={ArrowIcon}></Button>;
+};
+
+const formatDate = (date: string) => {
+    let d = new Date(date);
+    let month = "" + (d.getMonth() + 1);
+    let day = "" + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
 };
 
 export const Calendar = () => {
@@ -33,26 +44,22 @@ export const Calendar = () => {
         }
     };
 
-    const filter = (date: Date): boolean => {
-        const check = availableDates.includes(format(date, "YYYY-MM-DD"));
-        return check;
+    const renderDay = (info: any, style: StyleType) => {
+        const workDay = availableDates.includes(formatDate(info.date));
+        const emptySchedule = info.date < endDate || info.date < new Date();
+        const date = new Date(info.date).getDate();
+
+        return (
+            <View style={[styles.dayContainer, style.container]}>
+                <Text style={style.text}>{date}</Text>
+                {!workDay && emptySchedule && (
+                    <View style={styles.dayOff}>
+                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
+                    </View>
+                )}
+            </View>
+        );
     };
-
-    // const renderDay = (info: any, style: StyleType) => {
-    //     const workDay = filter(info.date);
-    //     const emptySchedule = info.date < endDate || info.date < new Date();
-
-    //     return (
-    //         <View style={[styles.dayContainer, style.container]}>
-    //             <Text style={style.text}>{format({ date: info.date, format: "D", tz: "Europe/Moscow" })}</Text>
-    //             {!workDay && emptySchedule && (
-    //                 <View style={styles.dayOff}>
-    //                     <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
-    //                 </View>
-    //             )}
-    //         </View>
-    //     );
-    // };
 
     return (
         <RangeCalendar
@@ -62,8 +69,7 @@ export const Calendar = () => {
             dateService={localeDateService}
             min={startDate}
             max={endDate}
-            // renderDay={renderDay}
-            filter={filter}
+            renderDay={renderDay}
         />
     );
 };
