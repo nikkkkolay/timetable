@@ -1,8 +1,9 @@
+import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType } from "@ui-kitten/components";
 import { i18n } from "./i18n";
-import { useEffect } from "react";
+import { format } from "@formkit/tempo";
 
 const localeDateService = new NativeDateService("ru", {
     i18n,
@@ -39,27 +40,32 @@ export const Calendar = () => {
 
     const selectionRange = (range: any) => {
         setRange(range);
-        if (range.startDate && range.endDate && group.uid) {
-            getSchedule(group.uid, range.startDate, range.endDate);
+        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
+        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
+        if (rangeStart && rangeEnd && group.uid) {
+            getSchedule(group.uid, rangeStart, rangeEnd);
         }
     };
 
-    const renderDay = (info: any, style: StyleType) => {
-        const workDay = availableDates.includes(formatDate(info.date));
-        const emptySchedule = info.date < endDate || info.date < new Date();
-        const date = new Date(info.date).getDate();
+    const renderDay = useCallback(
+        (info: any, style: StyleType) => {
+            const workDay = availableDates.includes(formatDate(info.date));
+            const emptySchedule = info.date < endDate || info.date < new Date();
+            const date = new Date(info.date).getDate();
 
-        return (
-            <View style={[styles.dayContainer, style.container]}>
-                <Text style={style.text}>{date}</Text>
-                {!workDay && emptySchedule && (
-                    <View style={styles.dayOff}>
-                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
-                    </View>
-                )}
-            </View>
-        );
-    };
+            return (
+                <View style={[styles.dayContainer, style.container]}>
+                    <Text style={style.text}>{date}</Text>
+                    {!workDay && emptySchedule && (
+                        <View style={styles.dayOff}>
+                            <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
+                        </View>
+                    )}
+                </View>
+            );
+        },
+        [availableDates]
+    );
 
     return (
         <RangeCalendar
