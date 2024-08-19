@@ -35,8 +35,8 @@ export const Calendar = () => {
     const endDate = new Date(availableDates[availableDates.length - 1]);
 
     useEffect(() => {
-        if (group) getAvailableDates(group.uid);
-    }, []);
+        if (group && availableDates.length === 0) getAvailableDates(group.uid);
+    }, [group]);
 
     const selectionRange = useCallback(
         (range: any) => {

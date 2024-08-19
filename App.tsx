@@ -20,9 +20,7 @@ export default () => {
         async function checkData() {
             await checkUpdateDate();
             const value = await AsyncStorage.getItem("group");
-            if (value !== null) {
-                await setGroup(JSON.parse(value));
-            }
+            if (value !== null) await setGroup(JSON.parse(value));
         }
         checkData();
     }, []);
