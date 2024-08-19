@@ -13,14 +13,16 @@ export const Header = () => {
     const { modalSettingsIsActive, calendarIsActive, hasErrors, group, fetchingTimetable, loading, setModalSettingsIsActive, setCalendarIsActive } =
         useStore((state) => state);
 
-    const hasGroup = Object.keys(group).length !== 0;
-
     const nameToggle = (): ReactElement => (
         <Pressable style={styles.nameContainer} onPress={() => setVisibleTooltip(true)}>
-            <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle">
-                {group.name}
-            </Text>
-            {group.name && <Icon style={styles.info} name="info-outline" />}
+            {group && (
+                <>
+                    <Text category="h6" style={styles.name} numberOfLines={1} ellipsizeMode="middle">
+                        {group.name}
+                    </Text>
+                    <Icon style={styles.info} name="info-outline" />
+                </>
+            )}
         </Pressable>
     );
 
@@ -29,29 +31,30 @@ export const Header = () => {
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require("./logo.png")} />
-
-                    <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
-                        {group.specialty}
-                    </Tooltip>
+                    {group && (
+                        <Tooltip style={styles.tooltip} anchor={nameToggle} visible={visibleTooltip} onBackdropPress={() => setVisibleTooltip(false)}>
+                            {group.specialty}
+                        </Tooltip>
+                    )}
                 </View>
                 <View style={styles.buttonsContainer}>
-                    {hasGroup && (
-                        <Button
-                            onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
-                            style={styles.button}
-                            appearance="ghost"
-                            accessoryLeft={SettingsIcon}
-                            disabled={hasErrors || fetchingTimetable || loading}
-                        />
-                    )}
-                    {hasGroup && (
-                        <Button
-                            onPress={() => setCalendarIsActive(!calendarIsActive)}
-                            style={styles.button}
-                            appearance="ghost"
-                            accessoryLeft={CalendarIcon}
-                            disabled={hasErrors || fetchingTimetable || loading}
-                        />
+                    {group && (
+                        <>
+                            <Button
+                                onPress={() => setModalSettingsIsActive(!modalSettingsIsActive)}
+                                style={styles.button}
+                                appearance="ghost"
+                                accessoryLeft={SettingsIcon}
+                                disabled={hasErrors || fetchingTimetable || loading}
+                            />
+                            <Button
+                                onPress={() => setCalendarIsActive(!calendarIsActive)}
+                                style={styles.button}
+                                appearance="ghost"
+                                accessoryLeft={CalendarIcon}
+                                disabled={hasErrors || fetchingTimetable || loading}
+                            />
+                        </>
                     )}
                 </View>
             </View>

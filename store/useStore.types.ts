@@ -39,7 +39,7 @@ export interface IStore {
     groups: ChoiceTypes[];
     availableDates: string[];
     schedule: ScheduleTypes[];
-    group: GroupTypes | Record<string, never>;
+    group: GroupTypes | null;
     range: RangeTypes | Record<string, never>;
     checkUpdateDate: () => void;
     getFaculties: () => void;

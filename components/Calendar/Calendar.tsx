@@ -35,17 +35,20 @@ export const Calendar = () => {
     const endDate = new Date(availableDates[availableDates.length - 1]);
 
     useEffect(() => {
-        getAvailableDates(group.uid);
+        if (group) getAvailableDates(group.uid);
     }, []);
 
-    const selectionRange = (range: any) => {
-        setRange(range);
-        const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-        const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-        if (rangeStart && rangeEnd && group.uid) {
-            getSchedule(group.uid, rangeStart, rangeEnd);
-        }
-    };
+    const selectionRange = useCallback(
+        (range: any) => {
+            setRange(range);
+            const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
+            const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
+            if (rangeStart && rangeEnd && group) {
+                getSchedule(group.uid, rangeStart, rangeEnd);
+            }
+        },
+        [group, getSchedule, setRange]
+    );
 
     const renderDay = useCallback(
         (info: any, style: StyleType) => {

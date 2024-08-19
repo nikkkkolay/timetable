@@ -4,11 +4,10 @@ import { useStore } from "../store/useStore";
 
 export const TimetableScreen = () => {
     const { hasErrors, group, getCurrentSchedule, getAvailableDates } = useStore((state) => state);
-    const hasGroup = Object.keys(group).length !== 0;
 
     useEffect(() => {
         async function setData() {
-            if (!hasErrors && hasGroup) {
+            if (!hasErrors && group) {
                 await getCurrentSchedule(group.uid);
                 await getAvailableDates(group.uid);
             }
@@ -19,8 +18,8 @@ export const TimetableScreen = () => {
     return (
         <Container>
             <Header />
-            {!hasErrors && !hasGroup && <Greeting />}
-            {!hasErrors && hasGroup && <Timetable />}
+            {!hasErrors && !group && <Greeting />}
+            {!hasErrors && group && <Timetable />}
             {hasErrors && <Error />}
         </Container>
     );

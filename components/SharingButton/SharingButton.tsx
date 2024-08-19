@@ -7,7 +7,6 @@ import * as Sharing from "expo-sharing";
 import XLSX from "xlsx-js-style";
 import { useStore } from "../../store/useStore";
 import { ScheduleTypes } from "../../store/useStore.types";
-// import { getDatesInRange } from "../../store/helpers";
 
 const DownloadIcon = (): IconElement => <Icon style={styles.icon} name="share-outline" fill="#f2f5fa" />;
 
@@ -74,18 +73,21 @@ export const SharingButton = (): ReactElement => {
     };
 
     const shareExcel = async () => {
+        if (!group) return;
+
         const dateStart = range.startDate && format(range.startDate, "DD.MM.YYYY");
         const dateEnd = range.endDate && format(range.endDate, "DD.MM.YYYY");
-        const sheet = sheetCollector(schedule, range.startDate, range.endDate, group.name);
+        const groupName = group.name;
+        const sheet = sheetCollector(schedule, range.startDate, range.endDate, groupName);
 
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(sheet);
         ws["!cols"] = [{ wch: 30 }, { wch: 50 }, { wch: 30 }, { wch: 30 }];
         ws["!rows"] = setHeightRows(sheet);
 
-        const fileTitle = `${group.name} ${dateStart === dateEnd ? `(${dateStart})` : `(${dateStart} - ${dateEnd})`}`;
+        const fileTitle = `${groupName} ${dateStart === dateEnd ? `(${dateStart})` : `(${dateStart} - ${dateEnd})`}`;
 
-        XLSX.utils.book_append_sheet(wb, ws, group.name, true);
+        XLSX.utils.book_append_sheet(wb, ws, groupName, true);
 
         const base64 = XLSX.write(wb, { type: "base64" });
         const fileName = FileSystem.documentDirectory + `${fileTitle}.xlsx`;

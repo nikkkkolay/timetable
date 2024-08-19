@@ -18,7 +18,7 @@ export const useStore = create<IStore>((set) => ({
     availableDates: [],
     schedule: [],
     range: {},
-    group: {},
+    group: null,
 
     setModalSettingsIsActive: (state) => {
         set({ modalSettingsIsActive: state });
@@ -100,7 +100,7 @@ export const useStore = create<IStore>((set) => ({
             set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
             await AsyncStorage.removeItem("group");
-            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false, group: {} });
+            set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false, group: null });
         }
     },
 
