@@ -35,7 +35,7 @@ export const SharingButton = (): ReactElement => {
             if (item.pair_first) {
                 const date = [
                     {
-                        v: item.pair_date,
+                        v: format(item.pair_date, "D MMMM (dddd)"),
                         s: {
                             fill: { fgColor: { theme: 4 } },
                             font: { sz: 12, bold: true, color: { rgb: "FFFFFF" } },
