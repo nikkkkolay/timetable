@@ -29,7 +29,7 @@ const formatDate = (date: string) => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, range, getSchedule, getAvailableDates, setRange } = useStore((state) => state);
+    const { availableDates, group, range, rangeList, getSchedule, getAvailableDates, setRange, createRangeList } = useStore((state) => state);
 
     const startDate = new Date(availableDates[0]);
     const endDate = new Date(availableDates[availableDates.length - 1]);
@@ -44,6 +44,7 @@ export const Calendar = () => {
             const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
             const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
             if (rangeStart && rangeEnd && group) {
+                createRangeList(rangeStart, rangeEnd);
                 getSchedule(group.uid, rangeStart, rangeEnd);
             }
         },
@@ -54,7 +55,7 @@ export const Calendar = () => {
         (info: any, style: StyleType) => {
             const workDay = availableDates.includes(formatDate(info.date));
             const emptySchedule = info.date < endDate || info.date < new Date();
-            const date = new Date(info.date).getDate();
+            const date = new Date(info.date).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric" });
 
             return (
                 <View style={[styles.dayContainer, style.container]}>

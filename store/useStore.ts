@@ -2,10 +2,9 @@ import { api } from "../http";
 import { create } from "zustand";
 import { format } from "@formkit/tempo";
 import { IStore, ScheduleTypes } from "./useStore.types";
-import { getDatesInRange } from "./helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const useStore = create<IStore>((set) => ({
+export const useStore = create<IStore>((set, get) => ({
     modalSettingsIsActive: false,
     calendarIsActive: false,
     hasErrors: false,
@@ -18,6 +17,7 @@ export const useStore = create<IStore>((set) => ({
     availableDates: [],
     schedule: [],
     range: {},
+    rangeList: [],
     group: null,
 
     setModalSettingsIsActive: (state) => {
@@ -34,6 +34,21 @@ export const useStore = create<IStore>((set) => ({
 
     setGroup: (group) => {
         set({ group: group });
+    },
+
+    createRangeList: (start: string, end: string) => {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        let currentDate = startDate;
+        const days = [];
+
+        while (currentDate <= endDate) {
+            days.push(format({ date: currentDate, format: "YYYY-MM-DDTHH:mm:ssZ", tz: "Europe/Moscow" }));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        set({ rangeList: days });
     },
 
     checkUpdateDate: async () => {
@@ -120,9 +135,11 @@ export const useStore = create<IStore>((set) => ({
         set({ fetchingTimetable: true });
         try {
             const response = await api.get(`/schedule/${uid}/${start}/${end}`);
-            const rangeArray = getDatesInRange(start, end);
+            const rangeList = get().rangeList;
 
-            const daysOff = rangeArray.filter((date) => !response.data.some((obj: any) => obj.pair_date === date));
+            const daysOff = rangeList.filter((date) => !response.data.some((obj: any) => obj.pair_date === date));
+
+            console.log(daysOff);
 
             const scheduleArr = [
                 ...response.data,

@@ -41,6 +41,7 @@ export interface IStore {
     schedule: ScheduleTypes[];
     group: GroupTypes | null;
     range: RangeTypes | Record<string, never>;
+    rangeList: string[];
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;
@@ -52,4 +53,5 @@ export interface IStore {
     setModalSettingsIsActive: (state: boolean) => void;
     setCalendarIsActive: (state: boolean) => void;
     setRange: (range: any) => void;
+    createRangeList: (startDate: string, endDate: string) => void;
 }
