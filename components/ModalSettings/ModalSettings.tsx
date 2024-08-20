@@ -60,7 +60,7 @@ export const ModalSettings = (): ReactElement => {
     };
 
     useEffect(() => {
-        if (modalSettingsIsActive && !settingsState) {
+        if (modalSettingsIsActive && !settingsState && !courses.length && !faculties.length) {
             getFaculties();
             getCourses();
         }
