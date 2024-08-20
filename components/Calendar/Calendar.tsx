@@ -55,7 +55,7 @@ export const Calendar = () => {
         (info: any, style: StyleType) => {
             const workDay = availableDates.includes(formatDate(info.date));
             const emptySchedule = info.date < endDate || info.date < new Date();
-            const date = new Date(info.date).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric" });
+            const date = new Date(info.date).getDate();
 
             return (
                 <View style={[styles.dayContainer, style.container]}>
