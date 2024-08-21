@@ -17,7 +17,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
         <>
             {info.item.pair_first ? (
                 <View style={styles.week}>
-                    <Text style={styles.pair_date}>{format(info.item.pair_date, "D MMMM (dddd)")}</Text>
+                    <Text style={styles.pair_date}>{format({ date: info.item.pair_date, format: "D MMMM (dddd)", tz: "Europe/Moscow" })}</Text>
                 </View>
             ) : (
                 <View style={styles.accent}></View>

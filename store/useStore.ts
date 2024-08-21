@@ -44,7 +44,7 @@ export const useStore = create<IStore>((set, get) => ({
         const days = [];
 
         while (currentDate <= endDate) {
-            days.push(format({ date: currentDate, format: "YYYY-MM-DDTHH:mm:ssZ", tz: "Europe/Moscow" }));
+            days.push(format(currentDate, "YYYY-MM-DDTHH:mm:ssZ"));
             currentDate.setDate(currentDate.getDate() + 1);
         }
 
@@ -122,10 +122,7 @@ export const useStore = create<IStore>((set, get) => ({
     getAvailableDates: async (uid) => {
         try {
             const response = await api.get(`/schedule-dates/${uid}/`);
-            const availableDates = response.data.reduce((acc: [], item: string) => {
-                return [...acc, format(item, "YYYY-MM-DD")];
-            }, []);
-            set({ availableDates: availableDates });
+            set({ availableDates: response.data });
         } catch (err) {
             set({ hasErrors: true, calendarIsActive: false });
         }
@@ -137,9 +134,12 @@ export const useStore = create<IStore>((set, get) => ({
             const response = await api.get(`/schedule/${uid}/${start}/${end}`);
             const rangeList = get().rangeList;
 
+            // const secondArrayDates = response.data.map((item: any) => item.pair_date);
+            // const nonMatchingDates = rangeList.filter((date) => !secondArrayDates.includes(date));
+
             const daysOff = rangeList.filter((date) => !response.data.some((obj: any) => obj.pair_date === date));
 
-            console.log(daysOff);
+            // console.log(rangeList);
 
             const scheduleArr = [
                 ...response.data,

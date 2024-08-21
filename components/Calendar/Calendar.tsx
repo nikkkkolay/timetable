@@ -9,58 +9,41 @@ const localeDateService = new NativeDateService("ru", {
     i18n,
     startDayOfWeek: 1,
 });
-
 const ArrowIcon = (): IconElement => <Icon style={styles.icon} name="chevron-right-outline" />;
 
 const CalendarIcon = (arrowProps: any): IconElement => {
     return <Button onPress={arrowProps} style={styles.button} appearance="ghost" accessoryLeft={ArrowIcon}></Button>;
 };
 
-const formatDate = (date: string) => {
-    let d = new Date(date);
-    let month = "" + (d.getMonth() + 1);
-    let day = "" + d.getDate();
-    let year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
-};
-
 export const Calendar = () => {
     const { availableDates, group, range, rangeList, getSchedule, getAvailableDates, setRange, createRangeList } = useStore((state) => state);
 
-    const startDate = new Date(availableDates[0]);
-    const endDate = new Date(availableDates[availableDates.length - 1]);
+    const formattedMaxDate = format({ date: availableDates[availableDates.length - 1], format: "YYYY-MM-DDTHH:mm:ss", tz: "Europe/Moscow" });
+    const formattedMinDate = format({ date: availableDates[0], format: "YYYY-MM-DDTHH:mm:ss", tz: "Europe/Moscow" });
 
-    useEffect(() => {
-        if (group && availableDates.length === 0) getAvailableDates(group.uid);
-    }, [group]);
+    const selectionRange = (range: any) => {
+        setRange(range);
+        const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD", tz: "Europe/Moscow" });
+        const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD", tz: "Europe/Moscow" });
 
-    const selectionRange = useCallback(
-        (range: any) => {
-            setRange(range);
-            const rangeStart = range.startDate && format(range.startDate, "YYYY-MM-DD");
-            const rangeEnd = range.endDate && format(range.endDate, "YYYY-MM-DD");
-            if (rangeStart && rangeEnd && group) {
-                createRangeList(rangeStart, rangeEnd);
-                getSchedule(group.uid, rangeStart, rangeEnd);
-            }
-        },
-        [group, getSchedule, setRange]
-    );
+        if (rangeStart && rangeEnd && group) {
+            createRangeList(rangeStart, rangeEnd);
+            getSchedule(group.uid, rangeStart, rangeEnd);
+        }
+    };
 
     const renderDay = useCallback(
         (info: any, style: StyleType) => {
-            const workDay = availableDates.includes(formatDate(info.date));
-            const emptySchedule = info.date < endDate || info.date < new Date();
-            const date = new Date(info.date).getDate();
+            const workDay = availableDates.includes(info.date);
+            // console.log(maxDate);
+
+            // const emptySchedule = info.date < maxDate || info.date < new Date();
+            const date = new Date(info.date).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric" });
 
             return (
                 <View style={[styles.dayContainer, style.container]}>
                     <Text style={style.text}>{date}</Text>
-                    {!workDay && emptySchedule && (
+                    {!workDay && (
                         <View style={styles.dayOff}>
                             <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
                         </View>
@@ -71,15 +54,19 @@ export const Calendar = () => {
         [availableDates]
     );
 
+    useEffect(() => {
+        if (group && availableDates.length === 0) getAvailableDates(group.uid);
+    }, [group]);
+
     return (
         <RangeCalendar
             range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
             onSelect={(nextRange) => selectionRange(nextRange)}
             dateService={localeDateService}
-            min={startDate}
-            max={endDate}
-            renderDay={renderDay}
+            min={new Date(formattedMinDate)}
+            max={new Date(formattedMaxDate)}
+            // renderDay={renderDay}
         />
     );
 };
