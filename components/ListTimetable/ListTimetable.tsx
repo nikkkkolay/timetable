@@ -11,7 +11,7 @@ export interface ITimetableProps {
 }
 
 export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
-    const { range } = useStore((state) => state);
+    const { schedule } = useStore((state) => state);
 
     const renderItemHeader = (info: ListRenderItemInfo<ScheduleTypes>): ReactElement => (
         <>
@@ -58,7 +58,7 @@ export const ListTimetable = ({ data }: ITimetableProps): ReactElement => {
     return (
         <>
             <List style={styles.container} contentContainerStyle={styles.contentContainer} data={data} renderItem={renderCard} />
-            {range.endDate && <SharingButton />}
+            {schedule.length !== 0 && <SharingButton />}
         </>
     );
 };

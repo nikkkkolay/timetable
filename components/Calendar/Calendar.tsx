@@ -9,6 +9,7 @@ const localeDateService = new NativeDateService("ru", {
     i18n,
     startDayOfWeek: 1,
 });
+
 const ArrowIcon = (): IconElement => <Icon style={styles.icon} name="chevron-right-outline" />;
 
 const CalendarIcon = (arrowProps: any): IconElement => {
@@ -18,26 +19,39 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 export const Calendar = () => {
     const { availableDates, group, range, rangeList, getSchedule, getAvailableDates, setRange, createRangeList } = useStore((state) => state);
 
-    const formattedMaxDate = format({ date: availableDates[availableDates.length - 1], format: "YYYY-MM-DDTHH:mm:ss", tz: "Europe/Moscow" });
-    const formattedMinDate = format({ date: availableDates[0], format: "YYYY-MM-DDTHH:mm:ss", tz: "Europe/Moscow" });
+    const maxRange = 14;
+    const minDate = new Date(availableDates[0]);
+    const maxDate = new Date(availableDates[availableDates.length - 1]);
+
+    useEffect(() => {
+        if (group && availableDates.length === 0) getAvailableDates(group.uid);
+    }, [group]);
+
+    useEffect(() => {
+        if (rangeList.length > maxRange) {
+            console.log("Это максимум");
+        } else {
+            const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD" });
+            const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD" });
+            if (rangeStart && rangeEnd && group) {
+                getSchedule(group.uid, rangeStart, rangeEnd);
+            }
+        }
+    }, [rangeList]);
 
     const selectionRange = (range: any) => {
         setRange(range);
-        const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD", tz: "Europe/Moscow" });
-        const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD", tz: "Europe/Moscow" });
-
-        if (rangeStart && rangeEnd && group) {
-            createRangeList(rangeStart, rangeEnd);
-            getSchedule(group.uid, rangeStart, rangeEnd);
-        }
+        const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD" });
+        const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD" });
+        createRangeList(rangeStart, rangeEnd);
     };
 
     const renderDay = useCallback(
         (info: any, style: StyleType) => {
             const workDay = availableDates.includes(info.date);
-            // console.log(maxDate);
 
-            // const emptySchedule = info.date < maxDate || info.date < new Date();
+            const emptySchedule = info.date < maxDate || info.date < new Date();
+
             const date = new Date(info.date).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric" });
 
             return (
@@ -54,18 +68,14 @@ export const Calendar = () => {
         [availableDates]
     );
 
-    useEffect(() => {
-        if (group && availableDates.length === 0) getAvailableDates(group.uid);
-    }, [group]);
-
     return (
         <RangeCalendar
             range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
             onSelect={(nextRange) => selectionRange(nextRange)}
             dateService={localeDateService}
-            min={new Date(formattedMinDate)}
-            max={new Date(formattedMaxDate)}
+            min={minDate}
+            max={maxDate}
             // renderDay={renderDay}
         />
     );
