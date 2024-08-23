@@ -1,6 +1,6 @@
 import { api } from "../http";
 import { create } from "zustand";
-import { format } from "@formkit/tempo";
+import { formatDate } from "../helpers";
 import { IStore, ScheduleTypes } from "./useStore.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -44,7 +44,8 @@ export const useStore = create<IStore>((set, get) => ({
         const days = [];
 
         while (currentDate <= endDate) {
-            days.push(format(currentDate, "YYYY-MM-DDTHH:mm:ssZ"));
+            days.push(formatDate(currentDate));
+
             currentDate.setDate(currentDate.getDate() + 1);
         }
 
@@ -132,14 +133,10 @@ export const useStore = create<IStore>((set, get) => ({
         set({ fetchingTimetable: true });
         try {
             const response = await api.get(`/schedule/${uid}/${start}/${end}`);
+
             const rangeList = get().rangeList;
 
-            // const secondArrayDates = response.data.map((item: any) => item.pair_date);
-            // const nonMatchingDates = rangeList.filter((date) => !secondArrayDates.includes(date));
-
-            const daysOff = rangeList.filter((date) => !response.data.some((obj: any) => obj.pair_date === date));
-
-            // console.log(rangeList);
+            const daysOff = rangeList.filter((date) => !response.data.some((obj: ScheduleTypes) => obj.pair_date === date));
 
             const scheduleArr = [
                 ...response.data,

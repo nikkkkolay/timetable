@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useStore } from "../../store/useStore";
-import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType } from "@ui-kitten/components";
+import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType, CalendarRange } from "@ui-kitten/components";
 import { i18n } from "./i18n";
-import { format } from "@formkit/tempo";
+import { formatDate } from "../../helpers";
 
 const localeDateService = new NativeDateService("ru", {
     i18n,
@@ -17,7 +17,7 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, range, rangeList, getSchedule, getAvailableDates, setRange, createRangeList } = useStore((state) => state);
+    const { availableDates, group, rangeList, range, getSchedule, getAvailableDates, createRangeList, setRange } = useStore((state) => state);
 
     const maxRange = 14;
     const minDate = new Date(availableDates[0]);
@@ -31,19 +31,17 @@ export const Calendar = () => {
         if (rangeList.length > maxRange) {
             console.log("Это максимум");
         } else {
-            const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD" });
-            const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD" });
-            if (rangeStart && rangeEnd && group) {
-                getSchedule(group.uid, rangeStart, rangeEnd);
-            }
+            const rangeStart = range.startDate && formatDate(range.startDate);
+            const rangeEnd = range.endDate && formatDate(range.endDate);
+            if (rangeStart && rangeEnd && group) getSchedule(group.uid, rangeStart, rangeEnd);
         }
     }, [rangeList]);
 
-    const selectionRange = (range: any) => {
+    const selectionRange = (range: CalendarRange<Date>) => {
         setRange(range);
-        const rangeStart = range.startDate && format({ date: range.startDate, format: "YYYY-MM-DD" });
-        const rangeEnd = range.endDate && format({ date: range.endDate, format: "YYYY-MM-DD" });
-        createRangeList(rangeStart, rangeEnd);
+        const rangeStart = range.startDate && formatDate(range.startDate);
+        const rangeEnd = range.endDate && formatDate(range.endDate);
+        if (rangeStart && rangeEnd) createRangeList(rangeStart, rangeEnd);
     };
 
     const renderDay = useCallback(
