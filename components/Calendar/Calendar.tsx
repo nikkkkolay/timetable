@@ -17,9 +17,10 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, rangeList, range, getSchedule, getAvailableDates, createRangeList, setRange } = useStore((state) => state);
+    const { availableDates, group, rangeList, range, maxRange, getSchedule, getAvailableDates, createRangeList, setRange } = useStore(
+        (state) => state
+    );
 
-    const maxRange = 14;
     const minDate = new Date(availableDates[0]);
     const maxDate = new Date(availableDates[availableDates.length - 1]);
 

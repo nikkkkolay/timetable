@@ -19,6 +19,7 @@ export const useStore = create<IStore>((set, get) => ({
     range: {},
     rangeList: [],
     group: null,
+    maxRange: 14,
 
     setModalSettingsIsActive: (state) => {
         set({ modalSettingsIsActive: state });

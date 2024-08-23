@@ -40,6 +40,7 @@ export interface IStore {
     availableDates: string[];
     schedule: ScheduleTypes[];
     group: GroupTypes | null;
+    maxRange: number;
     range: RangeTypes | Record<string, never>;
     rangeList: string[];
     checkUpdateDate: () => void;
