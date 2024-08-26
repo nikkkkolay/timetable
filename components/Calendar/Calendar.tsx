@@ -1,9 +1,14 @@
-import { useCallback, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { useStore } from "../../store/useStore";
 import { Icon, IconElement, NativeDateService, RangeCalendar, Button, Text, StyleType, CalendarRange } from "@ui-kitten/components";
-import { i18n } from "./i18n";
+import { useStore } from "../../store/useStore";
 import { formatDate } from "../../helpers";
+import { i18n } from "./i18n";
+
+export type FormattedRangeTypes = {
+    start: string | undefined;
+    end: string | undefined;
+};
 
 const localeDateService = new NativeDateService("ru", {
     i18n,
@@ -17,65 +22,58 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = () => {
-    const { availableDates, group, rangeList, range, maxRange, getSchedule, getAvailableDates, createRangeList, setRange } = useStore(
-        (state) => state
-    );
+    const range = useStore((state) => state.range);
+    const setRange = useStore((state) => state.setRange);
+    const { availableDates, group, rangeList, maxRange, getSchedule, getAvailableDates, createRangeList } = useStore((state) => state);
+    const [formattedRange, setFormattedRange] = useState<FormattedRangeTypes>();
 
     const minDate = new Date(availableDates[0]);
     const maxDate = new Date(availableDates[availableDates.length - 1]);
 
     useEffect(() => {
         if (group && availableDates.length === 0) getAvailableDates(group.uid);
-    }, [group]);
+    }, [group, availableDates]);
 
     useEffect(() => {
-        if (rangeList.length > maxRange) {
-            console.log("Это максимум");
-        } else {
-            const rangeStart = range.startDate && formatDate(range.startDate);
-            const rangeEnd = range.endDate && formatDate(range.endDate);
-            if (rangeStart && rangeEnd && group) getSchedule(group.uid, rangeStart, rangeEnd);
+        if (rangeList.length <= maxRange && formattedRange && formattedRange.start && formattedRange.end && group) {
+            getSchedule(group.uid, formattedRange.start, formattedRange.end);
         }
     }, [rangeList]);
 
-    const selectionRange = (range: CalendarRange<Date>) => {
-        setRange(range);
-        const rangeStart = range.startDate && formatDate(range.startDate);
-        const rangeEnd = range.endDate && formatDate(range.endDate);
-        if (rangeStart && rangeEnd) createRangeList(rangeStart, rangeEnd);
+    const setSelectedRange = (nextRange: CalendarRange<Date>) => {
+        setRange(nextRange);
+        if (nextRange.startDate && nextRange.endDate) {
+            const rangeStart = formatDate(nextRange.startDate);
+            const rangeEnd = formatDate(nextRange.endDate);
+            setFormattedRange({ start: rangeStart, end: rangeEnd });
+            createRangeList(rangeStart, rangeEnd);
+        }
     };
 
-    const renderDay = useCallback(
-        (info: any, style: StyleType) => {
-            const workDay = availableDates.includes(info.date);
-
-            const emptySchedule = info.date < maxDate || info.date < new Date();
-
-            const date = new Date(info.date).toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric" });
-
-            return (
-                <View style={[styles.dayContainer, style.container]}>
-                    <Text style={style.text}>{date}</Text>
-                    {!workDay && (
-                        <View style={styles.dayOff}>
-                            <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
-                        </View>
-                    )}
-                </View>
-            );
-        },
-        [availableDates]
-    );
+    const renderDay = (info: any, style: StyleType) => {
+        const workDay = availableDates.includes(formatDate(info.date));
+        const emptySchedule = info.date < maxDate || info.date < new Date();
+        return (
+            <View style={[styles.dayContainer, style.container]}>
+                <Text style={style.text}>{info.date.getDate()}</Text>
+                {!workDay && emptySchedule && (
+                    <View style={styles.dayOff}>
+                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
+                    </View>
+                )}
+            </View>
+        );
+    };
 
     return (
         <RangeCalendar
             range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
-            onSelect={(nextRange) => selectionRange(nextRange)}
+            onSelect={(nextRange) => setSelectedRange(nextRange)}
             dateService={localeDateService}
             min={minDate}
             max={maxDate}
-            // renderDay={renderDay}
+            renderDay={renderDay}
         />
     );
 };

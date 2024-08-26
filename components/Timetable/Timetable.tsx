@@ -15,7 +15,7 @@ export const Timetable = () => {
             {rangeList.length > maxRange && calendarIsActive && (
                 <View style={styles.container}>
                     <Icon style={styles.icon} name="bulb-outline" fill="#f9423a" />
-                    <Text style={styles.text} category="s1">{`Максимальный диапазон — ${maxRange} дней`}</Text>
+                    <Text style={styles.text} category="s1">{`Максимальный диапазон — ${maxRange} день`}</Text>
                 </View>
             )}
             {!hasErrors && schedule.length === 0 && <EmptyTimetable />}
