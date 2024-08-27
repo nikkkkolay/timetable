@@ -99,8 +99,9 @@ export const useStore = create<IStore>((set, get) => ({
         try {
             const response = await api.get(`/groups/${fac_id}/${course_id}`);
             set({
-                groups: response.data.map((group: { UID: number; group: string; speciality: string }) => ({
+                groups: response.data.map((group: { UID: number; group: string; speciality: string; UID_mg: string }) => ({
                     uid: group.UID,
+                    uid_mg: group.UID_mg ? group.UID_mg : null,
                     name: group.group,
                     specialty: group.speciality,
                 })),

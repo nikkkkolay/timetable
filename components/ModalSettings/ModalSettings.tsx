@@ -41,6 +41,7 @@ export const ModalSettings = (): ReactElement => {
         if (selectedIndexGroup) {
             const group = {
                 uid: groups[selectedIndexGroup.row].uid,
+                uid_mg: groups[selectedIndexGroup.row].uid_mg,
                 name: groups[selectedIndexGroup.row].name,
                 specialty: groups[selectedIndexGroup.row].specialty,
             };

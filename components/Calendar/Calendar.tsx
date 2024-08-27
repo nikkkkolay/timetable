@@ -73,7 +73,7 @@ export const Calendar = () => {
             dateService={localeDateService}
             min={minDate}
             max={maxDate}
-            renderDay={renderDay}
+            // renderDay={renderDay}
         />
     );
 };

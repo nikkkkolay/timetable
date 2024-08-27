@@ -1,12 +1,14 @@
 export type ChoiceTypes = {
     id: number;
     uid: string;
+    uid_mg: string;
     name: string;
     specialty: string;
 };
 
 export type GroupTypes = {
     uid: string;
+    uid_mg: string;
     name: string;
     specialty: string;
 };
