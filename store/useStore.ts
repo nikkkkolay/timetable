@@ -77,7 +77,7 @@ export const useStore = create<IStore>((set, get) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true, modalSettingsIsActive: false });
+            set({ hasErrors: true, modalSettingsIsActive: false, calendarIsActive: false });
         }
     },
 
@@ -91,7 +91,7 @@ export const useStore = create<IStore>((set, get) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true, modalSettingsIsActive: false });
+            set({ hasErrors: true, modalSettingsIsActive: false, calendarIsActive: false });
         }
     },
 
@@ -107,7 +107,16 @@ export const useStore = create<IStore>((set, get) => ({
                 })),
             });
         } catch (err) {
-            set({ hasErrors: true, modalSettingsIsActive: false });
+            set({ hasErrors: true, modalSettingsIsActive: false, calendarIsActive: false });
+        }
+    },
+
+    getAvailableDates: async (uid) => {
+        try {
+            const response = await api.get(`/schedule-dates/${uid}/`);
+            set({ availableDates: response.data });
+        } catch (err) {
+            set({ hasErrors: true, calendarIsActive: false });
         }
     },
 
@@ -119,15 +128,6 @@ export const useStore = create<IStore>((set, get) => ({
         } catch (err) {
             await AsyncStorage.removeItem("group");
             set({ hasErrors: true, fetchingTimetable: false, calendarIsActive: false, group: null });
-        }
-    },
-
-    getAvailableDates: async (uid) => {
-        try {
-            const response = await api.get(`/schedule-dates/${uid}/`);
-            set({ availableDates: response.data });
-        } catch (err) {
-            set({ hasErrors: true, calendarIsActive: false });
         }
     },
 
