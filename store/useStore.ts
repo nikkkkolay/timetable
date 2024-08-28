@@ -111,19 +111,19 @@ export const useStore = create<IStore>((set, get) => ({
         }
     },
 
-    getAvailableDates: async (uid) => {
+    getAvailableDates: async (uid, uid_mg) => {
         try {
-            const response = await api.get(`/schedule-dates/${uid}/`);
+            const response = await api.get(`/schedule-dates/${uid}${uid_mg ? "?UID_mg=" + uid_mg : ""}`);
             set({ availableDates: response.data });
         } catch (err) {
             set({ hasErrors: true, calendarIsActive: false });
         }
     },
 
-    getCurrentSchedule: async (uid) => {
+    getCurrentSchedule: async (uid, uid_mg) => {
         set({ fetchingTimetable: true });
         try {
-            const response = await api.get(`/schedule-current/${uid}`);
+            const response = await api.get(`/schedule-current/${uid}${uid_mg ? "?UID_mg=" + uid_mg : ""}`);
             set({ schedule: response.data, fetchingTimetable: false });
         } catch (err) {
             await AsyncStorage.removeItem("group");
@@ -131,13 +131,15 @@ export const useStore = create<IStore>((set, get) => ({
         }
     },
 
-    getSchedule: async (uid, start, end) => {
+    getSchedule: async (start, end, uid, uid_mg) => {
         set({ fetchingTimetable: true });
         try {
-            const response = await api.get(`/schedule/${uid}/${start}/${end}`);
+            if (uid_mg) {
+                console.log(uid_mg);
+            }
 
             const rangeList = get().rangeList;
-
+            const response = await api.get(`/schedule/${start}/${end}/${uid}${uid_mg ? "?UID_mg=" + uid_mg : ""}`);
             const daysOff = rangeList.filter((date) => !response.data.some((obj: ScheduleTypes) => obj.pair_date === date));
 
             const scheduleArr = [

@@ -31,12 +31,12 @@ export const Calendar = () => {
     const maxDate = new Date(availableDates[availableDates.length - 1]);
 
     useEffect(() => {
-        if (group && availableDates.length === 0) getAvailableDates(group.uid);
+        if (group && availableDates.length === 0) getAvailableDates(group.uid, group.uid_mg);
     }, [group, availableDates]);
 
     useEffect(() => {
         if (rangeList.length <= maxRange && formattedRange && formattedRange.start && formattedRange.end && group) {
-            getSchedule(group.uid, formattedRange.start, formattedRange.end);
+            getSchedule(formattedRange.start, formattedRange.end, group.uid, group.uid_mg);
         }
     }, [rangeList]);
 

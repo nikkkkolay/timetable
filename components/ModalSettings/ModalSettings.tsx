@@ -51,11 +51,12 @@ export const ModalSettings = (): ReactElement => {
             const value = await AsyncStorage.getItem("group");
             if (value !== null) {
                 const uid = JSON.parse(value).uid;
+                const uid_mg = JSON.parse(value).uid_mg;
                 await setCalendarIsActive(false);
                 await setRange({});
                 await setGroup(JSON.parse(value));
-                await getCurrentSchedule(uid);
-                await getAvailableDates(uid);
+                await getCurrentSchedule(uid, uid_mg);
+                await getAvailableDates(uid, uid_mg);
             }
         }
     };

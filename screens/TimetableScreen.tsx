@@ -8,8 +8,8 @@ export const TimetableScreen = () => {
     useEffect(() => {
         async function setData() {
             if (!hasErrors && group) {
-                await getCurrentSchedule(group.uid);
-                await getAvailableDates(group.uid);
+                await getCurrentSchedule(group.uid, group.uid_mg);
+                await getAvailableDates(group.uid, group.uid_mg);
             }
         }
         setData();

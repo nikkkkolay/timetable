@@ -1,14 +1,14 @@
 export type ChoiceTypes = {
     id: number;
     uid: string;
-    uid_mg: string;
+    uid_mg: string | null;
     name: string;
     specialty: string;
 };
 
 export type GroupTypes = {
     uid: string;
-    uid_mg: string;
+    uid_mg: string | null;
     name: string;
     specialty: string;
 };
@@ -48,10 +48,10 @@ export interface IStore {
     checkUpdateDate: () => void;
     getFaculties: () => void;
     getCourses: () => void;
-    getCurrentSchedule: (uid: string) => void;
+    getCurrentSchedule: (uid: string, uid_mg: string | null) => void;
     getGroups: (fac_id: number, course_id: number) => void;
-    getSchedule: (uid: string, start: string, end: string) => void;
-    getAvailableDates: (uid: string) => void;
+    getSchedule: (start: string, end: string, uid: string, uid_mg: string | null) => void;
+    getAvailableDates: (uid: string, uid_mg: string | null) => void;
     setGroup: (group: GroupTypes) => void;
     setModalSettingsIsActive: (state: boolean) => void;
     setCalendarIsActive: (state: boolean) => void;
