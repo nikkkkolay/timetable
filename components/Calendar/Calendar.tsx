@@ -22,11 +22,20 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = memo(() => {
-    const range = useStore((state) => state.range);
-    const setRange = useStore((state) => state.setRange);
     const { availableDates, group, rangeList, maxRange, getSchedule, getAvailableDates, createRangeList } = useStore((state) => state);
     const [formattedRange, setFormattedRange] = useState<FormattedRangeTypes>();
 
+    const { range, setRange } = useStore(
+        useCallback(
+            (state) => ({
+                range: state.range,
+                setRange: state.setRange,
+            }),
+            []
+        )
+    );
+
+    const memoizedRange = useMemo(() => range, [range]);
     const minDate = useMemo(() => new Date(availableDates[0]), [availableDates]);
     const maxDate = useMemo(() => new Date(availableDates[availableDates.length - 1]), [availableDates]);
     const memoizedAvailableDates = useMemo(() => new Set(availableDates.map((date) => formatDate(new Date(date)))), [availableDates]);
@@ -73,7 +82,7 @@ export const Calendar = memo(() => {
 
     return (
         <RangeCalendar
-            range={range}
+            range={memoizedRange}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
             onSelect={(nextRange) => setSelectedRange(nextRange)}
             dateService={localeDateService}
