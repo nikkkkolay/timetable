@@ -134,10 +134,6 @@ export const useStore = create<IStore>((set, get) => ({
     getSchedule: async (start, end, uid, uid_mg) => {
         set({ fetchingTimetable: true });
         try {
-            if (uid_mg) {
-                console.log(uid_mg);
-            }
-
             const rangeList = get().rangeList;
             const response = await api.get(`/schedule/${start}/${end}/${uid}${uid_mg ? "?UID_mg=" + uid_mg : ""}`);
             const daysOff = rangeList.filter((date) => !response.data.some((obj: ScheduleTypes) => obj.pair_date === date));
