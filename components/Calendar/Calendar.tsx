@@ -22,23 +22,14 @@ const CalendarIcon = (arrowProps: any): IconElement => {
 };
 
 export const Calendar = memo(() => {
+    const range = useStore((state) => state.range);
+    const setRange = useStore((state) => state.setRange);
     const { availableDates, group, rangeList, maxRange, getSchedule, getAvailableDates, createRangeList } = useStore((state) => state);
     const [formattedRange, setFormattedRange] = useState<FormattedRangeTypes>();
+    // const [range, setRange] = useState<CalendarRange<Date>>({});
 
-    const { range, setRange } = useStore(
-        useCallback(
-            (state) => ({
-                range: state.range,
-                setRange: state.setRange,
-            }),
-            []
-        )
-    );
-
-    const memoizedRange = useMemo(() => range, [range]);
     const minDate = useMemo(() => new Date(availableDates[0]), [availableDates]);
     const maxDate = useMemo(() => new Date(availableDates[availableDates.length - 1]), [availableDates]);
-    const memoizedAvailableDates = useMemo(() => new Set(availableDates.map((date) => formatDate(new Date(date)))), [availableDates]);
 
     useEffect(() => {
         if (group && availableDates.length === 0) getAvailableDates(group.uid, group.uid_mg);
@@ -50,30 +41,26 @@ export const Calendar = memo(() => {
         }
     }, [rangeList]);
 
-    const setSelectedRange = useCallback(
-        (nextRange: CalendarRange<Date>) => {
-            setRange(nextRange);
-            if (nextRange.startDate && nextRange.endDate) {
-                const rangeStart = formatDate(nextRange.startDate);
-                const rangeEnd = formatDate(nextRange.endDate);
-                setFormattedRange({ start: rangeStart, end: rangeEnd });
-                createRangeList(rangeStart, rangeEnd);
-            }
-        },
-        [setRange, createRangeList]
-    );
+    const setSelectedRange = (nextRange: CalendarRange<Date>) => {
+        setRange(nextRange);
+        if (nextRange.startDate && nextRange.endDate) {
+            const rangeStart = formatDate(nextRange.startDate);
+            const rangeEnd = formatDate(nextRange.endDate);
+            setFormattedRange({ start: rangeStart, end: rangeEnd });
+            createRangeList(rangeStart, rangeEnd);
+        }
+    };
 
     const renderDay = (info: any, style: StyleType) => {
-        const formattedDate = formatDate(info.date);
-        const workDay = memoizedAvailableDates.has(formattedDate);
-        const emptySchedule = info.date < maxDate || info.date < new Date();
+        const workDay = availableDates.includes(formatDate(info.date));
+        const emptySchedule = info.date < maxDate && info.date > minDate;
 
         return (
             <View style={[styles.dayContainer, style.container]}>
                 <Text style={style.text}>{info.date.getDate()}</Text>
                 {!workDay && emptySchedule && (
                     <View style={styles.dayOff}>
-                        <Icon name="checkmark-circle-2-outline" fill={`${!workDay}` && "#c8ceda"} />
+                        <Icon name="checkmark-circle-2-outline" fill="#c8ceda" />
                     </View>
                 )}
             </View>
@@ -82,7 +69,7 @@ export const Calendar = memo(() => {
 
     return (
         <RangeCalendar
-            range={memoizedRange}
+            range={range}
             renderArrowRight={(arrowProps) => CalendarIcon(arrowProps.onPress)}
             onSelect={(nextRange) => setSelectedRange(nextRange)}
             dateService={localeDateService}
