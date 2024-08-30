@@ -17,6 +17,9 @@
 
 ```sh
 EXPO_PUBLIC_API_URL="API URL"
+PROJECT_OWNER="PROJECT OWNER"
+PROJECT_ID="PROJECT ID"
+
 ```
 
 Установить зависимости
