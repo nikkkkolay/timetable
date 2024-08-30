@@ -1,0 +1,19 @@
+{
+    "build": {
+        "development": {
+            "android": {
+                "buildType": "apk"
+            },
+            "env": {
+                "EXPO_PUBLIC_API_URL": "API URL"
+            },
+            "developmentClient": true,
+            "distribution": "internal"
+        },
+        "production": {
+            "android": {
+                "gradleCommand": ":app:assembleRelease"
+            }
+        }
+    }
+}
